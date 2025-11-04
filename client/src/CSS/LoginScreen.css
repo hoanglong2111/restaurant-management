@@ -56,6 +56,21 @@
     background-color: #ffffff !important;
 }
 
+/* Password input wrapper styling */
+.ant-input-affix-wrapper {
+    padding: 0 !important;
+}
+
+.ant-input-affix-wrapper .ant-input {
+    padding: 12px 16px !important;
+    border: none !important;
+}
+
+.ant-input-password-icon {
+    color: #999;
+    margin-right: 12px;
+}
+
 /* Focus State - Strong Visual Feedback */
 .ant-input:focus,
 .ant-input-password:focus,
@@ -63,6 +78,10 @@
     border-color: #ff7e5f !important;
     box-shadow: 0 0 0 4px rgba(255, 126, 95, 0.15) !important;
     transform: translateY(-2px);
+}
+
+.ant-input-affix-wrapper-focused .ant-input-password-icon {
+    color: #ff7e5f;
 }
 
 /* Hover State */
@@ -395,36 +414,37 @@
     right: 0;
     bottom: 0;
     min-height: 100dvh;
-    padding: 20px;
+    padding: max(env(safe-area-inset-top), 24px) 20px max(env(safe-area-inset-bottom), 20px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background: linear-gradient(135deg, rgba(246,211,101,1) 0%, rgba(253,160,133,1) 100%);
-    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .landing-wrapper.login-page .hero .brand {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     flex-shrink: 0;
+    padding-top: 16px;
   }
 
   .landing-wrapper.login-page .form-panel {
     position: static;
     width: 100%;
-    max-width: 360px;
+    max-width: 380px;
     padding: 0;
     background: transparent;
     animation: none;
-    flex-shrink: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+    margin-bottom: max(env(safe-area-inset-bottom), 24px);
   }
 
   .landing-wrapper.login-page .form-card {
     background: rgba(255,255,255,0.96);
     border-radius: 16px;
-    padding: 20px 18px;
+    padding: 24px 20px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     backdrop-filter: blur(10px);
   }
@@ -460,11 +480,29 @@
   }
 
   .landing-wrapper.login-page .ant-form-item {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
   .landing-wrapper.login-page .register-link {
     margin-top: 16px;
     font-size: 14px;
+  }
+
+  /* Password input giống text input */
+  .landing-wrapper.login-page .ant-input-password {
+    padding: 0 !important;
+  }
+
+  .landing-wrapper.login-page .ant-input-password .ant-input {
+    border: none !important;
+    padding: 12px 16px !important;
+  }
+
+  .landing-wrapper.login-page .ant-input-affix-wrapper {
+    padding: 0 !important;
+  }
+
+  .landing-wrapper.login-page .ant-input-password-icon {
+    margin-right: 12px;
   }
 }

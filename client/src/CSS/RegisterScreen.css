@@ -68,6 +68,21 @@
     background-color: #ffffff !important;
 }
 
+/* Password input wrapper styling */
+.register-form .ant-input-affix-wrapper {
+    padding: 0 !important;
+}
+
+.register-form .ant-input-affix-wrapper .ant-input {
+    padding: 12px 16px !important;
+    border: none !important;
+}
+
+.register-form .ant-input-password-icon {
+    color: #999;
+    margin-right: 12px;
+}
+
 /* Focus State - Strong Visual Feedback */
 .register-form .ant-input:focus,
 .register-form .ant-input-password:focus,
@@ -75,6 +90,10 @@
     border-color: #667eea !important;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15) !important;
     transform: translateY(-2px);
+}
+
+.register-form .ant-input-affix-wrapper-focused .ant-input-password-icon {
+    color: #667eea;
 }
 
 /* Hover State */
@@ -391,36 +410,37 @@
     right: 0;
     bottom: 0;
     min-height: 100dvh;
-    padding: 20px;
+    padding: max(env(safe-area-inset-top), 24px) 20px max(env(safe-area-inset-bottom), 20px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
-    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .landing-wrapper.register-page .hero .brand {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     flex-shrink: 0;
+    padding-top: 16px;
   }
 
   .landing-wrapper.register-page .form-panel {
     position: static;
     width: 100%;
-    max-width: 360px;
+    max-width: 380px;
     padding: 0;
     background: transparent;
     animation: none;
-    flex-shrink: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+    margin-bottom: max(env(safe-area-inset-bottom), 24px);
   }
 
   .landing-wrapper.register-page .form-card {
     background: rgba(255,255,255,0.96);
     border-radius: 16px;
-    padding: 20px 18px;
+    padding: 24px 20px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     backdrop-filter: blur(10px);
   }
@@ -455,12 +475,30 @@
   }
 
   .landing-wrapper.register-page .ant-form-item {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
   .landing-wrapper.register-page .login-link {
     margin-top: 16px;
     font-size: 14px;
+  }
+
+  /* Password input giống text input */
+  .landing-wrapper.register-page .ant-input-password {
+    padding: 0 !important;
+  }
+
+  .landing-wrapper.register-page .ant-input-password .ant-input {
+    border: none !important;
+    padding: 12px 16px !important;
+  }
+
+  .landing-wrapper.register-page .ant-input-affix-wrapper {
+    padding: 0 !important;
+  }
+
+  .landing-wrapper.register-page .ant-input-password-icon {
+    margin-right: 12px;
   }
 }
 
