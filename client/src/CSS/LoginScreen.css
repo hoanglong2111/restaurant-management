@@ -231,6 +231,7 @@
   align-items: stretch;
   min-height: 100vh;
   animation: fadeIn 0.5s ease-out;
+  overflow: visible;
 }
 
 @keyframes fadeIn {
@@ -248,6 +249,8 @@
   padding: 48px;
   animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   order: 1;
+  position: static;
+  overflow: visible;
 }
 
 @keyframes slideInLeft {
@@ -368,13 +371,17 @@
   transform: translateY(-2px);
 }
 
-.landing-wrapper.landing-wrapper.login-page .form-panel {
+.landing-wrapper.login-page .form-panel {
   flex: 0 0 450px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px;
   background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98));
+  animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  order: 2;
+  position: static;
+  overflow: visible;
   animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   order: 2;
 }
