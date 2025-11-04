@@ -1,0 +1,83 @@
+/* RegisterScreen.css */
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+
+.register-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    max-width: 400px;
+    width: 100%;
+}
+
+.register-form h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #333333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ant-form-item {
+    margin-bottom: 16px;
+}
+
+.ant-input,
+.ant-input-password {
+    border-radius: 8px;
+}
+
+.ant-btn-primary {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #ff7e5f;
+    border-color: #ff7e5f;
+    font-weight: bold;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.ant-btn-primary:hover {
+    background-color: #feb47b;
+    border-color: #feb47b;
+}
+
+.alert-error {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    background-color: #ffe6e6;
+    border: 1px solid #ffcccc;
+}
+
+/* New styles for the login link */
+
+.login-link {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #1890ff; /* Ant Design primary color */
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .register-form {
+        padding: 20px;
+    }
+
+    .register-form h2 {
+        font-size: 24px;
+    }
+}

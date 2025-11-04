@@ -1,0 +1,175 @@
+/* client/src/CSS/ManageTables.css */
+
+.manage-tables-container {
+    background-color: #f0f2f5;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.manage-tables-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333333;
+}
+
+.manage-tables-table {
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.manage-tables-table thead {
+    background-color: #1890ff;
+    color: #ffffff;
+}
+
+.manage-tables-table .ant-table-thead > tr > th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.manage-tables-table .ant-table-tbody > tr > td {
+    text-align: center;
+}
+
+.status-free {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-occupied {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.manage-tables-alert {
+    margin-bottom: 20px;
+}
+
+.manage-tables-spin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.add-table-button {
+    margin-bottom: 16px;
+    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+}
+
+.add-table-button:hover {
+    background: linear-gradient(45deg, #2575fc 0%, #6a11cb 100%);
+}
+
+.action-button {
+    margin: 0 5px;
+}
+
+.edit-button {
+    color: #1890ff;
+    background: linear-gradient(45deg, #11998e 0%, #38ef7d 100%);
+    color: #ffffff;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.edit-button:hover {
+    background: linear-gradient(45deg, #38ef7d 0%, #11998e 100%);
+}
+
+.delete-button {
+    color: #dc3545;
+    background: linear-gradient(45deg, #ff416c 0%, #ff4b2b 100%);
+    color: #ffffff;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.delete-button:hover {
+    background: linear-gradient(45deg, #ff4b2b 0%, #ff416c 100%);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .manage-tables-container {
+        padding: 12px;
+        padding-bottom: 80px;
+    }
+
+    .manage-tables-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .add-table-button {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    /* Table mobile - Scroll horizontal */
+    .manage-tables-table {
+        overflow-x: auto;
+    }
+
+    .manage-tables-table .ant-table {
+        min-width: 500px;
+        font-size: 12px;
+    }
+
+    .manage-tables-table .ant-table-thead > tr > th {
+        padding: 8px 4px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .manage-tables-table .ant-table-tbody > tr > td {
+        padding: 8px 4px;
+        font-size: 11px;
+    }
+
+    /* Compact buttons */
+    .action-button {
+        margin: 0 2px;
+    }
+
+    .edit-button,
+    .delete-button {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+
+    /* Status tags */
+    .status-free,
+    .status-occupied {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 576px) {
+    .manage-tables-container {
+        padding: 8px;
+    }
+
+    .manage-tables-title {
+        font-size: 18px;
+    }
+
+    .manage-tables-table .ant-table {
+        font-size: 11px;
+    }
+
+    .manage-tables-table .ant-table-thead > tr > th,
+    .manage-tables-table .ant-table-tbody > tr > td {
+        padding: 6px 3px;
+        font-size: 10px;
+    }
+}

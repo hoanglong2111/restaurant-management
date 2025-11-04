@@ -1,0 +1,289 @@
+/* Navbar.css */
+
+/* Menu Button Styling - Mobile Only */
+.menu-button.mobile-only {
+  display: none;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.menu-button.mobile-only:hover {
+  background-color: #000000;
+  transform: scale(1.05);
+}
+
+.menu-button.mobile-only .anticon {
+  font-size: 20px;
+}
+
+/* Show menu button on mobile */
+@media (max-width: 768px) {
+  .menu-button.mobile-only {
+    display: flex;
+  }
+}
+
+/* Header Styling - STICKY cho mobile */
+.navbar-header {
+  background-color: #1a1a1a !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  height: 64px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Sticky Header - Chỉ mobile */
+@media (max-width: 768px) {
+  .navbar-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    width: 100% !important;
+  }
+
+  /* Thêm padding-top cho body để không bị che */
+  body {
+    padding-top: 64px !important;
+  }
+}
+
+/* Logo Styling */
+.logo {
+  flex-shrink: 0;
+}
+
+.logo a {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.logo a:hover {
+  color: #f0f0f0;
+}
+
+/* Desktop Menu Styling */
+.navbar-menu.desktop-menu {
+  flex: 1;
+  margin-left: 24px;
+  display: none; /* Ẩn mặc định */
+}
+
+/* Menu Item Text Color */
+.ant-menu-dark .ant-menu-item a {
+  color: #ffffff !important;
+}
+
+/* Navbar Actions (Right Side) */
+.navbar-actions.desktop-menu {
+  display: none; /* Ẩn mặc định */
+  align-items: center;
+}
+
+.navbar-actions.desktop-menu .ant-menu-item {
+  margin-left: 16px;
+}
+
+/* Hiển thị menu và actions chỉ trên desktop */
+@media (min-width: 769px) {
+  .navbar-menu.desktop-menu,
+  .navbar-actions.desktop-menu {
+    display: flex !important;
+  }
+}
+
+/* Drawer Menu Styling */
+.drawer-menu {
+  border-right: none !important;
+}
+
+.drawer-menu .ant-menu-item {
+  margin: 0;
+  padding: 16px 24px;
+  height: auto;
+  line-height: 1.5;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+  border-radius: 0;
+}
+
+.drawer-menu .ant-menu-item a {
+  color: #1a1a1a;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.drawer-menu .ant-menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+.drawer-menu .ant-menu-item-selected {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.drawer-menu .ant-menu-item-selected a {
+  color: #ffffff;
+}
+
+.drawer-menu .ant-menu-item-icon {
+  font-size: 18px;
+}
+
+.drawer-menu .ant-menu-item-divider {
+  margin: 8px 0;
+  background-color: #f0f0f0;
+}
+
+/* Mobile Drawer Styling */
+.mobile-drawer .ant-drawer-header {
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 24px;
+}
+
+.mobile-drawer .ant-drawer-title {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.mobile-drawer .ant-drawer-close {
+  color: #ffffff;
+}
+
+.mobile-drawer .ant-drawer-close:hover {
+  color: #d9d9d9;
+}
+
+.mobile-drawer .ant-drawer-body {
+  padding: 0;
+  background-color: #ffffff;
+}
+
+/* Drawer Header */
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  .navbar-header {
+    padding: 0 16px;
+  }
+
+  /* Ẩn hoàn toàn menu và actions trên mobile */
+  .navbar-menu.desktop-menu,
+  .navbar-actions.desktop-menu {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .logo a {
+    font-size: 18px;
+  }
+
+  .mobile-drawer {
+    width: 280px !important;
+  }
+
+  /* Đảm bảo header chỉ có logo và menu button */
+  .navbar-header {
+    justify-content: space-between;
+  }
+}
+
+/* Responsive - Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar-header {
+    padding: 0 20px;
+  }
+}
+
+/* Hide Menu Button on Desktop */
+@media (min-width: 769px) {
+  .menu-button.mobile-only {
+    display: none !important;
+  }
+}
+
+/* Ensure Links Have No Underlines */
+.ant-menu-item a {
+  text-decoration: none;
+}
+
+/* Admin Button */
+.navbar-actions .admin-button {
+    background: #1a1a1a;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.navbar-actions .admin-button:hover {
+    background: #ffffff;
+    color: #1a1a1a;
+    border-color: #1a1a1a;
+}
+
+/* Badge Styling */
+.ant-badge-count {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar Actions Spacing */
+.navbar-actions.desktop-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar-actions.desktop-menu > * {
+    cursor: pointer;
+}
+
+/* Avatar Styling */
+.navbar-actions .ant-avatar {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: 2px solid #ffffff;
+    transition: all 0.3s ease;
+}
+
+.navbar-actions .ant-avatar:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}

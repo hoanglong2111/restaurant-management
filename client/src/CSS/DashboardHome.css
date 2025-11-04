@@ -1,0 +1,348 @@
+/* Dashboard Home Container */
+.dashboard-home {
+    padding: 24px;
+    background: #fafafa;
+    min-height: calc(100vh - 64px);
+    padding-bottom: 100px; /* Space for mobile back button */
+}
+
+/* Mobile - Với sticky header */
+@media (max-width: 768px) {
+    .dashboard-home {
+        min-height: 100vh; /* Full height vì header sticky */
+    }
+}
+
+.dashboard-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+}
+
+/* Loading State */
+.dashboard-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+/* Statistics Cards */
+.stats-row {
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.stat-card .ant-statistic-title {
+    font-size: 14px;
+    color: #595959;
+    font-weight: 500;
+}
+
+.stat-card .ant-statistic-content {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.stat-card .anticon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+/* Charts Row */
+.charts-row {
+    margin-bottom: 24px;
+}
+
+.chart-card {
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    height: 100%;
+}
+
+.chart-card .ant-card-head {
+    border-bottom: 2px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.chart-card .ant-card-head-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.chart-card .ant-card-body {
+    padding: 20px;
+}
+
+/* Table Summary */
+.table-summary {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.summary-label {
+    font-size: 13px;
+    color: #595959;
+    font-weight: 500;
+}
+
+.summary-label.available {
+    color: #4caf50;
+}
+
+.summary-label.occupied {
+    color: #f44336;
+}
+
+.summary-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+/* Recharts Customization */
+.recharts-wrapper {
+    margin: 0 auto;
+}
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+    stroke: #f0f0f0;
+}
+
+.recharts-text {
+    fill: #595959;
+    font-size: 12px;
+}
+
+.recharts-legend-wrapper {
+    padding-top: 10px;
+}
+
+.recharts-legend-item-text {
+    color: #1a1a1a !important;
+    font-weight: 500;
+}
+
+.recharts-tooltip-wrapper {
+    outline: none;
+}
+
+.recharts-default-tooltip {
+    background: white !important;
+    border: 1px solid #f0f0f0 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    padding: 12px !important;
+}
+
+.recharts-tooltip-label {
+    color: #1a1a1a !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+}
+
+.recharts-tooltip-item {
+    color: #595959 !important;
+}
+
+/* Pie Chart Labels */
+.recharts-pie-label-text {
+    fill: #1a1a1a;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Bar Chart */
+.recharts-bar-rectangle {
+    transition: opacity 0.3s ease;
+}
+
+.recharts-bar-rectangle:hover {
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-home {
+        padding: 12px;
+        padding-bottom: 100px;
+    }
+
+    .dashboard-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+        padding-top: 8px;
+    }
+
+    .stats-row {
+        margin-bottom: 16px;
+    }
+
+    .stat-card {
+        margin-bottom: 12px;
+    }
+
+    .stat-card .ant-statistic-title {
+        font-size: 13px;
+    }
+
+    .stat-card .ant-statistic-content {
+        font-size: 18px;
+    }
+
+    .stat-card .anticon {
+        font-size: 18px;
+    }
+
+    .charts-row {
+        margin-bottom: 16px;
+    }
+
+    .chart-card {
+        margin-bottom: 16px;
+    }
+
+    .chart-card .ant-card-head-title {
+        font-size: 15px;
+    }
+
+    .chart-card .ant-card-body {
+        padding: 12px;
+    }
+
+    .table-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-top: 12px;
+        padding-top: 12px;
+    }
+
+    .summary-item {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .summary-label {
+        font-size: 12px;
+    }
+
+    .summary-value {
+        font-size: 18px;
+    }
+
+    .recharts-text {
+        font-size: 9px;
+    }
+
+    .recharts-pie-label-text {
+        font-size: 9px;
+    }
+
+    .recharts-legend-item-text {
+        font-size: 11px !important;
+    }
+
+    /* Smaller chart heights on mobile */
+    .chart-card .recharts-wrapper {
+        height: 250px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-title {
+        font-size: 20px;
+    }
+
+    .stat-card .ant-statistic-title {
+        font-size: 12px;
+    }
+
+    .stat-card .ant-statistic-content {
+        font-size: 18px;
+    }
+
+    .chart-card .ant-card-head-title {
+        font-size: 14px;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stat-card,
+.chart-card {
+    animation: fadeIn 0.5s ease;
+}
+
+.stats-row .ant-col:nth-child(1) .stat-card {
+    animation-delay: 0.1s;
+}
+
+.stats-row .ant-col:nth-child(2) .stat-card {
+    animation-delay: 0.2s;
+}
+
+.stats-row .ant-col:nth-child(3) .stat-card {
+    animation-delay: 0.3s;
+}
+
+.stats-row .ant-col:nth-child(4) .stat-card {
+    animation-delay: 0.4s;
+}
+
+/* Empty State */
+.dashboard-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #8c8c8c;
+}
+
+.dashboard-empty h3 {
+    font-size: 18px;
+    color: #595959;
+    margin-bottom: 8px;
+}
+
+.dashboard-empty p {
+    font-size: 14px;
+    color: #8c8c8c;
+}
+

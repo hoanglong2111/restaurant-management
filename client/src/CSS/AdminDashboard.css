@@ -1,0 +1,149 @@
+/* Admin Dashboard Layout */
+.admin-dashboard-layout {
+    min-height: calc(100vh - 64px);
+}
+
+.admin-sider {
+    background: #2f2f2f;
+    border-right: 1px solid #1a1a1a;
+}
+
+.admin-sider .ant-menu {
+    background: #2f2f2f;
+}
+
+.admin-sider .ant-menu-item {
+    margin: 4px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.admin-sider .ant-menu-item-selected {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.admin-sider .ant-menu-item-selected a {
+    color: #ffffff;
+}
+
+.admin-sider .ant-menu-item:hover {
+    background: #3f3f3f;
+}
+
+.admin-sider .ant-menu-item a {
+    color: #ffffff;
+}
+
+.admin-sider .ant-menu-item .anticon {
+    color: #ffffff;
+}
+
+.admin-content-layout {
+    padding: 0 24px 24px;
+    background: #fafafa;
+}
+
+.admin-content {
+    padding: 24px;
+    margin: 0;
+    min-height: 280px;
+    background: #fafafa;
+}
+
+/* Mobile Menu Button */
+.admin-mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 16px;
+    z-index: 998;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.admin-mobile-menu-btn:hover,
+.admin-mobile-menu-btn:focus {
+    background: #000000;
+    color: white;
+}
+
+/* Mobile Drawer */
+.admin-drawer .ant-drawer-header {
+    background: #1a1a1a;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-drawer .ant-drawer-title {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.admin-drawer .ant-drawer-close {
+    color: #ffffff;
+}
+
+.admin-drawer .ant-menu {
+    border-right: none;
+}
+
+.admin-drawer .ant-menu-item {
+    margin: 4px 0;
+    border-radius: 6px;
+}
+
+/* Desktop/Mobile Toggle */
+.desktop-only {
+    display: block;
+}
+
+.mobile-only {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-only {
+        display: inline-flex !important;
+    }
+
+    .admin-content-layout {
+        padding: 0 12px 12px;
+    }
+
+    .admin-content {
+        padding: 12px;
+        padding-top: 60px; /* Space for mobile menu button */
+    }
+
+    .admin-mobile-menu-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .admin-content-layout {
+        padding: 0 8px 8px;
+    }
+
+    .admin-content {
+        padding: 8px;
+        padding-top: 60px;
+    }
+
+    .admin-mobile-menu-btn {
+        top: 76px;
+        left: 12px;
+    }
+}
+

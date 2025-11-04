@@ -1,0 +1,212 @@
+/* client/src/CSS/ManageReservations.css */
+
+.manage-reservations-container {
+    background-color: #f0f2f5;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.manage-reservations-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333333;
+}
+
+.manage-reservations-actions {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.manage-reservations-select {
+    width: 120px;
+}
+
+.current-time {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.column-selector {
+    margin-bottom: 16px;
+}
+
+.column-selector .ant-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.manage-reservations-table {
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.manage-reservations-table thead {
+    background-color: #1890ff;
+    color: #ffffff;
+}
+
+.manage-reservations-table .ant-table-thead > tr > th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.manage-reservations-table .ant-table-tbody > tr > td {
+    text-align: center;
+}
+
+.status-pending {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.status-completed {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.action-button {
+    margin-right: 8px;
+}
+
+.edit-button {
+    color: #1890ff;
+}
+
+.delete-button {
+    color: #dc3545;
+}
+
+.manage-reservations-spin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.manage-reservations-alert {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .manage-reservations-container {
+        padding: 12px;
+        padding-bottom: 80px;
+    }
+
+    .manage-reservations-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .manage-reservations-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .manage-reservations-select {
+        width: 100px;
+    }
+
+    .current-time {
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        padding: 8px;
+        background: #f0f2f5;
+        border-radius: 4px;
+    }
+
+    .column-selector {
+        margin-bottom: 12px;
+    }
+
+    .column-selector strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+    }
+
+    .column-selector .ant-checkbox-group {
+        gap: 6px;
+    }
+
+    .column-selector .ant-checkbox-wrapper {
+        font-size: 12px;
+        margin: 0;
+    }
+
+    /* Table mobile - Scroll horizontal */
+    .manage-reservations-table {
+        overflow-x: auto;
+    }
+
+    .manage-reservations-table .ant-table {
+        min-width: 800px;
+        font-size: 12px;
+    }
+
+    .manage-reservations-table .ant-table-thead > tr > th {
+        padding: 8px 4px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .manage-reservations-table .ant-table-tbody > tr > td {
+        padding: 8px 4px;
+        font-size: 11px;
+    }
+
+    /* Compact buttons */
+    .manage-reservations-table .ant-btn-link {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    /* Status tags */
+    .status-pending,
+    .status-completed,
+    .status-cancelled {
+        font-size: 11px;
+    }
+
+    /* DatePicker mobile */
+    .manage-reservations-actions .ant-picker {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .manage-reservations-container {
+        padding: 8px;
+    }
+
+    .manage-reservations-title {
+        font-size: 18px;
+    }
+
+    .manage-reservations-table .ant-table {
+        font-size: 11px;
+    }
+
+    .manage-reservations-table .ant-table-thead > tr > th,
+    .manage-reservations-table .ant-table-tbody > tr > td {
+        padding: 6px 3px;
+        font-size: 10px;
+    }
+}

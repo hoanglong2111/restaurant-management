@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Authentication Token</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .info {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
+            margin-bottom: 20px;
+        }
+        .success {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-left: 4px solid #4CAF50;
+            margin-bottom: 20px;
+            display: none;
+        }
+        button {
+            background-color: #f44336;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #d32f2f;
+        }
+        .login-btn {
+            background-color: #2196F3;
+        }
+        .login-btn:hover {
+            background-color: #1976D2;
+        }
+        .token-info {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-left: 4px solid #ff9800;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Fix JWT Token Error</h1>
+        
+        <div class="info">
+            <strong>Problem:</strong> Your authentication token was signed with a different JWT_SECRET and is now invalid.
+        </div>
+
+        <div id="tokenInfo" class="token-info">
+            <strong>Current Token Status:</strong> <span id="tokenStatus">Checking...</span>
+        </div>
+
+        <div class="success" id="successMessage">
+            <strong>✓ Success!</strong> Token has been cleared. You can now login again.
+        </div>
+
+        <h3>Solution:</h3>
+        <ol>
+            <li>Click the button below to clear your old token</li>
+            <li>Go to the login page and login again</li>
+            <li>You'll get a new valid token</li>
+        </ol>
+
+        <button onclick="clearToken()">Clear Token</button>
+        <button class="login-btn" onclick="goToLogin()">Go to Login Page</button>
+    </div>
+
+    <script>
+        // Check if token exists
+        window.onload = function() {
+            const user = localStorage.getItem('currentUser');
+            const statusElement = document.getElementById('tokenStatus');
+            
+            if (user) {
+                try {
+                    const userData = JSON.parse(user);
+                    if (userData.token) {
+                        statusElement.innerHTML = '<span style="color: #f44336;">❌ Invalid token found</span>';
+                        statusElement.innerHTML += '<br><small>Token: ' + userData.token.substring(0, 50) + '...</small>';
+                    } else {
+                        statusElement.innerHTML = '<span style="color: #ff9800;">⚠️ User data found but no token</span>';
+                    }
+                } catch (e) {
+                    statusElement.innerHTML = '<span style="color: #f44336;">❌ Corrupted user data</span>';
+                }
+            } else {
+                statusElement.innerHTML = '<span style="color: #4CAF50;">✓ No token found (already cleared)</span>';
+            }
+        };
+
+        function clearToken() {
+            localStorage.removeItem('currentUser');
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('tokenStatus').innerHTML = '<span style="color: #4CAF50;">✓ Token cleared successfully!</span>';
+            console.log('Token cleared from localStorage');
+        }
+
+        function goToLogin() {
+            window.location.href = 'http://localhost:3000/login';
+        }
+    </script>
+</body>
+</html>
+

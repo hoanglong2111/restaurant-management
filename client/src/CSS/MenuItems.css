@@ -1,0 +1,523 @@
+/* Container chính */
+.menu-items {
+    background: #fafafa;
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* Mobile - Padding top cho sticky header */
+@media (max-width: 768px) {
+    .menu-items {
+        padding-top: 0; /* Header sticky sẽ tự động xử lý */
+    }
+}
+
+/* Banner Section */
+.menu-banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-image: url(../../public/TAN-GIA-BANG-POSTER-NHA-HANG-MIEN-PHI-848x480.jpg); /* Thay đường dẫn hình ảnh của bạn */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 40px;
+}
+
+.menu-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Overlay tối để chữ rõ hơn */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tiêu đề */
+.menu-title {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff; /* Chữ trắng để nổi bật trên banner */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Shadow để chữ rõ hơn */
+}
+
+/* Filter Section */
+.menu-filter-section {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin: 0 20px 32px 20px;
+    border: 1px solid #f0f0f0;
+}
+
+/* Menu Items Container */
+.menu-items-container {
+    padding: 0 20px 40px 20px;
+}
+
+/* Search và Select */
+.menu-items .ant-input-search {
+    border-radius: 6px;
+}
+
+.menu-items .ant-select-selector {
+    border-radius: 6px !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+}
+
+/* Card styling - Đồng đều và đẹp */
+.menu-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #f0f0f0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: #d9d9d9;
+}
+
+.menu-card .ant-card-cover {
+    overflow: hidden;
+    height: 240px;
+    background: #f5f5f5;
+}
+
+.menu-image {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.menu-card:hover .menu-image {
+    transform: scale(1.05);
+}
+
+/* Placeholder image */
+.menu-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+}
+
+.placeholder-icon {
+    font-size: 64px;
+    opacity: 0.3;
+}
+
+/* Card Body */
+.menu-card .ant-card-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-card .ant-card-meta-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.menu-card .ant-card-meta-description {
+    color: #666;
+}
+
+/* Card Info Container */
+.menu-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Price styling */
+.menu-price {
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* Category tag */
+.menu-category-tag {
+    display: inline-block;
+    background: #f5f5f5;
+    color: #595959;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    width: fit-content;
+}
+
+/* Availability status */
+.menu-availability {
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.menu-availability.in-stock {
+    color: #52c41a;
+}
+
+.menu-availability.out-of-stock {
+    color: #ff4d4f;
+}
+
+/* Card Actions */
+.menu-card .ant-card-actions {
+    background: #fafafa;
+    border-top: 1px solid #f0f0f0;
+}
+
+.menu-card .ant-card-actions > li {
+    margin: 8px 0;
+}
+
+.menu-card .ant-btn-link {
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+.menu-card .ant-btn-link:hover {
+    color: #1890ff;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-state h3 {
+    font-size: 20px;
+    color: #595959;
+    margin: 20px 0 10px;
+    font-weight: 500;
+}
+
+.empty-state p {
+    color: #8c8c8c;
+    font-size: 14px;
+}
+
+/* Modal styling */
+.menu-detail-modal .ant-modal-content {
+    border-radius: 8px;
+}
+
+.menu-detail-modal .ant-modal-body {
+    padding: 8px;
+}
+
+.menu-detail-modal .ant-modal-footer {
+    padding: 8px;
+}
+
+/* Modal Footer Custom Layout */
+.modal-footer-custom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 4px;
+}
+
+.modal-footer-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.modal-footer-row .ant-btn {
+    flex: 1;
+}
+
+.modal-footer-custom .ant-btn {
+    height: 40px;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+/* Mobile Modal Optimization */
+@media (max-width: 768px) {
+    .menu-detail-modal {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .menu-detail-modal .ant-modal {
+        max-width: calc(100vw - 24px) !important;
+        margin: 12px auto !important;
+    }
+
+    .menu-detail-modal .ant-modal-content {
+        border-radius: 10px;
+    }
+
+    .menu-detail-modal .ant-modal-body {
+        padding: 6px;
+        max-height: calc(100vh - 180px);
+        overflow-y: auto;
+    }
+
+    .menu-detail-modal .ant-modal-footer {
+        padding: 6px;
+    }
+
+    .modal-footer-custom {
+        gap: 6px;
+        padding: 2px;
+    }
+
+    .modal-footer-row {
+        gap: 6px;
+    }
+
+    .modal-footer-custom .ant-btn {
+        height: 38px;
+        font-size: 13px;
+    }
+}
+
+.menu-item-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 12px 8px 10px 8px;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+.menu-item-price {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 8px;
+}
+
+.menu-item-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 8px;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    margin: 10px 0;
+}
+
+.menu-item-category {
+    font-size: 13px;
+    color: #595959;
+}
+
+.menu-item-category strong {
+    color: #1a1a1a;
+}
+
+.menu-item-availability {
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.menu-item-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #595959;
+    margin: 10px 8px;
+    padding: 0;
+}
+
+/* Carousel in modal */
+.menu-detail-modal .ant-carousel {
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.menu-detail-modal .menu-image {
+    height: 350px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* Mobile - Smaller images */
+@media (max-width: 768px) {
+    .menu-detail-modal .menu-image {
+        height: 220px;
+    }
+
+    .menu-detail-modal .ant-carousel {
+        margin-bottom: 8px;
+    }
+}
+
+/* Reserve Modal */
+.reserve-modal .ant-modal-content {
+    border-radius: 8px;
+}
+
+.reserve-modal .ant-form-item-label > label {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+/* Mobile - Reserve Modal */
+@media (max-width: 768px) {
+    .reserve-modal {
+        max-width: calc(100vw - 32px) !important;
+        margin: 16px auto !important;
+    }
+
+    .reserve-modal .ant-modal-body {
+        padding: 16px;
+    }
+
+    .reserve-modal .ant-form-item {
+        margin-bottom: 16px;
+    }
+
+    .reserve-modal .ant-form-item-label > label {
+        font-size: 14px;
+    }
+
+    .reserve-modal .ant-btn {
+        height: 42px;
+    }
+}
+
+/* Confirmation Modal */
+.confirmation-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.confirmation-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    background: #fafafa;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
+}
+
+.confirmation-icon {
+    font-size: 20px;
+    color: #595959;
+    margin-top: 2px;
+}
+
+.confirmation-label {
+    font-size: 13px;
+    color: #8c8c8c;
+    margin-bottom: 4px;
+}
+
+.confirmation-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.confirmation-note {
+    padding: 16px;
+    background: #f0f0f0;
+    border-radius: 6px;
+    color: #595959;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #d9d9d9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .menu-banner {
+        height: 200px;
+    }
+
+    .menu-title {
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    .menu-filter-section {
+        padding: 16px;
+        margin: 0 16px 24px 16px;
+    }
+
+    .menu-card .ant-card-cover {
+        height: 200px;
+    }
+
+    .menu-image {
+        height: 200px;
+    }
+
+    .menu-item-name {
+        font-size: 18px;
+        margin: 8px 6px 6px 6px;
+    }
+
+    .menu-item-price {
+        font-size: 20px;
+        margin: 6px;
+    }
+
+    .menu-item-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 8px 6px;
+        margin: 8px 0;
+    }
+
+    .menu-item-category {
+        font-size: 12px;
+    }
+
+    .menu-item-availability {
+        font-size: 12px;
+    }
+
+    .menu-item-description {
+        font-size: 13px;
+        line-height: 1.5;
+        margin: 8px 6px;
+    }
+}
+
+/* Loading state */
+.menu-items .ant-spin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}

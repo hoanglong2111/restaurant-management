@@ -1,0 +1,119 @@
+/* ManageUsers Container */
+.manage-users-container {
+    background-color: #f0f2f5;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.manage-users-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333333;
+}
+
+.manage-users-table {
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.manage-users-table thead {
+    background-color: #1890ff;
+    color: #ffffff;
+}
+
+.manage-users-table .ant-table-thead > tr > th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.manage-users-table .ant-table-tbody > tr > td {
+    text-align: center;
+}
+
+.manage-users-spin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.manage-users-alert {
+    margin-bottom: 16px;
+}
+
+.action-button {
+    margin-right: 8px;
+}
+
+.delete-button {
+    color: #dc3545;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .manage-users-container {
+        padding: 12px;
+        padding-bottom: 80px;
+    }
+
+    .manage-users-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    /* Table mobile - Scroll horizontal */
+    .manage-users-table {
+        overflow-x: auto;
+    }
+
+    .manage-users-table .ant-table {
+        min-width: 600px;
+        font-size: 12px;
+    }
+
+    .manage-users-table .ant-table-thead > tr > th {
+        padding: 8px 4px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .manage-users-table .ant-table-tbody > tr > td {
+        padding: 8px 4px;
+        font-size: 11px;
+    }
+
+    /* Compact buttons */
+    .action-button {
+        margin-right: 4px;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    /* Tags smaller */
+    .manage-users-table .ant-tag {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+}
+
+@media (max-width: 576px) {
+    .manage-users-container {
+        padding: 8px;
+    }
+
+    .manage-users-title {
+        font-size: 18px;
+    }
+
+    .manage-users-table .ant-table {
+        font-size: 11px;
+    }
+
+    .manage-users-table .ant-table-thead > tr > th,
+    .manage-users-table .ant-table-tbody > tr > td {
+        padding: 6px 3px;
+        font-size: 10px;
+    }
+}
+

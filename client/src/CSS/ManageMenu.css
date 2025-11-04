@@ -1,0 +1,137 @@
+/* client/src/CSS/ManageMenu.css */
+
+.manage-menu-container {
+    background-color: #f0f2f5;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.manage-menu-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333333;
+}
+
+.add-menu-button {
+    margin-bottom: 16px;
+}
+
+.gradient-button {
+    background: linear-gradient(90deg, #1890ff, #40a9ff);
+    border: none;
+}
+
+.manage-menu-table {
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.manage-menu-table thead {
+    background-color: #1890ff;
+    color: #ffffff;
+}
+
+.manage-menu-table .ant-table-thead > tr > th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.manage-menu-table .ant-table-tbody > tr > td {
+    text-align: center;
+}
+
+.action-button {
+    margin-right: 8px;
+}
+
+.edit-button {
+    color: #1890ff;
+}
+
+.delete-button {
+    color: #ff4d4f;
+}
+
+.manage-menu-spin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.manage-menu-alert {
+    margin-bottom: 16px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .manage-menu-container {
+        padding: 12px;
+        padding-bottom: 80px;
+    }
+
+    .manage-menu-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .add-menu-button {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    /* Table mobile - Scroll horizontal */
+    .manage-menu-table {
+        overflow-x: auto;
+    }
+
+    .manage-menu-table .ant-table {
+        min-width: 600px; /* Force horizontal scroll */
+        font-size: 12px;
+    }
+
+    .manage-menu-table .ant-table-thead > tr > th {
+        padding: 8px 4px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .manage-menu-table .ant-table-tbody > tr > td {
+        padding: 8px 4px;
+        font-size: 11px;
+    }
+
+    /* Compact buttons */
+    .action-button {
+        margin-right: 4px;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    /* Image smaller */
+    .manage-menu-table img {
+        max-width: 40px;
+        max-height: 40px;
+    }
+}
+
+@media (max-width: 576px) {
+    .manage-menu-container {
+        padding: 8px;
+    }
+
+    .manage-menu-title {
+        font-size: 18px;
+    }
+
+    .manage-menu-table .ant-table {
+        font-size: 11px;
+    }
+
+    .manage-menu-table .ant-table-thead > tr > th,
+    .manage-menu-table .ant-table-tbody > tr > td {
+        padding: 6px 3px;
+        font-size: 10px;
+    }
+}

@@ -1,0 +1,57 @@
+/* Mobile Back Button */
+.mobile-back-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 24px;
+    height: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.mobile-back-button:hover,
+.mobile-back-button:focus {
+    background: #000000;
+    color: white;
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-back-button .anticon {
+    font-size: 16px;
+}
+
+/* Show only on mobile */
+@media (max-width: 768px) {
+    .mobile-back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+/* Animation */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.mobile-back-button {
+    animation: slideUp 0.3s ease;
+}
+

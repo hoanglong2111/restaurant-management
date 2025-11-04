@@ -1,0 +1,121 @@
+/* client/src/CSS/global.css - Global Styles */
+
+/* Reset và Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ant Design Customization */
+.ant-btn-primary {
+    background: #1a1a1a;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+    background: #000000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ant-btn {
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.ant-btn-default:hover {
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+/* Card Hover Effects */
+.ant-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modal Customization */
+.ant-modal-header {
+    border-radius: 16px 16px 0 0;
+}
+
+.ant-modal-content {
+    border-radius: 16px;
+}
+
+/* Input và Select Styling */
+.ant-input,
+.ant-input-number,
+.ant-picker {
+    border-radius: 6px;
+}
+
+.ant-input:focus,
+.ant-input-number:focus,
+.ant-picker:focus {
+    border-color: #1a1a1a;
+    box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1);
+}
+
+.ant-select-focused .ant-select-selector {
+    border-color: #1a1a1a !important;
+    box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.1) !important;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #bfbfbf;
+}
+
+/* Loading Spinner */
+.ant-spin-dot-item {
+    background-color: #1a1a1a;
+}
+
+/* Smooth Transitions */
+.smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.p-20 {
+    padding: 20px;
+}
