@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd client && npm install && npm run build",
-  "outputDirectory": "client/build",
-  "devCommand": "cd client && npm start",
-  "installCommand": "echo 'Skipping root install'"
-}
