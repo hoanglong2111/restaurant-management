@@ -25,13 +25,16 @@ function LoginScreen() {
     return (
         <div className="landing-wrapper login-page">
             <div className="hero">
-                <div className="form-card">
-                    <div className="brand">
-                        <img src="/logo192.png" alt="Cảnh Quan" className="brand-logo" />
-                        <h1 className="brand-title">Chào mừng đến với Cảnh Quan</h1>
-                        <p className="brand-subtitle">Quán ăn của mọi nhà — đặt món, đặt bàn, tận hưởng.</p>
-                    </div>
+                <div className="brand">
+                    <img src="/logo192.png" alt="Cảnh Quan" className="brand-logo" />
+                    <h1 className="brand-title">Chào mừng đến với Cảnh Quan</h1>
+                    <p className="brand-subtitle">Quán ăn của mọi nhà — đặt món, đặt bàn, tận hưởng.</p>
+                    <Link to="/register" className="cta-ghost">Tạo tài khoản mới</Link>
+                </div>
+            </div>
 
+            <div className="form-panel">
+                <div className="form-card">
                     <h2>Đăng Nhập</h2>
                     {error && <Alert className="alert-error" message="Lỗi" description={error} type="error" showIcon />}
                     <Form onFinish={onFinish} layout="vertical">
@@ -51,8 +54,6 @@ function LoginScreen() {
                     <div className="register-link">
                         Bạn chưa có tài khoản? <Link to="/register">Đăng Ký</Link>
                     </div>
-
-                    <Link to="/register" className="cta-ghost">Tạo tài khoản mới</Link>
                 </div>
             </div>
         </div>

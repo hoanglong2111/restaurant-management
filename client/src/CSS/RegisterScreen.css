@@ -1,14 +1,10 @@
-/* RegisterScreen.css - Landing Page Style */
+/* RegisterScreen.css - Responsive Landing Layout */
 
-/* Landing wrapper */
+/* Base landing wrapper */
 .landing-wrapper.register-page {
   display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
   animation: fadeIn 0.5s ease-out;
-  overflow: auto;
-  padding: 20px;
 }
 
 @keyframes fadeIn {
@@ -16,165 +12,128 @@
   to { opacity: 1; }
 }
 
-/* Hero background - fixed gradient (different color) */
-.landing-wrapper.register-page .hero {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
-  padding: 20px;
-  z-index: 1;
-}
-
-/* Form card - white card in center */
-.landing-wrapper.register-page .form-card {
-  position: relative;
-  z-index: 2;
-  background: white;
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 480px;
-  width: 100%;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
+/* =========================
+   DESKTOP LAYOUT (769px+)
+   ========================= */
+@media (min-width: 769px) {
+  .landing-wrapper.register-page {
+    align-items: stretch;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .landing-wrapper.register-page .hero {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
+    color: #fff;
+    padding: 48px;
+    order: 2; /* Swap: hero on right */
   }
-}
 
-/* Brand section inside form card */
-.landing-wrapper.register-page .brand {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.landing-wrapper.register-page .brand-logo {
-  width: 72px;
-  height: 72px;
-  border-radius: 16px;
-  margin: 0 auto 16px;
-  display: block;
-  animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-@keyframes bounceIn {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.landing-wrapper.register-page .brand-title {
-  font-size: 24px;
-  margin: 0 0 10px;
-  font-weight: 700;
-  color: #333;
-  animation: fadeInUp 0.6s ease-out 0.2s both;
-}
-
-.landing-wrapper.register-page .brand-subtitle {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 0;
-  line-height: 1.5;
-  animation: fadeInUp 0.6s ease-out 0.3s both;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  .landing-wrapper.register-page .hero .brand {
+    max-width: 520px;
+    text-align: center;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .landing-wrapper.register-page .brand-logo {
+    width: 88px;
+    height: 88px;
+    border-radius: 16px;
+    margin: 0 auto 18px;
+    display: block;
+    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
-}
 
-/* CTA button */
-.landing-wrapper.register-page .cta-ghost {
-  display: inline-block;
-  padding: 8px 16px;
-  margin-top: 24px;
-  border-radius: 999px;
-  background: #667eea;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  transition: all 0.3s;
-  animation: fadeInUp 0.6s ease-out 0.4s both;
-}
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
 
-.landing-wrapper.register-page .cta-ghost:hover {
-  background: #5568d3;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102,126,234,0.4);
-}
+  .landing-wrapper.register-page .brand-title {
+    font-size: 34px;
+    margin: 0 0 12px;
+    font-weight: 700;
+    color: #fff;
+  }
 
-/* Form title */
-.landing-wrapper.register-page .form-card h2 {
-  text-align: center;
-  margin-bottom: 24px;
-  color: #333333;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 22px;
-  font-weight: 600;
-  padding-top: 16px;
-  border-top: 1px solid #eee;
-}
+  .landing-wrapper.register-page .brand-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.95);
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
 
-/* Form inputs */
-.landing-wrapper.register-page .ant-input,
-.landing-wrapper.register-page .ant-input-password,
-.landing-wrapper.register-page .ant-input-affix-wrapper {
+  .landing-wrapper.register-page .cta-ghost {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .landing-wrapper.register-page .cta-ghost:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .landing-wrapper.register-page .form-panel {
+    flex: 0 0 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: #fff;
+    order: 1; /* Swap: form on left */
+  }
+
+  .landing-wrapper.register-page .form-card {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .landing-wrapper.register-page .form-card h2 {
+    text-align: center;
+    margin-bottom: 28px;
+    color: #333333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  /* Form inputs - desktop */
+  .landing-wrapper.register-page .ant-input,
+  .landing-wrapper.register-page .ant-input-password,
+  .landing-wrapper.register-page .ant-input-affix-wrapper {
     border-radius: 10px !important;
     border: 2px solid #e0e0e0 !important;
     padding: 12px 16px !important;
     font-size: 16px !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    background-color: #ffffff !important;
-}
+  }
 
-.landing-wrapper.register-page .ant-input-affix-wrapper {
+  .landing-wrapper.register-page .ant-input-affix-wrapper {
     padding: 0 !important;
-}
+  }
 
-.landing-wrapper.register-page .ant-input-affix-wrapper .ant-input {
+  .landing-wrapper.register-page .ant-input-affix-wrapper .ant-input {
     padding: 12px 16px !important;
     border: none !important;
-}
+  }
 
-.landing-wrapper.register-page .ant-input-password-icon {
-    color: #999;
-    margin-right: 12px;
-}
-
-.landing-wrapper.register-page .ant-input:focus,
-.landing-wrapper.register-page .ant-input-password:focus,
-.landing-wrapper.register-page .ant-input-affix-wrapper-focused {
+  .landing-wrapper.register-page .ant-input:focus,
+  .landing-wrapper.register-page .ant-input-affix-wrapper-focused {
     border-color: #667eea !important;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15) !important;
-}
+  }
 
-.landing-wrapper.register-page .ant-input-affix-wrapper-focused .ant-input-password-icon {
-    color: #667eea;
-}
-
-/* Submit button */
-.landing-wrapper.register-page .ant-btn-primary {
+  .landing-wrapper.register-page .ant-btn-primary {
     width: 100%;
     height: 48px;
     border-radius: 10px;
@@ -182,80 +141,181 @@
     border: none;
     font-weight: 600;
     font-size: 16px;
-    letter-spacing: 0.5px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
+  }
 
-.landing-wrapper.register-page .ant-btn-primary:hover {
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  .landing-wrapper.register-page .ant-btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  .landing-wrapper.register-page .login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 15px;
+    color: #666;
+  }
+
+  .landing-wrapper.register-page .login-link a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .landing-wrapper.register-page .login-link a:hover {
+    text-decoration: underline;
+  }
+
+  .landing-wrapper.register-page .ant-form-item {
+    margin-bottom: 18px;
+  }
 }
 
-/* Login link */
-.landing-wrapper.register-page .login-link {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #666;
-}
-
-.landing-wrapper.register-page .login-link a {
-  color: #667eea;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.landing-wrapper.register-page .login-link a:hover {
-  text-decoration: underline;
-}
-
-/* Alert */
-.landing-wrapper.register-page .alert-error {
-    margin-bottom: 20px;
-    border-radius: 10px;
-    background-color: #fff1f0;
-    border: 1px solid #ffccc7;
-}
-
-/* Mobile optimizations */
+/* =========================
+   MOBILE LAYOUT (≤768px)
+   ========================= */
 @media (max-width: 768px) {
   .landing-wrapper.register-page {
-    padding: 16px;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: auto;
+  }
+
+  .landing-wrapper.register-page .hero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
+    z-index: 1;
+  }
+
+  .landing-wrapper.register-page .hero .brand {
+    display: none;
+  }
+
+  .landing-wrapper.register-page .form-panel {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 480px;
   }
 
   .landing-wrapper.register-page .form-card {
-    padding: 32px 24px;
-    max-width: 100%;
+    background: white;
+    border-radius: 20px;
+    padding: 40px 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .landing-wrapper.register-page .brand-logo {
-    width: 60px;
-    height: 60px;
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .landing-wrapper.register-page .brand-title {
-    font-size: 20px;
+  /* Logo at top of card on mobile */
+  .landing-wrapper.register-page .form-card::before {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    background-image: url('/logo192.png');
+    background-size: cover;
+    border-radius: 14px;
+    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
-  .landing-wrapper.register-page .brand-subtitle {
-    font-size: 13px;
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
   }
 
   .landing-wrapper.register-page .form-card h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #333333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
   }
 
+  /* Form inputs - mobile */
   .landing-wrapper.register-page .ant-input,
+  .landing-wrapper.register-page .ant-input-password,
   .landing-wrapper.register-page .ant-input-affix-wrapper {
+    border-radius: 10px !important;
+    border: 2px solid #e0e0e0 !important;
     min-height: 48px !important;
-    font-size: 16px !important; /* Prevent iOS zoom */
+    padding: 14px 16px !important;
+    font-size: 16px !important;
+    transition: all 0.3s !important;
+  }
+
+  .landing-wrapper.register-page .ant-input-affix-wrapper {
+    padding: 0 !important;
+  }
+
+  .landing-wrapper.register-page .ant-input-affix-wrapper .ant-input {
+    padding: 14px 16px !important;
+    border: none !important;
+  }
+
+  .landing-wrapper.register-page .ant-input:focus,
+  .landing-wrapper.register-page .ant-input-affix-wrapper-focused {
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2) !important;
   }
 
   .landing-wrapper.register-page .ant-btn-primary {
-    height: 52px !important;
-    font-size: 17px !important;
+    width: 100%;
+    height: 52px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    font-weight: 600;
+    font-size: 17px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
   }
+
+  .landing-wrapper.register-page .login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .landing-wrapper.register-page .login-link a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .landing-wrapper.register-page .login-link a:hover {
+    text-decoration: underline;
+  }
+
+  .landing-wrapper.register-page .ant-form-item {
+    margin-bottom: 16px;
+  }
+}
+
+/* Alert styles */
+.landing-wrapper.register-page .alert-error {
+  margin-bottom: 20px;
+  border-radius: 10px;
 }

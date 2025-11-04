@@ -31,13 +31,16 @@ function RegisterScreen() {
     return (
         <div className="landing-wrapper register-page">
             <div className="hero hero-alt">
-                <div className="form-card">
-                    <div className="brand">
-                        <img src="/logo192.png" alt="Cảnh Quan" className="brand-logo" />
-                        <h1 className="brand-title">Tham gia Cảnh Quan</h1>
-                        <p className="brand-subtitle">Tạo tài khoản để nhận ưu đãi và quản lý đặt chỗ dễ dàng.</p>
-                    </div>
+                <div className="brand">
+                    <img src="/logo192.png" alt="Cảnh Quan" className="brand-logo" />
+                    <h1 className="brand-title">Tham gia Cảnh Quan</h1>
+                    <p className="brand-subtitle">Tạo tài khoản để nhận ưu đãi và quản lý đặt chỗ dễ dàng.</p>
+                    <Link to="/login" className="cta-ghost">Đăng nhập nếu đã có tài khoản</Link>
+                </div>
+            </div>
 
+            <div className="form-panel">
+                <div className="form-card">
                     <h2>Đăng Ký</h2>
                     {error && <Alert className="alert-error" message="Lỗi" description={error} type="error" showIcon />}
                     <Form onFinish={onFinish} layout="vertical">
@@ -61,8 +64,6 @@ function RegisterScreen() {
                     <div className="login-link">
                         Bạn đã có tài khoản? <Link to="/login">Đăng Nhập</Link>
                     </div>
-
-                    <Link to="/login" className="cta-ghost">Đăng nhập nếu đã có tài khoản</Link>
                 </div>
             </div>
         </div>
