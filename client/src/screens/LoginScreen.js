@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axiosInstance from '../components/axiosInstance';
 import { Form, Input, Button, Alert } from 'antd';
-import { useNavigate, Link } from 'react-router-dom'; // Added Link import
-import '../CSS/LoginScreen.css'; // Import the CSS file
+import { useNavigate, Link } from 'react-router-dom';
+import '../CSS/LoginScreen.css';
 
 function LoginScreen() {
     const [error, setError] = useState('');
@@ -23,25 +23,37 @@ function LoginScreen() {
     };
 
     return (
-        <div className="login-container">
-            <div className="login-form">
-                <h2>Đăng Nhập</h2>
-                {error && <Alert className="alert-error" message="Lỗi" description={error} type="error" showIcon />}
-                <Form onFinish={onFinish} layout="vertical">
-                    <Form.Item name="email" label="Email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
-                        <Input placeholder="Email" />
-                    </Form.Item>
-                    <Form.Item name="password" label="Mật Khẩu" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
-                        <Input.Password placeholder="Mật khẩu" />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Đăng Nhập
-                        </Button>
-                    </Form.Item>
-                </Form>
-                <div className="register-link">
-                    Bạn chưa có tài khoản? <Link to="/register">Đăng Ký</Link>
+        <div className="landing-wrapper">
+            <div className="hero">
+                <div className="brand">
+                    <img src="/logo192.png" alt="Cảnh Quan" className="brand-logo" />
+                    <h1 className="brand-title">Chào mừng đến với Cảnh Quan</h1>
+                    <p className="brand-subtitle">Quán ăn của mọi nhà — đặt món, đặt bàn, tận hưởng.</p>
+                    <Link to="/register" className="cta-ghost">Tạo tài khoản mới</Link>
+                </div>
+            </div>
+
+            <div className="form-panel">
+                <div className="form-card">
+                    <h2>Đăng Nhập</h2>
+                    {error && <Alert className="alert-error" message="Lỗi" description={error} type="error" showIcon />}
+                    <Form onFinish={onFinish} layout="vertical">
+                        <Form.Item name="email" label="Email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
+                            <Input placeholder="Email" />
+                        </Form.Item>
+                        <Form.Item name="password" label="Mật Khẩu" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                            <Input.Password placeholder="Mật khẩu" />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Đăng Nhập
+                            </Button>
+                        </Form.Item>
+                    </Form>
+
+                    <div className="register-link">
+                        Bạn chưa có tài khoản? <Link to="/register">Đăng Ký</Link>
+                    </div>
                 </div>
             </div>
         </div>
