@@ -41,6 +41,7 @@ function RegisterScreen() {
 
             <div className="form-panel">
                 <div className="form-card">
+                    <img src="/logo192.png" alt="Cảnh Quan" className="mobile-logo" />
                     <h2>Đăng Ký</h2>
                     {error && <Alert className="alert-error" message="Lỗi" description={error} type="error" showIcon />}
                     <Form onFinish={onFinish} layout="vertical">
