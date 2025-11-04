@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Reservations from './components/Reservations';
 import Tables from './components/Tables';
@@ -18,6 +18,63 @@ import ManageTables from './components/ManageTables';
 import CartScreen from './screens/CartScreen';
 import { logDeviceInfo } from './utils/deviceDetection';
 // ...other imports...
+
+// Component wrapper to conditionally show Navbar
+function AppContent({ currentUser, cart, removeFromCart, addToCart, clearCart }) {
+  const location = useLocation();
+  
+  // Hide Navbar on login and register pages
+  const hideNavbar = ['/login', '/register'].includes(location.pathname);
+
+  return (
+    <>
+      {!hideNavbar && <Navbar cart={cart} removeFromCart={removeFromCart} />}
+      <Routes>
+        {/* Redirect root to /menu if logged in, otherwise to /login */}
+        <Route path="/" element={
+          currentUser ? <Navigate to="/menu" replace /> : <Navigate to="/login" replace />
+        } />
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/register" element={<RegisterScreen />} />
+        <Route path="/reservations" element={
+          <PrivateRoute>
+            <Reservations />
+          </PrivateRoute>
+        } />
+        <Route path="/tables" element={
+          <PrivateRoute>
+            <Tables />
+          </PrivateRoute>
+        } />
+        <Route path="/menu" element={
+          <PrivateRoute>
+            <MenuItems addToCart={addToCart} />
+          </PrivateRoute>
+        } />
+        <Route path="/cart" element={<CartScreen cart={cart} removeFromCart={removeFromCart} clearCart={clearCart} />} />
+        <Route path="/profile" element={
+          <PrivateRoute>
+            <ProfileScreen />
+          </PrivateRoute>
+        } />
+        <Route path="/admin" element={
+          <PrivateRoute isAdmin={true}>
+            <AdminDashboard />
+          </PrivateRoute>
+        }>
+          <Route index element={<DashboardHome />} />
+          <Route path="menu" element={<ManageMenu />} />
+          <Route path="tables" element={<ManageTables />} />
+          <Route path="orders" element={<ManageOrders />} />
+          <Route path="reservations" element={<ManageReservations />} />
+          <Route path="users" element={<ManageUsers />} />
+        </Route>
+        {/* Redirect any unknown routes to root */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </>
+  );
+}
 
 function App() {
   const [currentUser, setCurrentUser] = useState(
@@ -74,50 +131,13 @@ function App() {
 
   return (
     <Router>
-      <Navbar cart={cart} removeFromCart={removeFromCart} />
-      <Routes>
-        {/* Redirect root to /menu if logged in, otherwise to /login */}
-        <Route path="/" element={
-          currentUser ? <Navigate to="/menu" replace /> : <Navigate to="/login" replace />
-        } />
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/register" element={<RegisterScreen />} />
-        <Route path="/reservations" element={
-          <PrivateRoute>
-            <Reservations />
-          </PrivateRoute>
-        } />
-        <Route path="/tables" element={
-          <PrivateRoute>
-            <Tables />
-          </PrivateRoute>
-        } />
-        <Route path="/menu" element={
-          <PrivateRoute>
-            <MenuItems addToCart={addToCart} />
-          </PrivateRoute>
-        } />
-        <Route path="/cart" element={<CartScreen cart={cart} removeFromCart={removeFromCart} clearCart={clearCart} />} />
-        <Route path="/profile" element={
-          <PrivateRoute>
-            <ProfileScreen />
-          </PrivateRoute>
-        } />
-        <Route path="/admin" element={
-          <PrivateRoute isAdmin={true}>
-            <AdminDashboard />
-          </PrivateRoute>
-        }>
-          <Route index element={<DashboardHome />} />
-          <Route path="menu" element={<ManageMenu />} />
-          <Route path="tables" element={<ManageTables />} />
-          <Route path="orders" element={<ManageOrders />} />
-          <Route path="reservations" element={<ManageReservations />} />
-          <Route path="users" element={<ManageUsers />} />
-        </Route>
-        {/* Redirect any unknown routes to root */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+      <AppContent 
+        currentUser={currentUser}
+        cart={cart}
+        removeFromCart={removeFromCart}
+        addToCart={addToCart}
+        clearCart={clearCart}
+      />
     </Router>
   );
 }
