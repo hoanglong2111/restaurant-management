@@ -404,6 +404,20 @@
   font-weight: 600;
 }
 
+/* Desktop default - prevent mobile styles bleeding */
+@media (min-width: 901px) {
+  .landing-wrapper.login-page .hero {
+    position: static;
+    overflow: visible;
+  }
+
+  .landing-wrapper.login-page .form-panel {
+    position: static;
+    overflow: visible;
+    flex: 0 0 450px;
+  }
+}
+
 /* Mobile: hero as full background with form inside */
 @media (max-width: 900px) {
 
