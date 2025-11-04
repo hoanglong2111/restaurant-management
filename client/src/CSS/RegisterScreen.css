@@ -377,56 +377,75 @@
   font-weight: 600;
 }
 
-/* Mobile: lock viewport, small hero on top, scrollable form */
+/* Mobile: hero as full background with form inside */
 @media (max-width: 900px) {
   .landing-wrapper.register-page {
     height: 100dvh;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
-    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .landing-wrapper.register-page .hero {
-    order: 1;
-    background: transparent;
-    flex: 0 0 28%;
-    min-height: auto;
-    padding: 24px 16px 8px;
-    justify-content: flex-end;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100dvh;
+    padding: 48px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .landing-wrapper.register-page .hero .brand {
+    margin-bottom: 32px;
+    flex-shrink: 0;
   }
 
   .landing-wrapper.register-page .form-panel {
-    order: 2;
-    flex: 1 1 auto;
+    position: static;
     width: 100%;
-    max-width: none;
-    padding: 16px;
+    max-width: 440px;
+    padding: 0;
     background: transparent;
     animation: none;
+    flex-shrink: 0;
+    margin-bottom: 24px;
   }
 
   .landing-wrapper.register-page .form-card {
     background: rgba(255,255,255,0.96);
-    border-radius: 16px;
-    padding: 24px 16px;
-    margin: 0 auto;
-    max-width: 480px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    border-radius: 20px;
+    padding: 28px 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
   }
 
-  .landing-wrapper.register-page .form-card form {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-right: 4px;
+  .landing-wrapper.register-page .brand-logo {
+    width: 72px;
+    height: 72px;
   }
 
-  .landing-wrapper.register-page .brand-title { font-size: 22px; border-right: none; }
-  .landing-wrapper.register-page .brand-subtitle { font-size: 14px; }
+  .landing-wrapper.register-page .brand-title { 
+    font-size: 24px;
+    border-right: none;
+    width: auto;
+    white-space: normal;
+  }
+
+  .landing-wrapper.register-page .brand-subtitle { 
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .landing-wrapper.register-page .cta-ghost {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
 }
 
 @keyframes typing {
