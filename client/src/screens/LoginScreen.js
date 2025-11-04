@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../components/axiosInstance';
 import { Form, Input, Button, Alert } from 'antd';
 import { useNavigate, Link } from 'react-router-dom'; // Added Link import
 import '../CSS/LoginScreen.css'; // Import the CSS file
@@ -10,7 +10,7 @@ function LoginScreen() {
 
     const onFinish = async (values) => {
         try {
-            const { data } = await axios.post('http://localhost:5000/api/users/login', values);
+            const { data } = await axiosInstance.post('/users/login', values);
             localStorage.setItem('currentUser', JSON.stringify(data));
 
             // Dispatch custom event to notify App.js
