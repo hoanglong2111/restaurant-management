@@ -202,7 +202,7 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                             size="large"
                             onSearch={handleSearch}
                             allowClear
-                            prefix={<SearchOutlined style={{ color: '#999' }} />}
+                            onChange={(e) => handleSearch(e.target.value)}
                         />
                     </Col>
                     <Col xs={24} sm={12} md={8}>
