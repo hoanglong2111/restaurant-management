@@ -16,6 +16,7 @@ import ManageReservations from './components/ManageReservations';
 import ManageUsers from './components/ManageUsers';
 import ManageTables from './components/ManageTables';
 import CartScreen from './screens/CartScreen';
+import { logDeviceInfo } from './utils/deviceDetection';
 // ...other imports...
 
 function App() {
@@ -23,6 +24,11 @@ function App() {
     JSON.parse(localStorage.getItem('currentUser'))
   );
   const [cart, setCart] = useState([]);
+
+  // Log device info on mount (for debugging mobile issues)
+  useEffect(() => {
+    logDeviceInfo();
+  }, []);
 
   // Listen for localStorage changes
   useEffect(() => {
