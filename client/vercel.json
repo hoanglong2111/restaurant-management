@@ -26,6 +26,7 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
+    
   ]
 }
 
