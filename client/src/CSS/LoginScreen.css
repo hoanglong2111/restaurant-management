@@ -252,19 +252,81 @@
   border-radius: 16px;
   margin: 0 auto 18px;
   display: block;
+  animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .brand-title {
   font-size: 34px;
   margin: 0 0 12px;
   font-weight: 700;
+  background: linear-gradient(90deg, #fff 0%, #ffe8a1 50%, #fff 100%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s ease-in-out infinite, typing 2s steps(30) 0.5s forwards;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid rgba(255,255,255,0.75);
+  width: 0;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Oval highlight background */
+.brand-title::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 255, 255, 0.15) 0%, 
+    rgba(255, 255, 255, 0.05) 40%,
+    transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
 }
 
 .brand-subtitle {
   font-size: 16px;
-  opacity: 0.95;
+  opacity: 0;
   margin-bottom: 18px;
   line-height: 1.5;
+  animation: fadeInUp 0.8s ease-out 2s forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 0.95;
+    transform: translateY(0);
+  }
 }
 
 .cta-ghost {
@@ -277,6 +339,8 @@
   font-weight: 600;
   border: 1px solid rgba(255,255,255,0.12);
   transition: all 0.3s;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 2.5s forwards;
 }
 
 .cta-ghost:hover {
@@ -319,28 +383,54 @@
   font-weight: 600;
 }
 
-/* Mobile: Form trên, Hero dưới */
+/* Mobile: Form TRONG hero */
 @media (max-width: 900px) {
   .landing-wrapper {
     flex-direction: column;
+    background: linear-gradient(135deg, rgba(246,211,101,1) 0%, rgba(253,160,133,1) 100%);
   }
 
   .hero {
-    order: 2;
-    padding: 36px 20px;
+    min-height: 100vh;
+    padding: 48px 20px;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 60px;
+  }
+  
+  .hero .brand {
+    margin-bottom: 40px;
   }
 
   .form-panel {
-    order: 1;
     width: 100%;
-    padding: 32px 20px;
+    max-width: 420px;
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    margin: 0 auto;
   }
 
   .brand-title {
-    font-size: 26px;
+    font-size: 28px;
+    white-space: normal;
+    border-right: none;
+    animation: mobileTyping 2s steps(30) 0.5s forwards, shimmer 3s ease-in-out infinite;
+  }
+  
+  @keyframes mobileTyping {
+    from { opacity: 0; }
+    to { opacity: 1; width: auto; }
   }
   
   .brand-subtitle {
     font-size: 15px;
+  }
+  
+  .cta-ghost {
+    margin-bottom: 24px;
   }
 }
