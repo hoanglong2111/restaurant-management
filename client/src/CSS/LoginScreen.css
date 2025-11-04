@@ -414,20 +414,18 @@
     right: 0;
     bottom: 0;
     min-height: 100dvh;
-    padding: max(env(safe-area-inset-top), 24px) 20px max(env(safe-area-inset-bottom), 20px);
+    padding: max(env(safe-area-inset-top), 20px) 20px max(env(safe-area-inset-bottom), 20px);
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, rgba(246,211,101,1) 0%, rgba(253,160,133,1) 100%);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
   }
 
   .landing-wrapper.login-page .hero .brand {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     flex-shrink: 0;
-    padding-top: 16px;
   }
 
   .landing-wrapper.login-page .form-panel {
@@ -437,8 +435,10 @@
     padding: 0;
     background: transparent;
     animation: none;
-    flex-shrink: 0;
-    margin-bottom: max(env(safe-area-inset-bottom), 24px);
+    flex-shrink: 1;
+    max-height: 60vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .landing-wrapper.login-page .form-card {
@@ -455,28 +455,28 @@
   }
 
   .landing-wrapper.login-page .brand-logo {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 12px;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
   }
 
   .landing-wrapper.login-page .brand-title {
-    font-size: 20px;
+    font-size: 19px;
     border-right: none;
     width: auto;
     white-space: normal;
     animation: shimmer 3s ease-in-out infinite;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .landing-wrapper.login-page .brand-subtitle { 
-    font-size: 13px;
-    margin-bottom: 10px;
+    font-size: 12px;
+    margin-bottom: 8px;
   }
 
   .landing-wrapper.login-page .cta-ghost {
-    font-size: 13px;
-    padding: 6px 14px;
+    font-size: 12px;
+    padding: 5px 12px;
   }
 
   .landing-wrapper.login-page .ant-form-item {
