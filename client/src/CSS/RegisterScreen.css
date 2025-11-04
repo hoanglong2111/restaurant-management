@@ -1,83 +1,216 @@
-/* RegisterScreen.css */
+/* RegisterScreen.css - Enhanced Mobile UX */
 
 .register-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
 }
 
 .register-form {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     max-width: 400px;
     width: 100%;
+    backdrop-filter: blur(10px);
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .register-form h2 {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
     color: #333333;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 .ant-form-item {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
-.ant-input,
-.ant-input-password {
-    border-radius: 8px;
+/* Enhanced Input Styles with Better Feedback */
+.register-form .ant-input,
+.register-form .ant-input-password,
+.register-form .ant-input-affix-wrapper {
+    border-radius: 10px !important;
+    border: 2px solid #e0e0e0 !important;
+    padding: 12px 16px !important;
+    font-size: 16px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background-color: #ffffff !important;
 }
 
-.ant-btn-primary {
+/* Focus State - Strong Visual Feedback */
+.register-form .ant-input:focus,
+.register-form .ant-input-password:focus,
+.register-form .ant-input-affix-wrapper-focused {
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15) !important;
+    transform: translateY(-2px);
+}
+
+/* Hover State */
+.register-form .ant-input:hover,
+.register-form .ant-input-password:hover,
+.register-form .ant-input-affix-wrapper:hover {
+    border-color: #667eea !important;
+}
+
+/* Label Styles */
+.register-form .ant-form-item-label > label {
+    font-weight: 500;
+    font-size: 15px;
+    color: #444;
+}
+
+/* Button Styles with Better Feedback */
+.register-form .ant-btn-primary {
     width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #ff7e5f;
-    border-color: #ff7e5f;
-    font-weight: bold;
-    transition: background-color 0.3s, border-color 0.3s;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-.ant-btn-primary:hover {
-    background-color: #feb47b;
-    border-color: #feb47b;
+.register-form .ant-btn-primary:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
-.alert-error {
-    margin-bottom: 16px;
-    border-radius: 8px;
-    background-color: #ffe6e6;
-    border: 1px solid #ffcccc;
+.register-form .ant-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
-/* New styles for the login link */
+/* Alert Styles */
+.register-form .alert-error,
+.register-form .alert-success {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    animation: shake 0.4s ease-in-out;
+}
 
+.register-form .alert-error {
+    background-color: #fff1f0;
+    border: 1px solid #ffccc7;
+}
+
+.register-form .alert-success {
+    background-color: #f6ffed;
+    border: 1px solid #b7eb8f;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Login Link */
 .login-link {
     text-align: center;
-    margin-top: 16px;
-    font-size: 14px;
+    margin-top: 24px;
+    font-size: 15px;
+    color: #666;
 }
 
 .login-link a {
-    color: #1890ff; /* Ant Design primary color */
+    color: #667eea;
     text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
 }
 
 .login-link a:hover {
+    color: #764ba2;
     text-decoration: underline;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .register-container {
+        padding: 16px;
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+
+    .register-form {
+        padding: 32px 24px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .register-form h2 {
+        font-size: 26px;
+        margin-bottom: 28px;
+    }
+
+    /* Better touch targets */
+    .register-form .ant-input,
+    .register-form .ant-input-password,
+    .register-form .ant-input-affix-wrapper {
+        min-height: 48px !important;
+        padding: 14px 16px !important;
+        font-size: 16px !important; /* Prevent iOS zoom */
+    }
+
+    .register-form .ant-btn-primary {
+        height: 52px;
+        font-size: 17px;
+    }
+
+    /* Enhanced focus feedback on mobile */
+    .register-form .ant-input:focus,
+    .register-form .ant-input-password:focus,
+    .register-form .ant-input-affix-wrapper-focused {
+        box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2) !important;
+        transform: scale(1.02);
+    }
 }
 
 @media (max-width: 480px) {
     .register-form {
-        padding: 20px;
+        padding: 28px 20px;
     }
 
     .register-form h2 {
         font-size: 24px;
     }
+}
+
+/* Password input icon color */
+.register-form .ant-input-password-icon {
+    color: #999;
+    transition: color 0.3s;
+}
+
+.register-form .ant-input-affix-wrapper-focused .ant-input-password-icon {
+    color: #667eea;
+}
+
+/* Loading state */
+.register-form .ant-btn-loading {
+    opacity: 0.7;
 }
