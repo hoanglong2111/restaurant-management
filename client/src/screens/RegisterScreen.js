@@ -29,7 +29,7 @@ function RegisterScreen() {
     };
 
     return (
-        <div className="landing-wrapper">
+        <div className="landing-wrapper register-page">
             <div className="hero hero-alt">
                 <div className="brand">
                     <img src="/logo192.png" alt="Cảnh Quan" className="brand-logo" />

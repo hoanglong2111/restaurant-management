@@ -23,7 +23,7 @@ function LoginScreen() {
     };
 
     return (
-        <div className="landing-wrapper">
+        <div className="landing-wrapper login-page">
             <div className="hero">
                 <div className="brand">
                     <img src="/logo192.png" alt="Cảnh Quan" className="brand-logo" />
