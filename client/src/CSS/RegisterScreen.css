@@ -439,7 +439,8 @@
     justify-content: flex-start;
     align-items: center;
     background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
-    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .landing-wrapper.register-page .hero .brand {
@@ -455,11 +456,8 @@
     padding: 0;
     background: transparent;
     animation: none;
-    flex: 1 1 auto;
-    display: flex;
-    align-items: flex-start;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+    margin-bottom: 20px;
   }
 
   .landing-wrapper.register-page .form-card {
