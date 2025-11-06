@@ -26,7 +26,7 @@ function LoginScreen() {
         <div className="landing-wrapper login-page">
             <div className="hero">
                 <div className="brand">
-                    <img src="/logo192.png" alt="Cảnh Quan" className="brand-logo" />
+                    <img src='%PUBLIC_URL%/logo192.png' alt="Cảnh Quan" className="brand-logo" />
                     <h1 className="brand-title">Chào mừng đến với Cảnh Quan</h1>
                     <p className="brand-subtitle">Quán ăn của mọi nhà — đặt món, đặt bàn, tận hưởng.</p>
                     <Link to="/register" className="cta-ghost">Tạo tài khoản mới</Link>
@@ -35,7 +35,7 @@ function LoginScreen() {
 
             <div className="form-panel">
                 <div className="form-card">
-                    <img src="/logo192.png" alt="Cảnh Quan" className="mobile-logo" />
+                    <img src="%PUBLIC_URL%/logo192.png" alt="Cảnh Quan" className="mobile-logo" />
                     <h2>Đăng Nhập</h2>
                     {error && <Alert className="alert-error" message="Lỗi" description={error} type="error" showIcon />}
                     <Form onFinish={onFinish} layout="vertical">
