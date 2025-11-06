@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import Navbar from './components/Navbar';
 import Reservations from './components/Reservations';
 import Tables from './components/Tables';
@@ -132,15 +133,23 @@ function App() {
   };
 
   return (
-    <Router>
-      <AppContent 
-        currentUser={currentUser}
-        cart={cart}
-        removeFromCart={removeFromCart}
-        addToCart={addToCart}
-        clearCart={clearCart}
-      />
-    </Router>
+    <PayPalScriptProvider
+      options={{
+        clientId: "AULTM5n6VFmcrUr5_J8V3vUjghjXqeqJfCG4_l11cgt5TSQa0SvdnLjSoysFG6t1tp3YIJrMwV7LOlVc",
+        currency: "USD",
+        intent: "capture",
+      }}
+    >
+      <Router>
+        <AppContent 
+          currentUser={currentUser}
+          cart={cart}
+          removeFromCart={removeFromCart}
+          addToCart={addToCart}
+          clearCart={clearCart}
+        />
+      </Router>
+    </PayPalScriptProvider>
   );
 }
 

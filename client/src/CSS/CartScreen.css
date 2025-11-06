@@ -131,12 +131,9 @@
     margin-bottom: 0;
 }
 
-.vnpay-button:hover {
-    background: #006699 !important;
-}
-
-.zalopay-button:hover {
-    background: #0055CC !important;
+.paypal-button-container {
+    width: 100%;
+    margin-top: 8px;
 }
 
 /* Mobile Responsive */

@@ -115,4 +115,43 @@ router.post('/stripe', protect, async (req, res) => {
     }
 });
 
+// PayPal Payment Route
+router.post('/paypal', protect, async (req, res) => {
+    try {
+        const { orderID, paymentDetails, orderItems, totalPrice } = req.body;
+
+        // Verify payment was successful
+        if (paymentDetails.status === 'COMPLETED') {
+            // Create a New Order
+            const order = new Order({
+                user: req.user._id,
+                orderItems: orderItems.map(item => ({
+                    menuItem: item.menuItem,
+                    quantity: item.quantity,
+                    price: item.price
+                })),
+                paymentMethod: 'PayPal',
+                totalPrice,
+                isPaid: true,
+                paidAt: Date.now(),
+                status: 'confirmed',
+                paymentResult: {
+                    id: orderID,
+                    status: paymentDetails.status,
+                    update_time: paymentDetails.update_time,
+                    email_address: paymentDetails.payer.email_address,
+                },
+            });
+
+            const createdOrder = await order.save();
+            res.json({ success: true, order: createdOrder });
+        } else {
+            res.json({ success: false, message: 'Thanh toán PayPal không thành công.' });
+        }
+    } catch (error) {
+        console.error('PayPal Payment Error:', error);
+        res.status(400).json({ message: error.message });
+    }
+});
+
 module.exports = router;

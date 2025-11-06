@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Alert } from 'antd';
 import { FaCcVisa, FaCcMastercard } from 'react-icons/fa';
 import StripeCheckout from 'react-stripe-checkout';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 import axiosInstance from '../components/axiosInstance';
 import MobileBackButton from '../components/MobileBackButton';
 import '../CSS/CartScreen.css';
@@ -12,6 +13,7 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
     const [error] = useState('');
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const totalUSD = (totalPrice / 25000).toFixed(2); // Convert VND to USD (1 USD ≈ 25,000 VND)
 
     const handleToken = async (token) => {
         setLoading(true);
@@ -48,6 +50,58 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
 
     const handleCheckout = () => {
         // StripeCheckout handles the checkout process
+    };
+
+    // PayPal handlers
+    const createPayPalOrder = (data, actions) => {
+        return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    currency_code: "USD",
+                    value: totalUSD,
+                },
+                description: "Restaurant Order Payment",
+            }],
+        });
+    };
+
+    const onPayPalApprove = async (data, actions) => {
+        try {
+            const details = await actions.order.capture();
+            
+            // Send order to backend
+            const response = await axiosInstance.post('/orders/paypal', {
+                orderID: details.id,
+                paymentDetails: details,
+                orderItems: cart.map(item => ({
+                    menuItem: item._id,
+                    quantity: item.quantity,
+                    price: item.price
+                })),
+                totalPrice: totalPrice,
+            });
+
+            if (response.data.success) {
+                clearCart();
+                Modal.success({
+                    title: 'Thanh Toán Thành Công',
+                    content: 'Giao dịch PayPal của bạn đã được xử lý thành công.',
+                });
+            }
+        } catch (err) {
+            Modal.error({
+                title: 'Thanh Toán Thất Bại',
+                content: err.response?.data?.message || 'Có lỗi xảy ra',
+            });
+        }
+    };
+
+    const onPayPalError = (err) => {
+        Modal.error({
+            title: 'Lỗi PayPal',
+            content: 'Có lỗi xảy ra trong quá trình thanh toán.',
+        });
+        console.error('PayPal Error:', err);
     };
 
     return (
@@ -103,7 +157,14 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
                                 </Button>
                             </StripeCheckout>
 
-                            {/* PayPal sẽ được thêm vào đây */}
+                            <div className="paypal-button-container">
+                                <PayPalButtons
+                                    style={{ layout: "vertical", color: "blue", shape: "rect", label: "pay" }}
+                                    createOrder={createPayPalOrder}
+                                    onApprove={onPayPalApprove}
+                                    onError={onPayPalError}
+                                />
+                            </div>
                         </div>
                     </>
                 )}

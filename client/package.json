@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
+    "@paypal/react-paypal-js": "^8.9.2",
     "antd": "^5.22.5",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
