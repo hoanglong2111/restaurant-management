@@ -115,19 +115,40 @@
     border-radius: 8px;
 }
 
-.checkout-button {
+.stripe-button {
     width: 100%;
     height: 48px;
     font-size: 16px;
     font-weight: 600;
-    background: #1a1a1a;
+    background: #635bff;
     border: none;
-    margin-bottom: 12px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stripe-button:hover {
+    background: #5148e5 !important;
+    opacity: 0.95;
+}
+
+.checkout-button {
+    width: 100%;
+    height: 45px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #000000;
+    border: none;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .checkout-button:hover {
-    background: #000000;
-    opacity: 0.9;
+    background: #1a1a1a !important;
+    opacity: 0.95;
 }
 
 .payment-buttons {
@@ -137,13 +158,35 @@
     width: 100%;
 }
 
-.payment-buttons .checkout-button {
-    margin-bottom: 0;
-}
-
 .paypal-button-container {
     width: 100%;
-    margin-top: 8px;
+    min-height: 48px;
+}
+
+/* Fix PayPal iframe issues */
+.paypal-button-container iframe {
+    max-width: 100% !important;
+    height: 150px !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.cod-button {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #52c41a;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cod-button:hover {
+    background: #49aa16 !important;
+    color: white !important;
+    opacity: 0.95;
 }
 
 /* Mobile Responsive */
@@ -201,8 +244,9 @@
         padding: 16px;
     }
 
-    .checkout-button {
-        height: 44px;
+    .checkout-button,
+    .stripe-button {
+        height: 45px;
         font-size: 15px;
     }
 }

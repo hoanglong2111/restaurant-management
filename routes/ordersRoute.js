@@ -170,4 +170,36 @@ router.post('/paypal', protect, async (req, res) => {
     }
 });
 
+// Cash on Delivery (COD) Route
+router.post('/cod', protect, async (req, res) => {
+    try {
+        const { orderItems, totalPrice } = req.body;
+
+        // Validate Required Fields
+        if (!orderItems || !Array.isArray(orderItems) || orderItems.length === 0) {
+            return res.status(400).json({ message: 'Vui lòng cung cấp thông tin đơn hàng.' });
+        }
+
+        // Create Order with pending status
+        const order = new Order({
+            user: req.user._id,
+            orderItems: orderItems.map(item => ({
+                menuItem: item.menuItem,
+                quantity: item.quantity,
+                price: item.price
+            })),
+            paymentMethod: 'Cash',
+            totalPrice,
+            isPaid: false,
+            status: 'pending', // Đơn hàng chờ xác nhận
+        });
+
+        const createdOrder = await order.save();
+        res.json({ success: true, order: createdOrder });
+    } catch (error) {
+        console.error('COD Order Error:', error);
+        res.status(400).json({ message: error.message });
+    }
+});
+
 module.exports = router;

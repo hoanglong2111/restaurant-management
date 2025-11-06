@@ -37,47 +37,63 @@ function Navbar({ cart, removeFromCart }) {
     window.location.href = '/login';
   };
 
-  const userMenu = (
-    <Menu>
-      <Menu.Item key="profile">
-        <Link to="/profile">Hồ Sơ Cá Nhân</Link>
-      </Menu.Item>
-      <Menu.Item key="reservations">
-        <Link to="/reservations">Đặt Chỗ</Link>
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="logout" onClick={handleLogout}>
-        Đăng Xuất
-      </Menu.Item>
-    </Menu>
-  );
+  const userMenuItems = [
+    {
+      key: 'profile',
+      label: <Link to="/profile">Hồ Sơ Cá Nhân</Link>,
+    },
+    {
+      key: 'myorders',
+      label: <Link to="/myorders">Đơn Hàng Của Tôi</Link>,
+    },
+    {
+      key: 'reservations',
+      label: <Link to="/reservations">Đặt Chỗ</Link>,
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'logout',
+      label: 'Đăng Xuất',
+      onClick: handleLogout,
+    },
+  ];
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  const cartDropdown = (
-    <div style={{ padding: '10px', maxWidth: '300px' }}>
-      <h4>Giỏ Hàng</h4>
-      {cart.length > 0 ? (
-        <>
-          {cart.map((item) => (
-            <div key={item._id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span>{item.name} x {item.quantity}</span>
-              <Button type="link" danger onClick={() => removeFromCart(item._id)}>
-                Bỏ
-              </Button>
-            </div>
-          ))}
-          <Link to="/cart">
-            <Button type="primary" block>
-              Thanh Toán
-            </Button>
-          </Link>
-        </>
-      ) : (
-        <p>Giỏ hàng của bạn đang trống.</p>
-      )}
-    </div>
-  );
+  const cartDropdown = cart.length > 0 ? [
+    ...cart.map((item) => ({
+      key: item._id,
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '250px' }}>
+          <span>{item.name} x {item.quantity}</span>
+          <Button type="link" danger size="small" onClick={() => removeFromCart(item._id)}>
+            Bỏ
+          </Button>
+        </div>
+      ),
+    })),
+    {
+      type: 'divider',
+    },
+    {
+      key: 'checkout',
+      label: (
+        <Link to="/cart">
+          <Button type="primary" block>
+            Thanh Toán
+          </Button>
+        </Link>
+      ),
+    },
+  ] : [
+    {
+      key: 'empty',
+      label: 'Giỏ hàng của bạn đang trống.',
+      disabled: true,
+    },
+  ];
 
   return (
     <Layout>
@@ -85,24 +101,33 @@ function Navbar({ cart, removeFromCart }) {
         <div className="logo">
           <Link to="/">Cảnh Quan</Link>
         </div>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[selectedKey()]} className="navbar-menu desktop-menu">
-          <Menu.Item key="/menu">
-            <Link to="/menu">Thực Đơn</Link>
-          </Menu.Item>
-          <Menu.Item key="/reservations">
-            <Link to="/reservations">Đặt Chỗ</Link>
-          </Menu.Item>
-          <Menu.Item key="/tables">
-            <Link to="/tables">Bàn</Link>
-          </Menu.Item>
-        </Menu>
+        <Menu 
+          theme="dark" 
+          mode="horizontal" 
+          defaultSelectedKeys={[selectedKey()]} 
+          className="navbar-menu desktop-menu"
+          items={[
+            {
+              key: '/menu',
+              label: <Link to="/menu">Thực Đơn</Link>,
+            },
+            {
+              key: '/reservations',
+              label: <Link to="/reservations">Đặt Chỗ</Link>,
+            },
+            {
+              key: '/tables',
+              label: <Link to="/tables">Bàn</Link>,
+            },
+          ]}
+        />
         <div className="navbar-actions desktop-menu">
-          <Dropdown overlay={cartDropdown} trigger={['click']} placement="bottomRight">
+          <Dropdown menu={{ items: cartDropdown }} trigger={['click']} placement="bottomRight">
             <Badge count={totalItems} offset={[-5, 5]}>
               <ShoppingCartOutlined style={{ fontSize: '18px', color: '#ffffff', cursor: 'pointer' }} />
             </Badge>
           </Dropdown>
-          <Dropdown overlay={userMenu}>
+          <Dropdown menu={{ items: userMenuItems }}>
             <Avatar icon={<UserOutlined />} style={{ cursor: 'pointer' }} />
           </Dropdown>
           {currentUser.isAdmin && (
@@ -132,50 +157,97 @@ function Navbar({ cart, removeFromCart }) {
           </div>
         }
       >
-        <Menu mode="inline" selectedKeys={[selectedKey()]} className="drawer-menu">
-          <Menu.Item key="/menu" icon={<span>🍽️</span>}>
-            <Link to="/menu" onClick={onClose}>Thực Đơn</Link>
-          </Menu.Item>
-          <Menu.Item key="/reservations" icon={<span>📅</span>}>
-            <Link to="/reservations" onClick={onClose}>Đặt Chỗ</Link>
-          </Menu.Item>
-          <Menu.Item key="/tables" icon={<span>🪑</span>}>
-            <Link to="/tables" onClick={onClose}>Bàn</Link>
-          </Menu.Item>
-
-          <Menu.Divider />
-
-          {currentUser.name ? (
-            <>
-              <Menu.Item key="/cart" icon={<ShoppingCartOutlined />}>
-                <Link to="/cart" onClick={onClose}>
-                  Giỏ Hàng {totalItems > 0 && <Badge count={totalItems} style={{ marginLeft: '8px' }} />}
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="/profile" icon={<UserOutlined />}>
-                <Link to="/profile" onClick={onClose}>Hồ Sơ</Link>
-              </Menu.Item>
-              {currentUser.isAdmin && (
-                <Menu.Item key="/admin" icon={<span>⚙️</span>}>
-                  <Link to="/admin" onClick={onClose}>Quản Trị</Link>
-                </Menu.Item>
-              )}
-              <Menu.Divider />
-              <Menu.Item key="logout" icon={<span>🚪</span>} onClick={handleLogout}>
-                Đăng Xuất
-              </Menu.Item>
-            </>
-          ) : (
-            <>
-              <Menu.Item key="/login" icon={<span>🔑</span>}>
-                <Link to="/login" onClick={onClose}>Đăng Nhập</Link>
-              </Menu.Item>
-              <Menu.Item key="/register" icon={<span>📝</span>}>
-                <Link to="/register" onClick={onClose}>Đăng Ký</Link>
-              </Menu.Item>
-            </>
-          )}
-        </Menu>
+        <Menu 
+          mode="inline" 
+          selectedKeys={[selectedKey()]} 
+          className="drawer-menu"
+          items={
+            currentUser.name ? [
+              {
+                key: '/menu',
+                icon: <span>🍽️</span>,
+                label: <Link to="/menu" onClick={onClose}>Thực Đơn</Link>,
+              },
+              {
+                key: '/reservations',
+                icon: <span>📅</span>,
+                label: <Link to="/reservations" onClick={onClose}>Đặt Chỗ</Link>,
+              },
+              {
+                key: '/tables',
+                icon: <span>🪑</span>,
+                label: <Link to="/tables" onClick={onClose}>Bàn</Link>,
+              },
+              {
+                type: 'divider',
+              },
+              {
+                key: '/cart',
+                icon: <ShoppingCartOutlined />,
+                label: (
+                  <Link to="/cart" onClick={onClose}>
+                    Giỏ Hàng {totalItems > 0 && <Badge count={totalItems} style={{ marginLeft: '8px' }} />}
+                  </Link>
+                ),
+              },
+              {
+                key: '/myorders',
+                icon: <span>📦</span>,
+                label: <Link to="/myorders" onClick={onClose}>Đơn Hàng Của Tôi</Link>,
+              },
+              {
+                key: '/profile',
+                icon: <UserOutlined />,
+                label: <Link to="/profile" onClick={onClose}>Hồ Sơ</Link>,
+              },
+              ...(currentUser.isAdmin ? [
+                {
+                  key: '/admin',
+                  icon: <span>⚙️</span>,
+                  label: <Link to="/admin" onClick={onClose}>Quản Trị</Link>,
+                },
+              ] : []),
+              {
+                type: 'divider',
+              },
+              {
+                key: 'logout',
+                icon: <span>🚪</span>,
+                label: 'Đăng Xuất',
+                onClick: handleLogout,
+              },
+            ] : [
+              {
+                key: '/menu',
+                icon: <span>🍽️</span>,
+                label: <Link to="/menu" onClick={onClose}>Thực Đơn</Link>,
+              },
+              {
+                key: '/reservations',
+                icon: <span>📅</span>,
+                label: <Link to="/reservations" onClick={onClose}>Đặt Chỗ</Link>,
+              },
+              {
+                key: '/tables',
+                icon: <span>🪑</span>,
+                label: <Link to="/tables" onClick={onClose}>Bàn</Link>,
+              },
+              {
+                type: 'divider',
+              },
+              {
+                key: '/login',
+                icon: <span>🔑</span>,
+                label: <Link to="/login" onClick={onClose}>Đăng Nhập</Link>,
+              },
+              {
+                key: '/register',
+                icon: <span>📝</span>,
+                label: <Link to="/register" onClick={onClose}>Đăng Ký</Link>,
+              },
+            ]
+          }
+        />
       </Drawer>
     </Layout>
   );

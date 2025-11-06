@@ -18,38 +18,49 @@ function AdminDashboard() {
     setDrawerVisible(false);
   };
 
-  const menuItems = (
-    <Menu
-      mode="inline"
-      style={{ height: '100%', borderRight: 0 }}
-      onClick={closeDrawer}
-    >
-      <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
-        <Link to="/admin">Dashboard</Link>
-      </Menu.Item>
-      <Menu.Item key="menu" icon={<AppstoreOutlined />}>
-        <Link to="menu">Quản Lý Thực Đơn</Link>
-      </Menu.Item>
-      <Menu.Item key="tables" icon={<TableOutlined />}>
-        <Link to="tables">Quản Lý Bàn</Link>
-      </Menu.Item>
-      <Menu.Item key="orders" icon={<ShoppingOutlined />}>
-        <Link to="orders">Quản Lý Đơn Hàng</Link>
-      </Menu.Item>
-      <Menu.Item key="reservations" icon={<CalendarOutlined />}>
-        <Link to="reservations">Quản Lý Đặt Chỗ</Link>
-      </Menu.Item>
-      <Menu.Item key="users" icon={<UserOutlined />}>
-        <Link to="users">Quản Lý Người Dùng</Link>
-      </Menu.Item>
-    </Menu>
-  );
+  const menuItems = [
+    {
+      key: 'dashboard',
+      icon: <DashboardOutlined />,
+      label: <Link to="/admin">Dashboard</Link>,
+    },
+    {
+      key: 'menu',
+      icon: <AppstoreOutlined />,
+      label: <Link to="menu">Quản Lý Thực Đơn</Link>,
+    },
+    {
+      key: 'tables',
+      icon: <TableOutlined />,
+      label: <Link to="tables">Quản Lý Bàn</Link>,
+    },
+    {
+      key: 'orders',
+      icon: <ShoppingOutlined />,
+      label: <Link to="orders">Quản Lý Đơn Hàng</Link>,
+    },
+    {
+      key: 'reservations',
+      icon: <CalendarOutlined />,
+      label: <Link to="reservations">Quản Lý Đặt Chỗ</Link>,
+    },
+    {
+      key: 'users',
+      icon: <UserOutlined />,
+      label: <Link to="users">Quản Lý Người Dùng</Link>,
+    },
+  ];
 
   return (
     <Layout className="admin-dashboard-layout">
       {/* Desktop Sider */}
       <Sider width={200} className="admin-sider desktop-only">
-        {menuItems}
+        <Menu
+          mode="inline"
+          style={{ height: '100%', borderRight: 0 }}
+          onClick={closeDrawer}
+          items={menuItems}
+        />
       </Sider>
 
       {/* Mobile Menu Button */}
@@ -70,7 +81,12 @@ function AdminDashboard() {
         open={drawerVisible}
         className="admin-drawer"
       >
-        {menuItems}
+        <Menu
+          mode="inline"
+          style={{ height: '100%', borderRight: 0 }}
+          onClick={closeDrawer}
+          items={menuItems}
+        />
       </Drawer>
 
       <Layout className="admin-content-layout">

@@ -1,7 +1,7 @@
 // client/src/components/ManageUsers.js
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './axiosInstance'; // Updated import
-import { Table, Switch, Alert, Spin } from 'antd';
+import { Table, Switch, Alert, Spin, Button, Modal, message } from 'antd';
 import { Link } from 'react-router-dom';
 import '../CSS/ManageUsers.css';
 
@@ -37,6 +37,27 @@ function ManageUsers() {
     }
   };
 
+  const handleDelete = (id) => {
+    Modal.confirm({
+      title: 'Bạn có chắc chắn muốn xóa người dùng này?',
+      content: 'Hành động này không thể hoàn tác.',
+      okText: 'Xóa',
+      okType: 'danger',
+      cancelText: 'Hủy',
+      onOk: async () => {
+        try {
+          await axiosInstance.delete(`users/${id}`);
+          message.success('Xóa người dùng thành công');
+          // Refresh users
+          const { data } = await axiosInstance.get('users');
+          setUsers(data);
+        } catch (err) {
+          message.error(err.response?.data?.message || 'Lỗi khi xóa người dùng');
+        }
+      },
+    });
+  };
+
   const columns = [
     { title: 'Tên', dataIndex: 'name', key: 'name' },
     { title: 'Email', dataIndex: 'email', key: 'email' },
@@ -55,7 +76,10 @@ function ManageUsers() {
       title: 'Hành Động',
       key: 'action',
       render: (text, record) => (
-        <Link to={`/admin/users/edit/${record._id}`}>Chỉnh Sửa</Link>
+        <>
+          <Link to={`/admin/users/edit/${record._id}`} style={{ fontSize: '12px' }}>Chỉnh Sửa</Link>
+          <Button type="link" danger style={{ fontSize: '12px' }} onClick={() => handleDelete(record._id)}>Xóa</Button>
+        </>
       ),
     },
   ];

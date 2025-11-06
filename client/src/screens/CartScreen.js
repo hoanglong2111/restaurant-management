@@ -1,7 +1,8 @@
 // client/src/screens/CartScreen.js
 import React, { useState } from 'react';
-import { Button, Modal, Alert, InputNumber } from 'antd';
-import { FaCcVisa, FaCcMastercard } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { Button, Modal, Alert, InputNumber, message } from 'antd';
+import { FaCcVisa, FaCcMastercard, FaMoneyBillWave } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import StripeCheckout from 'react-stripe-checkout';
 import { PayPalButtons } from '@paypal/react-paypal-js';
@@ -12,6 +13,7 @@ import '../CSS/CartScreen.css';
 function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
     const [loading, setLoading] = useState(false);
     const [error] = useState('');
+    const navigate = useNavigate();
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalUSD = (totalPrice / 25000).toFixed(2); // Convert VND to USD (1 USD ≈ 25,000 VND)
@@ -30,20 +32,23 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
             });
             if (response.data.success) {
                 clearCart();
-                Modal.success({
-                    title: 'Thanh Toán Thành Công',
-                    content: 'Giao dịch của bạn đã được xử lý thành công.',
+                message.success({
+                    content: 'Thanh toán thành công! Đơn hàng đang được xử lý.',
+                    duration: 3,
                 });
+                setTimeout(() => {
+                    navigate('/my-orders');
+                }, 1500);
             } else {
-                Modal.error({
-                    title: 'Thanh Toán Thất Bại',
-                    content: response.data.message || 'Có lỗi xảy ra trong quá trình thanh toán.',
+                message.error({
+                    content: response.data.message || 'Thanh toán thất bại',
+                    duration: 3,
                 });
             }
         } catch (err) {
-            Modal.error({
-                title: 'Thanh Toán Thất Bại',
-                content: err.response?.data?.message || 'Có lỗi xảy ra trong quá trình thanh toán.',
+            message.error({
+                content: err.response?.data?.message || 'Có lỗi xảy ra trong quá trình thanh toán',
+                duration: 3,
             });
         }
         setLoading(false);
@@ -96,17 +101,25 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
 
             if (response.data.success) {
                 clearCart();
-                Modal.success({
-                    title: 'Thanh Toán Thành Công',
-                    content: 'Giao dịch PayPal của bạn đã được xử lý thành công.',
+                message.success({
+                    content: 'Thanh toán PayPal thành công! Đơn hàng đang được xử lý.',
+                    duration: 3,
+                });
+                setTimeout(() => {
+                    navigate('/my-orders');
+                }, 1500);
+            } else {
+                message.error({
+                    content: response.data.message || 'Thanh toán thất bại',
+                    duration: 3,
                 });
             }
         } catch (err) {
             console.error('=== PayPal Error ===', err);
             console.error('Error response:', err.response?.data);
-            Modal.error({
-                title: 'Thanh Toán Thất Bại',
-                content: err.response?.data?.message || 'Có lỗi xảy ra',
+            message.error({
+                content: err.response?.data?.message || 'Có lỗi xảy ra trong quá trình thanh toán',
+                duration: 3,
             });
         }
     };
@@ -117,6 +130,43 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
             content: 'Có lỗi xảy ra trong quá trình thanh toán.',
         });
         console.error('PayPal Error:', err);
+    };
+
+    // Cash on Delivery handler
+    const handleCashOnDelivery = async () => {
+        setLoading(true);
+        try {
+            const response = await axiosInstance.post('/orders/cod', {
+                orderItems: cart.map(item => ({
+                    menuItem: item._id,
+                    quantity: item.quantity,
+                    price: item.price
+                })),
+                totalPrice: totalPrice,
+            });
+
+            if (response.data.success) {
+                clearCart();
+                message.success({
+                    content: 'Đơn hàng đã được tạo thành công! Vui lòng chuẩn bị tiền mặt khi nhận hàng.',
+                    duration: 3,
+                });
+                setTimeout(() => {
+                    navigate('/my-orders');
+                }, 1500);
+            } else {
+                message.error({
+                    content: response.data.message || 'Đặt hàng thất bại',
+                    duration: 3,
+                });
+            }
+        } catch (err) {
+            message.error({
+                content: err.response?.data?.message || 'Có lỗi xảy ra',
+                duration: 3,
+            });
+        }
+        setLoading(false);
     };
 
     return (
@@ -181,6 +231,7 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
                         {error && <Alert message="Lỗi" description={error} type="error" showIcon style={{ marginBottom: 16 }} />}
 
                         <div className="payment-buttons">
+                            {/* 1. Stripe */}
                             <StripeCheckout
                                 stripeKey="pk_test_51PzSctJezifUlBdf2XqkntE5CDvInoO2LOMfbqJnM1lp84btQUPsiC4ojf2WJHJKGhZKCz1thwHMn3BQceOYz3kr00CmHIYBWW"
                                 token={handleToken}
@@ -188,16 +239,53 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
                                 name="Thanh Toán Giỏ Hàng"
                             >
                                 <Button type="primary" loading={loading} onClick={handleCheckout} className="checkout-button">
-                                    💳 Stripe
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', width: '100%' }}>
+                                        <img 
+                                            src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" 
+                                            alt="Stripe" 
+                                            style={{ height: '20px', objectFit: 'contain' }}
+                                        />
+                                    </div>
                                 </Button>
                             </StripeCheckout>
 
+                            {/* 2. Cash on Delivery */}
+                            <Button 
+                                type="default" 
+                                loading={loading} 
+                                onClick={handleCashOnDelivery} 
+                                className="cod-button"
+                                style={{ 
+                                    width: '100%', 
+                                    height: '45px',
+                                    fontSize: '16px',
+                                    backgroundColor: '#52c41a',
+                                    color: 'white',
+                                    border: 'none',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '8px'
+                                }}
+                            >
+                                <FaMoneyBillWave style={{ fontSize: '20px' }} />
+                                Thanh Toán Khi Nhận Hàng
+                            </Button>
+
+                            {/* 3. PayPal - Debit or Credit Card */}
                             <div className="paypal-button-container">
                                 <PayPalButtons
-                                    style={{ layout: "vertical", color: "blue", shape: "rect", label: "pay" }}
+                                    style={{ 
+                                        layout: "vertical", 
+                                        color: "gold", 
+                                        shape: "rect", 
+                                        label: "paypal",
+                                        height: 45
+                                    }}
                                     createOrder={createPayPalOrder}
                                     onApprove={onPayPalApprove}
                                     onError={onPayPalError}
+                                    forceReRender={[totalUSD]}
                                 />
                             </div>
                         </div>

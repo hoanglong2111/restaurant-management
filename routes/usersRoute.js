@@ -88,7 +88,7 @@ router.delete('/:id', protect, isAdmin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if(user){
-      await user.remove();
+      await User.deleteOne({ _id: req.params.id });
       res.json({ message: 'Người dùng đã bị xóa' });
     } else {
       res.status(404).json({ message: 'Người dùng không tìm thấy' });

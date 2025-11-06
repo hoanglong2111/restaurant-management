@@ -92,8 +92,8 @@ function ManageOrders() {
       key: 'action',
       render: (text, record) => (
         <>
-          <Button type="link" onClick={() => showModal(record)}>Cập Nhật</Button>
-          <Button type="link" danger onClick={() => handleDelete(record._id)}>Xóa</Button>
+          <Button type="link" style={{ fontSize: '12px' }} onClick={() => showModal(record)}>Cập Nhật</Button>
+          <Button type="link" danger style={{ fontSize: '12px' }} onClick={() => handleDelete(record._id)}>Xóa</Button>
         </>
       ),
     },
@@ -113,7 +113,7 @@ function ManageOrders() {
           <Form.Item name="status" label="Trạng Thái" rules={[{ required: true, message: 'Vui lòng chọn trạng thái' }]}>
             <Select>
               <Option value="pending">Đang Chờ</Option>
-              <Option value="completed">Hoàn Thành</Option>
+              <Option value="confirmed">Hoàn Thành</Option>
               <Option value="cancelled">Đã Hủy</Option>
             </Select>
           </Form.Item>

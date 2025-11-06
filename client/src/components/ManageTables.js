@@ -153,6 +153,7 @@ function ManageTables() {
           <Button
             type="link"
             icon={<EditOutlined />}
+            style={{ fontSize: '12px' }}
             onClick={() => showModal(record)}
             className="action-button edit-button"
           >
@@ -162,6 +163,7 @@ function ManageTables() {
             type="link"
             icon={<DeleteOutlined />}
             danger
+            style={{ fontSize: '12px' }}
             onClick={() => handleDelete(record._id)}
             className="action-button delete-button"
           >

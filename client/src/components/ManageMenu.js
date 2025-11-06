@@ -119,10 +119,10 @@ function ManageMenu() {
       key: 'action',
       render: (text, record) => (
         <>
-          <Button type="link" onClick={() => showEditModal(record)} className="action-button edit-button">
+          <Button type="link" style={{ fontSize: '12px' }} onClick={() => showEditModal(record)} className="action-button edit-button">
             Chỉnh Sửa
           </Button>
-          <Button type="link" danger onClick={() => handleDelete(record._id)} className="action-button delete-button">
+          <Button type="link" danger style={{ fontSize: '12px' }} onClick={() => handleDelete(record._id)} className="action-button delete-button">
             Xóa
           </Button>
         </>
@@ -139,7 +139,7 @@ function ManageMenu() {
       <Button type="primary" onClick={showModal} style={{ marginBottom: 16 }} className="add-menu-button gradient-button">
         Thêm Món Mới
       </Button>
-      <Table dataSource={menuItems} columns={columns} rowKey="_id" className="manage-menu-table" bordered />
+      <Table dataSource={menuItems} columns={columns} rowKey="_id" className="manage-menu-table" bordered scroll={{ x: 'max-content' }} />
       <Modal
         title={editingItem ? 'Chỉnh Sửa Món Ăn' : 'Thêm Món Mới'}
         visible={isModalVisible}

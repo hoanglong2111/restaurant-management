@@ -139,7 +139,7 @@ function DashboardHome() {
         <div className="dashboard-home">
             <h1 className="dashboard-title">Tổng Quan Hệ Thống</h1>
 
-            <MobileBackButton to="/admin" label="Quay về Admin" />
+            <MobileBackButton to="/menu" label="Quay về Menu" />
 
             {/* Statistics Cards */}
             <Row gutter={[16, 16]} className="stats-row">

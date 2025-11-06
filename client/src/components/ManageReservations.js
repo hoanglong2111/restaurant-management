@@ -166,8 +166,8 @@ function ManageReservations() {
             key: 'action',
             render: (text, record) => (
                 <>
-                    <Button type="link" onClick={() => showModal(record)}>Cập Nhật</Button>
-                    <Button type="link" danger onClick={() => handleDelete(record._id)}>Xóa</Button>
+                    <Button type="link" style={{ fontSize: '12px' }} onClick={() => showModal(record)}>Cập Nhật</Button>
+                    <Button type="link" danger style={{ fontSize: '12px' }} onClick={() => handleDelete(record._id)}>Xóa</Button>
                 </>
             ),
             visible: visibleColumns.includes('Hành Động'),
