@@ -112,10 +112,31 @@
     font-weight: 600;
     background: #1a1a1a;
     border: none;
+    margin-bottom: 12px;
 }
 
 .checkout-button:hover {
     background: #000000;
+    opacity: 0.9;
+}
+
+.payment-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.payment-buttons .checkout-button {
+    margin-bottom: 0;
+}
+
+.vnpay-button:hover {
+    background: #006699 !important;
+}
+
+.zalopay-button:hover {
+    background: #0055CC !important;
 }
 
 /* Mobile Responsive */

@@ -16,6 +16,7 @@ import ManageReservations from './components/ManageReservations';
 import ManageUsers from './components/ManageUsers';
 import ManageTables from './components/ManageTables';
 import CartScreen from './screens/CartScreen';
+import PaymentResult from './screens/PaymentResult';
 import { logDeviceInfo } from './utils/deviceDetection';
 // ...other imports...
 
@@ -52,6 +53,7 @@ function AppContent({ currentUser, cart, removeFromCart, addToCart, clearCart })
           </PrivateRoute>
         } />
         <Route path="/cart" element={<CartScreen cart={cart} removeFromCart={removeFromCart} clearCart={clearCart} />} />
+        <Route path="/payment-result" element={<PaymentResult />} />
         <Route path="/profile" element={
           <PrivateRoute>
             <ProfileScreen />

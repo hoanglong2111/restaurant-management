@@ -1,0 +1,79 @@
+/* Payment Result Page */
+.payment-result-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+}
+
+.payment-result-loading {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.payment-result-card {
+    max-width: 600px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.payment-details {
+    margin-top: 16px;
+}
+
+.payment-details p {
+    margin: 8px 0;
+    font-size: 15px;
+    color: #595959;
+}
+
+.payment-details strong {
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .payment-result-container {
+        padding: 16px;
+    }
+
+    .payment-result-card {
+        border-radius: 8px;
+    }
+
+    .payment-details p {
+        font-size: 14px;
+    }
+
+    .ant-result-title {
+        font-size: 20px !important;
+    }
+
+    .ant-result-subtitle {
+        font-size: 14px !important;
+    }
+
+    .ant-btn {
+        height: 42px !important;
+        font-size: 15px !important;
+    }
+}
