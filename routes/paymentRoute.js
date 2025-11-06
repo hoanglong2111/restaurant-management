@@ -62,20 +62,45 @@ router.post('/vnpay/create', protect, async (req, res) => {
         vnp_Params['vnp_TxnRef'] = payment._id.toString(); // Dùng payment ID
         vnp_Params['vnp_OrderInfo'] = orderInfo || `Thanh toan don hang ${createdOrder._id}`;
         vnp_Params['vnp_OrderType'] = 'other';
-        vnp_Params['vnp_Amount'] = amount * 100; // VNPay yêu cầu nhân 100
+        vnp_Params['vnp_Amount'] = Math.floor(amount * 100); // Đảm bảo là số nguyên
         vnp_Params['vnp_ReturnUrl'] = vnp_ReturnUrl;
-        vnp_Params['vnp_IpAddr'] = req.headers['x-forwarded-for'] || req.connection.remoteAddress || '127.0.0.1';
+        
+        // Get IPv4 address (VNPay chỉ chấp nhận IPv4)
+        let ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || '127.0.0.1';
+        // Nếu có nhiều IP (proxy), lấy IP đầu tiên
+        if (ipAddr.includes(',')) {
+            ipAddr = ipAddr.split(',')[0].trim();
+        }
+        // Nếu là IPv6 loopback (::1), đổi thành IPv4
+        if (ipAddr === '::1' || ipAddr === '::ffff:127.0.0.1') {
+            ipAddr = '127.0.0.1';
+        }
+        // Loại bỏ prefix ::ffff: nếu có
+        if (ipAddr.startsWith('::ffff:')) {
+            ipAddr = ipAddr.substring(7);
+        }
+        vnp_Params['vnp_IpAddr'] = ipAddr;
+        
         vnp_Params['vnp_CreateDate'] = createDate;
 
         // Sắp xếp params theo thứ tự alphabet
         vnp_Params = sortObject(vnp_Params);
 
+        console.log('=== VNPay Debug ===');
+        console.log('Sorted params:', vnp_Params);
+        
         const signData = querystring.stringify(vnp_Params, { encode: false });
+        console.log('Sign data:', signData);
+        
         const hmac = crypto.createHmac('sha512', vnp_HashSecret);
         const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
+        console.log('Signature:', signed);
 
         vnp_Params['vnp_SecureHash'] = signed;
         const paymentUrl = vnp_Url + '?' + querystring.stringify(vnp_Params, { encode: false });
+        
+        console.log('Payment URL:', paymentUrl);
+        console.log('==================');
 
         res.json({
             success: true,
