@@ -99,6 +99,7 @@ router.post('/stripe', protect, async (req, res) => {
                 totalPrice: amount /10 , // Convert cents to main currency unit if needed
                 isPaid: true,
                 paidAt: Date.now(),
+                status: 'confirmed', // ✅ Set status to confirmed when payment succeeds
             });
 
             // Save Order to Database
