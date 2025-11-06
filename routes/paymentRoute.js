@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const crypto = require('crypto-js');
+const crypto = require('crypto'); // Native Node.js crypto, KHÔNG dùng crypto-js
 const moment = require('moment');
 const axios = require('axios');
 const querystring = require('querystring');
@@ -71,8 +71,8 @@ router.post('/vnpay/create', protect, async (req, res) => {
         vnp_Params = sortObject(vnp_Params);
 
         const signData = querystring.stringify(vnp_Params, { encode: false });
-        const hmac = crypto.HmacSHA512(signData, vnp_HashSecret);
-        const signed = hmac.toString(crypto.enc.Hex);
+        const hmac = crypto.createHmac('sha512', vnp_HashSecret);
+        const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
 
         vnp_Params['vnp_SecureHash'] = signed;
         const paymentUrl = vnp_Url + '?' + querystring.stringify(vnp_Params, { encode: false });
@@ -102,8 +102,8 @@ router.get('/vnpay/return', async (req, res) => {
 
         const vnp_HashSecret = process.env.VNPAY_HASH_SECRET;
         const signData = querystring.stringify(vnp_Params, { encode: false });
-        const hmac = crypto.HmacSHA512(signData, vnp_HashSecret);
-        const signed = hmac.toString(crypto.enc.Hex);
+        const hmac = crypto.createHmac('sha512', vnp_HashSecret);
+        const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
 
         const paymentId = vnp_Params['vnp_TxnRef'];
         const responseCode = vnp_Params['vnp_ResponseCode'];
@@ -219,7 +219,7 @@ router.post('/zalopay/create', protect, async (req, res) => {
 
         // app_id|app_trans_id|app_user|amount|app_time|embed_data|item
         const data = config.app_id + '|' + order_zalopay.app_trans_id + '|' + order_zalopay.app_user + '|' + order_zalopay.amount + '|' + order_zalopay.app_time + '|' + order_zalopay.embed_data + '|' + order_zalopay.item;
-        order_zalopay.mac = crypto.HmacSHA256(data, config.key1).toString();
+        order_zalopay.mac = crypto.createHmac('sha256', config.key1).update(data).digest('hex');
 
         const response = await axios.post(config.endpoint, null, { params: order_zalopay });
 
@@ -254,7 +254,7 @@ router.post('/zalopay/callback', async (req, res) => {
         const dataStr = req.body.data;
         const reqMac = req.body.mac;
 
-        const mac = crypto.HmacSHA256(dataStr, config.key2).toString();
+        const mac = crypto.createHmac('sha256', config.key2).update(dataStr).digest('hex');
 
         // Kiểm tra callback hợp lệ
         if (reqMac !== mac) {
