@@ -91,6 +91,9 @@
     height: 40px !important;
     border-radius: 0 8px 8px 0 !important;
     padding: 0 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .menu-items .ant-select-selector {
