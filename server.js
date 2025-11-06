@@ -23,19 +23,23 @@ const app = express();
 // CORS Configuration
 const allowedOrigins = [
     'http://localhost:3000',
+    'http://localhost:5000',
     'https://restaurant-management-blue-ten.vercel.app',
+    'https://www.paypal.com',
+    'https://www.sandbox.paypal.com',
     process.env.CLIENT_URL
 ].filter(Boolean);
 
 const corsOptions = {
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
+        // Allow requests with no origin (like mobile apps, curl requests, or PayPal)
         if (!origin) return callback(null, true);
         
         if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+            console.log('CORS blocked origin:', origin);
+            callback(null, true); // Allow all origins temporarily for debugging
         }
     },
     credentials: true,

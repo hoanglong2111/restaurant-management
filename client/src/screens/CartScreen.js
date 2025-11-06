@@ -66,10 +66,20 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
     };
 
     const onPayPalApprove = async (data, actions) => {
+        console.log('=== PayPal Approve Started ===');
+        console.log('Order ID:', data.orderID);
+        
         try {
             const details = await actions.order.capture();
+            console.log('=== Payment Details ===', details);
             
             // Send order to backend
+            console.log('Sending to backend:', {
+                orderID: details.id,
+                totalPrice: totalPrice,
+                itemCount: cart.length
+            });
+            
             const response = await axiosInstance.post('/orders/paypal', {
                 orderID: details.id,
                 paymentDetails: details,
@@ -81,6 +91,8 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
                 totalPrice: totalPrice,
             });
 
+            console.log('Backend response:', response.data);
+
             if (response.data.success) {
                 clearCart();
                 Modal.success({
@@ -89,6 +101,8 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
                 });
             }
         } catch (err) {
+            console.error('=== PayPal Error ===', err);
+            console.error('Error response:', err.response?.data);
             Modal.error({
                 title: 'Thanh Toán Thất Bại',
                 content: err.response?.data?.message || 'Có lỗi xảy ra',
