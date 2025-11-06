@@ -67,6 +67,22 @@ router.put('/:id', protect, isAdmin, async (req, res) => {
     }
 });
 
+// Xóa đơn hàng (Admin)
+router.delete('/:id', protect, isAdmin, async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+
+        if (order) {
+            await Order.deleteOne({ _id: req.params.id });
+            res.json({ message: 'Đơn hàng đã được xóa' });
+        } else {
+            res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
 // Xử lý thanh toán bằng Stripe
 router.post('/stripe', protect, async (req, res) => {
     const { token, amount, orderItems } = req.body;

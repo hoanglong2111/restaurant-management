@@ -57,12 +57,28 @@ function ManageOrders() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axiosInstance.delete(`orders/${id}`); // Updated to use axiosInstance
-      fetchOrders();
-    } catch (err) {
-      setError(err.response?.data?.message || 'Xóa đơn hàng thất bại');
-    }
+    Modal.confirm({
+      title: 'Xác nhận xóa đơn hàng',
+      content: 'Bạn có chắc chắn muốn xóa đơn hàng này? Hành động này không thể hoàn tác.',
+      okText: 'Xóa',
+      okType: 'danger',
+      cancelText: 'Hủy',
+      onOk: async () => {
+        try {
+          await axiosInstance.delete(`orders/${id}`);
+          Modal.success({
+            title: 'Thành công',
+            content: 'Đơn hàng đã được xóa thành công',
+          });
+          fetchOrders();
+        } catch (err) {
+          Modal.error({
+            title: 'Lỗi',
+            content: err.response?.data?.message || 'Xóa đơn hàng thất bại',
+          });
+        }
+      },
+    });
   };
 
   const columns = [
