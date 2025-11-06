@@ -54,7 +54,7 @@ function AppContent({ currentUser, cart, removeFromCart, addToCart, updateQuanti
           </PrivateRoute>
         } />
         <Route path="/cart" element={<CartScreen cart={cart} removeFromCart={removeFromCart} updateQuantity={updateQuantity} clearCart={clearCart} />} />
-        <Route path="/payment-result" element={<PaymentResult />} />
+        <Route path="/paymentresult" element={<PaymentResult />} />
         <Route path="/profile" element={
           <PrivateRoute>
             <ProfileScreen />
