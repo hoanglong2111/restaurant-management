@@ -323,19 +323,19 @@ router.post('/zalopay/callback', async (req, res) => {
     }
 });
 
-// Helper function để sắp xếp object
+// Helper function để sắp xếp object (không encode)
 function sortObject(obj) {
     let sorted = {};
     let str = [];
     let key;
     for (key in obj) {
         if (obj.hasOwnProperty(key)) {
-            str.push(encodeURIComponent(key));
+            str.push(key);
         }
     }
     str.sort();
     for (key = 0; key < str.length; key++) {
-        sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, '+');
+        sorted[str[key]] = obj[str[key]];
     }
     return sorted;
 }
