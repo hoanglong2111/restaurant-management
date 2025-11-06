@@ -9,8 +9,6 @@ import '../CSS/CartScreen.css';
 
 function CartScreen({ cart, removeFromCart, clearCart }) {
     const [loading, setLoading] = useState(false);
-    const [vnpayLoading, setVnpayLoading] = useState(false);
-    const [zalopayLoading, setZalopayLoading] = useState(false);
     const [error] = useState('');
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -50,70 +48,6 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
 
     const handleCheckout = () => {
         // StripeCheckout handles the checkout process
-    };
-
-    // VNPay Payment Handler
-    const handleVNPayPayment = async () => {
-        setVnpayLoading(true);
-        try {
-            const response = await axiosInstance.post('/payment/vnpay/create', {
-                orderItems: cart.map(item => ({
-                    menuItem: item._id,
-                    quantity: item.quantity,
-                    price: item.price,
-                })),
-                totalPrice: totalPrice,
-                orderInfo: 'Thanh toan don hang qua VNPay',
-            });
-
-            if (response.data.success) {
-                // Redirect to VNPay payment page
-                window.location.href = response.data.paymentUrl;
-            } else {
-                Modal.error({
-                    title: 'Lỗi',
-                    content: 'Không thể tạo thanh toán VNPay',
-                });
-            }
-        } catch (err) {
-            Modal.error({
-                title: 'Lỗi',
-                content: err.response?.data?.message || 'Có lỗi xảy ra',
-            });
-        }
-        setVnpayLoading(false);
-    };
-
-    // ZaloPay Payment Handler
-    const handleZaloPayPayment = async () => {
-        setZalopayLoading(true);
-        try {
-            const response = await axiosInstance.post('/payment/zalopay/create', {
-                orderItems: cart.map(item => ({
-                    menuItem: item._id,
-                    quantity: item.quantity,
-                    price: item.price,
-                })),
-                totalPrice: totalPrice,
-                orderInfo: 'Thanh toan don hang qua ZaloPay',
-            });
-
-            if (response.data.success) {
-                // Redirect to ZaloPay payment page
-                window.location.href = response.data.paymentUrl;
-            } else {
-                Modal.error({
-                    title: 'Lỗi',
-                    content: 'Không thể tạo thanh toán ZaloPay',
-                });
-            }
-        } catch (err) {
-            Modal.error({
-                title: 'Lỗi',
-                content: err.response?.data?.message || 'Có lỗi xảy ra',
-            });
-        }
-        setZalopayLoading(false);
     };
 
     return (
@@ -169,25 +103,7 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
                                 </Button>
                             </StripeCheckout>
 
-                            <Button 
-                                type="primary" 
-                                loading={vnpayLoading} 
-                                onClick={handleVNPayPayment} 
-                                className="checkout-button vnpay-button"
-                                style={{ background: '#0088CC', borderColor: '#0088CC' }}
-                            >
-                                🏦 VNPay
-                            </Button>
-
-                            <Button 
-                                type="primary" 
-                                loading={zalopayLoading} 
-                                onClick={handleZaloPayPayment} 
-                                className="checkout-button zalopay-button"
-                                style={{ background: '#0068FF', borderColor: '#0068FF' }}
-                            >
-                                📱 ZaloPay
-                            </Button>
+                            {/* PayPal sẽ được thêm vào đây */}
                         </div>
                     </>
                 )}
