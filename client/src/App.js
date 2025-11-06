@@ -22,7 +22,7 @@ import { logDeviceInfo } from './utils/deviceDetection';
 // ...other imports...
 
 // Component wrapper to conditionally show Navbar
-function AppContent({ currentUser, cart, removeFromCart, addToCart, clearCart }) {
+function AppContent({ currentUser, cart, removeFromCart, addToCart, updateQuantity, clearCart }) {
   const location = useLocation();
   
   // Hide Navbar on login and register pages
@@ -53,7 +53,7 @@ function AppContent({ currentUser, cart, removeFromCart, addToCart, clearCart })
             <MenuItems addToCart={addToCart} />
           </PrivateRoute>
         } />
-        <Route path="/cart" element={<CartScreen cart={cart} removeFromCart={removeFromCart} clearCart={clearCart} />} />
+        <Route path="/cart" element={<CartScreen cart={cart} removeFromCart={removeFromCart} updateQuantity={updateQuantity} clearCart={clearCart} />} />
         <Route path="/payment-result" element={<PaymentResult />} />
         <Route path="/profile" element={
           <PrivateRoute>
@@ -127,6 +127,19 @@ function App() {
     setCart((prevCart) => prevCart.filter((item) => item._id !== id));
   };
 
+  // Cập nhật số lượng sản phẩm trong giỏ hàng
+  const updateQuantity = (id, newQuantity) => {
+    if (newQuantity <= 0) {
+      removeFromCart(id);
+      return;
+    }
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item._id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
   // Xóa toàn bộ giỏ hàng (sau khi thanh toán)
   const clearCart = () => {
     setCart([]);
@@ -146,6 +159,7 @@ function App() {
           cart={cart}
           removeFromCart={removeFromCart}
           addToCart={addToCart}
+          updateQuantity={updateQuantity}
           clearCart={clearCart}
         />
       </Router>

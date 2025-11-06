@@ -22,7 +22,7 @@ const paymentSchema = mongoose.Schema(
         paymentMethod: {
             type: String,
             required: true,
-            enum: ['Stripe', 'VNPay', 'ZaloPay', 'Cash', 'PayPal'],
+            enum: ['Stripe', 'Cash', 'PayPal'],
         },
         isPaid: {
             type: Boolean,

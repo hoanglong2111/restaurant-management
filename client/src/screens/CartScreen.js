@@ -1,14 +1,15 @@
 // client/src/screens/CartScreen.js
 import React, { useState } from 'react';
-import { Button, Modal, Alert } from 'antd';
+import { Button, Modal, Alert, InputNumber } from 'antd';
 import { FaCcVisa, FaCcMastercard } from 'react-icons/fa';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import StripeCheckout from 'react-stripe-checkout';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import axiosInstance from '../components/axiosInstance';
 import MobileBackButton from '../components/MobileBackButton';
 import '../CSS/CartScreen.css';
 
-function CartScreen({ cart, removeFromCart, clearCart }) {
+function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
     const [loading, setLoading] = useState(false);
     const [error] = useState('');
 
@@ -135,7 +136,27 @@ function CartScreen({ cart, removeFromCart, clearCart }) {
                             <div key={item._id} className="cart-item">
                                 <div className="cart-item-info">
                                     <span className="cart-item-name">{item.name}</span>
-                                    <span className="cart-item-quantity">x {item.quantity}</span>
+                                    <div className="cart-item-quantity-controls">
+                                        <Button
+                                            type="default"
+                                            size="small"
+                                            icon={<MinusOutlined />}
+                                            onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                                        />
+                                        <InputNumber
+                                            min={1}
+                                            max={99}
+                                            value={item.quantity}
+                                            onChange={(value) => updateQuantity(item._id, value || 1)}
+                                            style={{ width: '60px', margin: '0 8px' }}
+                                        />
+                                        <Button
+                                            type="default"
+                                            size="small"
+                                            icon={<PlusOutlined />}
+                                            onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="cart-item-actions">
                                     <span className="cart-item-price">{(item.price * item.quantity).toLocaleString()} VND</span>

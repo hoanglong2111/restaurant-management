@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Spin, Alert, Button, Modal, Carousel, Card, Row, Col, Input, Select, Form, DatePicker, InputNumber } from 'antd';
 import { SearchOutlined, FilterOutlined, CalendarOutlined, CheckCircleOutlined, CloseCircleOutlined, EyeOutlined, ShoppingCartOutlined, CreditCardOutlined, UserOutlined, ClockCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import '../CSS/MenuItems.css';
@@ -8,6 +9,7 @@ const { Search } = Input;
 const { Option } = Select;
 
 function MenuItems({ addToCart }) { // Nhận addToCart từ props
+    const navigate = useNavigate();
     const [menuItems, setMenuItems] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -95,8 +97,8 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
     };
 
     const handleCheckout = () => {
-        // Chuyển hướng đến trang thanh toán
-        window.location.href = '/cart';
+        // Chuyển hướng đến trang thanh toán bằng navigate (giữ state)
+        navigate('/cart');
     };
 
     const handleEatAtTable = () => {

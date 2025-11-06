@@ -68,11 +68,10 @@ app.get('/api/health', (req, res) => {
 
 // Routes
 app.use('/api/menu', protect, require('./routes/menuRoute'));
-app.use('/api/orders', protect, require('./routes/ordersRoute'));
+app.use('/api/orders', protect, require('./routes/ordersRoute')); // Stripe & PayPal routes here
 app.use('/api/reservations', protect, require('./routes/reservationsRoute'));
 app.use('/api/tables', protect, require('./routes/tablesRoute'));
 app.use('/api/users', require('./routes/usersRoute'));
-app.use('/api/payment', require('./routes/paymentRoute')); // Payment routes (VNPay, ZaloPay)
 
 
 const PORT = process.env.PORT || 5000;
