@@ -68,25 +68,36 @@
     border-radius: 8px;
 }
 
-.menu-items .ant-input-search .ant-input {
+/* Style cho wrapper (lớp ngoài) */
+.menu-items .ant-input-search > .ant-input-group > .ant-input-affix-wrapper {
     border-radius: 8px 0 0 8px !important;
     height: 40px !important;
-    font-size: 15px !important;
-    padding: 8px 15px !important;
     border: 1px solid #d9d9d9 !important;
     transition: all 0.3s ease !important;
 }
 
+/* Style cho input thật bên trong */
+.menu-items .ant-input-search .ant-input-affix-wrapper > input.ant-input {
+    font-size: 15px !important;
+    padding: 8px 15px !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Placeholder styling */
 .menu-items .ant-input-search .ant-input::placeholder {
     color: #bfbfbf;
     font-size: 14px;
 }
 
-.menu-items .ant-input-search .ant-input:focus {
+/* Focus state cho wrapper */
+.menu-items .ant-input-search .ant-input-affix-wrapper:focus,
+.menu-items .ant-input-search .ant-input-affix-wrapper-focused {
     border-color: #1890ff !important;
     box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1) !important;
 }
 
+/* Search button */
 .menu-items .ant-input-search-button {
     height: 40px !important;
     border-radius: 0 8px 8px 0 !important;
@@ -508,11 +519,14 @@
         margin: 0 16px 24px 16px;
     }
 
-    /* Mobile Search Input */
-    .menu-items .ant-input-search .ant-input {
+    /* Mobile Search Input - Style wrapper */
+    .menu-items .ant-input-search > .ant-input-group > .ant-input-affix-wrapper {
         height: 44px !important;
+    }
+
+    .menu-items .ant-input-search .ant-input-affix-wrapper > input.ant-input {
         font-size: 16px !important;
-        padding-left: 38px !important;
+        padding: 10px 15px !important;
     }
 
     .menu-items .ant-input-search-button {
