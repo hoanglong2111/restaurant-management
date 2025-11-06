@@ -3,7 +3,6 @@ const router = express.Router();
 const crypto = require('crypto'); // Native Node.js crypto, KHÔNG dùng crypto-js
 const moment = require('moment');
 const axios = require('axios');
-const querystring = require('querystring');
 const { protect } = require('../middleware/authMiddleware');
 const Payment = require('../models/payment');
 const Order = require('../models/order');
@@ -89,7 +88,10 @@ router.post('/vnpay/create', protect, async (req, res) => {
         console.log('=== VNPay Debug ===');
         console.log('Sorted params:', vnp_Params);
         
-        const signData = querystring.stringify(vnp_Params, { encode: false });
+        // Tạo signData thủ công (không dùng querystring.stringify)
+        const signData = Object.keys(vnp_Params)
+            .map(key => `${key}=${vnp_Params[key]}`)
+            .join('&');
         console.log('Sign data:', signData);
         
         const hmac = crypto.createHmac('sha512', vnp_HashSecret);
@@ -97,7 +99,11 @@ router.post('/vnpay/create', protect, async (req, res) => {
         console.log('Signature:', signed);
 
         vnp_Params['vnp_SecureHash'] = signed;
-        const paymentUrl = vnp_Url + '?' + querystring.stringify(vnp_Params, { encode: false });
+        
+        // Tạo payment URL thủ công
+        const paymentUrl = vnp_Url + '?' + Object.keys(vnp_Params)
+            .map(key => `${key}=${encodeURIComponent(vnp_Params[key])}`)
+            .join('&');
         
         console.log('Payment URL:', paymentUrl);
         console.log('==================');
@@ -126,7 +132,12 @@ router.get('/vnpay/return', async (req, res) => {
         vnp_Params = sortObject(vnp_Params);
 
         const vnp_HashSecret = process.env.VNPAY_HASH_SECRET;
-        const signData = querystring.stringify(vnp_Params, { encode: false });
+        
+        // Tạo signData thủ công
+        const signData = Object.keys(vnp_Params)
+            .map(key => `${key}=${vnp_Params[key]}`)
+            .join('&');
+            
         const hmac = crypto.createHmac('sha512', vnp_HashSecret);
         const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
 
