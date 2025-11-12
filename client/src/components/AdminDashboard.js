@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Menu, Layout, Drawer, Button } from 'antd';
-import { MenuOutlined, DashboardOutlined, AppstoreOutlined, TableOutlined, ShoppingOutlined, CalendarOutlined, UserOutlined } from '@ant-design/icons';
+import { MenuOutlined, DashboardOutlined, AppstoreOutlined, TableOutlined, ShoppingOutlined, CalendarOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
+import MobileBackButton from './MobileBackButton';
 import '../CSS/AdminDashboard.css';
 
 const { Sider, Content } = Layout;
@@ -49,6 +50,14 @@ function AdminDashboard() {
       icon: <UserOutlined />,
       label: <Link to="users">Quản Lý Người Dùng</Link>,
     },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'back-to-menu',
+      icon: <HomeOutlined />,
+      label: <Link to="/menu">Quay về Menu</Link>,
+    },
   ];
 
   return (
@@ -94,6 +103,9 @@ function AdminDashboard() {
           <Outlet />
         </Content>
       </Layout>
+
+      {/* Mobile Back Button */}
+      <MobileBackButton to="/menu" label="Quay về Menu" />
     </Layout>
   );
 }
