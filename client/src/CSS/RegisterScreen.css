@@ -178,35 +178,18 @@
 /* Mobile layout (768px and below) */
 @media (max-width: 768px) {
   .landing-wrapper.register-page {
-    align-items: flex-start;
-    justify-content: flex-start;
+    display: block;
     padding: 0;
     overflow-y: auto;
     overflow-x: hidden;
     height: 100vh;
     height: -webkit-fill-available; /* iOS Safari fix */
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); /* Cover full viewport */
+    background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
     position: relative;
     -webkit-overflow-scrolling: touch;
   }
 
   .landing-wrapper.register-page .hero {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
-    z-index: 1;
-  }
-
-  .landing-wrapper.register-page .hero .brand {
     display: none;
   }
 
@@ -216,8 +199,9 @@
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    padding: 20px;
-    min-height: 100%;
+    padding: 40px 20px;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -230,7 +214,6 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
-    margin: auto;
   }
 
   @keyframes slideUp {
