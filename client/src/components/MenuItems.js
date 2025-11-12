@@ -200,11 +200,7 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                     <Col xs={24} sm={24} md={8}>
                         <Search
                             placeholder="Tìm kiếm món ăn..."
-                            enterButton={
-                                <Button type="primary" icon={<SearchOutlined />}>
-                                    Tìm
-                                </Button>
-                            }
+                            enterButton={<SearchOutlined style={{ fontSize: '18px', color: '#ffffff' }} />}
                             size="large"
                             onSearch={handleSearch}
                             allowClear
