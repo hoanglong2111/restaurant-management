@@ -161,8 +161,8 @@ router.post('/stripe-checkout', protect, async (req, res) => {
 
         console.log('Line Items:', JSON.stringify(lineItems, null, 2));
 
-        // Frontend URL với fallback
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+        // Frontend URL - Ưu tiên Vercel URL
+        const frontendUrl = process.env.FRONTEND_URL || 'https://restaurant-management-pink-fifthcens.vercel.app';
         console.log('Frontend URL:', frontendUrl);
 
         // Create Stripe Checkout Session
