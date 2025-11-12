@@ -1,17 +1,11 @@
 /* LoginScreen.css - Responsive Landing Layout */
 
-/* Override global background for landing page */
-body:has(.landing-wrapper.login-page) {
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%) !important;
-}
-
 /* Base landing wrapper */
 .landing-wrapper.login-page {
   display: flex;
   min-height: 100vh;
   min-height: -webkit-fill-available; /* Fix for iOS Safari address bar */
   animation: fadeIn 0.5s ease-out;
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); /* Fallback background */
 }
 
 @keyframes fadeIn {
@@ -182,6 +176,11 @@ body:has(.landing-wrapper.login-page) {
 
 /* Mobile layout (768px and below) */
 @media (max-width: 768px) {
+  /* Override global background for mobile only */
+  body:has(.landing-wrapper.login-page) {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%) !important;
+  }
+
   .landing-wrapper.login-page {
     align-items: center;
     justify-content: center;
