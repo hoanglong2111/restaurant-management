@@ -1,6 +1,6 @@
 // client/src/components/AdminDashboard.js
 import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Menu, Layout, Drawer, Button } from 'antd';
 import { MenuOutlined, DashboardOutlined, AppstoreOutlined, TableOutlined, ShoppingOutlined, CalendarOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
 import MobileBackButton from './MobileBackButton';
@@ -10,6 +10,10 @@ const { Sider, Content } = Layout;
 
 function AdminDashboard() {
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const location = useLocation();
+
+  // Kiểm tra xem có đang ở trang Dashboard chính không
+  const isMainDashboard = location.pathname === '/admin' || location.pathname === '/admin/';
 
   const showDrawer = () => {
     setDrawerVisible(true);
@@ -104,8 +108,12 @@ function AdminDashboard() {
         </Content>
       </Layout>
 
-      {/* Mobile Back Button */}
-      <MobileBackButton to="/menu" label="Quay về Menu" />
+      {/* Mobile Back Button - Dynamic based on current page */}
+      {isMainDashboard ? (
+        <MobileBackButton to="/menu" label="Quay về Menu" />
+      ) : (
+        <MobileBackButton to="/admin" label="Quay về Admin" />
+      )}
     </Layout>
   );
 }
