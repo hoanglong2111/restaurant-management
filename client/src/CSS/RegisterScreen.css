@@ -1,5 +1,10 @@
 /* RegisterScreen.css - Responsive Landing Layout */
 
+/* Override global background for landing page */
+body:has(.landing-wrapper.register-page) {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%) !important;
+}
+
 /* Base landing wrapper */
 .landing-wrapper.register-page {
   display: flex;

@@ -1,5 +1,10 @@
 /* LoginScreen.css - Responsive Landing Layout */
 
+/* Override global background for landing page */
+body:has(.landing-wrapper.login-page) {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%) !important;
+}
+
 /* Base landing wrapper */
 .landing-wrapper.login-page {
   display: flex;
