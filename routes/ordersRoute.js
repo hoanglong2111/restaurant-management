@@ -147,6 +147,23 @@ router.post('/stripe-checkout', protect, async (req, res) => {
             return res.status(400).json({ message: 'Vui lòng cung cấp thông tin đơn hàng.' });
         }
 
+        // TẠO ORDER NGAY (pending status)
+        const order = new Order({
+            user: req.user._id,
+            orderItems: orderItems.map(item => ({
+                menuItem: item.menuItem,
+                quantity: item.quantity,
+                price: item.price
+            })),
+            paymentMethod: 'Stripe',
+            totalPrice,
+            isPaid: false,
+            status: 'pending',
+        });
+
+        const createdOrder = await order.save();
+        console.log('Order created with ID:', createdOrder._id);
+
         // Create line items for Stripe
         const lineItems = orderItems.map(item => ({
             price_data: {
@@ -170,10 +187,11 @@ router.post('/stripe-checkout', protect, async (req, res) => {
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${frontendUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+            success_url: `${frontendUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}&order_id=${createdOrder._id}`,
             cancel_url: `${frontendUrl}/cart`,
             customer_email: req.user.email,
             metadata: {
+                orderId: createdOrder._id.toString(),
                 userId: req.user._id.toString(),
                 orderItems: JSON.stringify(orderItems.map(item => ({
                     menuItem: item.menuItem,
@@ -181,7 +199,7 @@ router.post('/stripe-checkout', protect, async (req, res) => {
                     price: item.price
                 }))),
                 totalPrice: totalPrice.toString(),
-            },
+                },
         });
 
         console.log('Session created successfully:', session.id);
@@ -189,7 +207,8 @@ router.post('/stripe-checkout', protect, async (req, res) => {
         res.json({ 
             success: true, 
             sessionId: session.id,
-            checkoutUrl: session.url 
+            checkoutUrl: session.url,
+            orderId: createdOrder._id
         });
     } catch (error) {
         console.error('=== Stripe Checkout Error ===');
@@ -200,12 +219,18 @@ router.post('/stripe-checkout', protect, async (req, res) => {
 });
 
 // Stripe Webhook - Handle successful payment
-router.post('/stripe-webhook', async (req, res) => {
+router.post('/stripe-webhook', express.raw({ type: 'application/json' }), async (req, res) => {
     const sig = req.headers['stripe-signature'];
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+        // Nếu không có webhook secret thì bỏ qua verify (development mode)
+        if (process.env.STRIPE_WEBHOOK_SECRET) {
+            event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+        } else {
+            event = JSON.parse(req.body);
+            console.warn('⚠️ Webhook secret not configured - skipping signature verification');
+        }
     } catch (err) {
         console.error('Webhook signature verification failed:', err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -214,20 +239,24 @@ router.post('/stripe-webhook', async (req, res) => {
     // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object;
+        console.log('=== Stripe Payment Success Webhook ===');
+        console.log('Order ID:', session.metadata.orderId);
 
-        // Create order from session metadata
-        const order = new Order({
-            user: session.metadata.userId,
-            orderItems: JSON.parse(session.metadata.orderItems),
-            paymentMethod: 'Stripe',
-            totalPrice: parseFloat(session.metadata.totalPrice),
-            isPaid: true,
-            paidAt: Date.now(),
-            status: 'confirmed',
-        });
-
-        await order.save();
-        console.log('Order created from Stripe webhook:', order._id);
+        try {
+            // UPDATE order existing thành paid
+            const order = await Order.findById(session.metadata.orderId);
+            if (order) {
+                order.isPaid = true;
+                order.paidAt = Date.now();
+                order.status = 'confirmed';
+                await order.save();
+                console.log('✅ Order updated to paid:', order._id);
+            } else {
+                console.error('❌ Order not found:', session.metadata.orderId);
+            }
+        } catch (error) {
+            console.error('Error updating order:', error);
+        }
     }
 
     res.json({ received: true });
