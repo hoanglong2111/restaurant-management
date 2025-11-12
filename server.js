@@ -24,7 +24,7 @@ const app = express();
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:5000',
-    'https://restaurant-management-blue-ten.vercel.app',
+    'https://restaurant-management-pink-fifthcens.vercel.app',
     'https://www.paypal.com',
     'https://www.sandbox.paypal.com',
     process.env.CLIENT_URL
