@@ -11,6 +11,9 @@ html {
   /* Enable smooth scrolling */
   scroll-behavior: smooth;
   
+  /* Fix mobile viewport height for address bar */
+  height: -webkit-fill-available;
+  
   /* Safe area support for devices with notch (iPhone X+) */
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
@@ -22,6 +25,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* Fix mobile viewport height for address bar */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   
   /* Improve mobile text rendering */
   text-rendering: optimizeLegibility;

@@ -4,7 +4,9 @@
 .landing-wrapper.register-page {
   display: flex;
   min-height: 100vh;
+  min-height: -webkit-fill-available; /* Fix for iOS Safari address bar */
   animation: fadeIn 0.5s ease-out;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); /* Fallback background */
 }
 
 @keyframes fadeIn {
@@ -180,6 +182,9 @@
     justify-content: center;
     padding: 20px;
     overflow: auto;
+    min-height: 100vh;
+    min-height: -webkit-fill-available; /* iOS Safari fix */
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); /* Cover full viewport */
   }
 
   .landing-wrapper.register-page .hero {
