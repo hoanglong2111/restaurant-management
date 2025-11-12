@@ -1,7 +1,7 @@
 // client/src/components/ManageOrders.js
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './axiosInstance'; // Updated import
-import { Table, Button, Modal, Form, Select, Alert, Spin } from 'antd';
+import { Table, Button, Modal, Form, Select, Alert, Spin, Space, message } from 'antd';
 import '../CSS/ManageOrders.css';
 
 const { Option } = Select;
@@ -12,6 +12,7 @@ function ManageOrders() {
   const [error, setError] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentOrder, setCurrentOrder] = useState(null);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -81,6 +82,73 @@ function ManageOrders() {
     });
   };
 
+  // Bulk delete
+  const handleBulkDelete = () => {
+    if (selectedRowKeys.length === 0) {
+      message.warning('Vui lòng chọn ít nhất 1 đơn hàng');
+      return;
+    }
+
+    Modal.confirm({
+      title: `Xác nhận xóa ${selectedRowKeys.length} đơn hàng`,
+      content: 'Bạn có chắc chắn muốn xóa các đơn hàng đã chọn? Hành động này không thể hoàn tác.',
+      okText: 'Xóa',
+      okType: 'danger',
+      cancelText: 'Hủy',
+      onOk: async () => {
+        try {
+          await Promise.all(selectedRowKeys.map(id => axiosInstance.delete(`orders/${id}`)));
+          message.success(`Đã xóa ${selectedRowKeys.length} đơn hàng`);
+          setSelectedRowKeys([]);
+          fetchOrders();
+        } catch (err) {
+          message.error('Có lỗi xảy ra khi xóa đơn hàng');
+        }
+      },
+    });
+  };
+
+  // Bulk update status
+  const handleBulkUpdateStatus = (status) => {
+    if (selectedRowKeys.length === 0) {
+      message.warning('Vui lòng chọn ít nhất 1 đơn hàng');
+      return;
+    }
+
+    Modal.confirm({
+      title: `Cập nhật ${selectedRowKeys.length} đơn hàng`,
+      content: `Đổi trạng thái thành "${status}"?`,
+      okText: 'Cập nhật',
+      cancelText: 'Hủy',
+      onOk: async () => {
+        try {
+          await Promise.all(selectedRowKeys.map(id => 
+            axiosInstance.put(`orders/${id}`, { status: status.toLowerCase() })
+          ));
+          message.success(`Đã cập nhật ${selectedRowKeys.length} đơn hàng`);
+          setSelectedRowKeys([]);
+          fetchOrders();
+        } catch (err) {
+          message.error('Có lỗi xảy ra khi cập nhật');
+        }
+      },
+    });
+  };
+
+  const onSelectChange = (newSelectedRowKeys) => {
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    selections: [
+      Table.SELECTION_ALL,
+      Table.SELECTION_INVERT,
+      Table.SELECTION_NONE,
+    ],
+  };
+
   const columns = [
     { title: 'ID Đơn Hàng', dataIndex: '_id', key: '_id' },
     { title: 'Tên Người Dùng', dataIndex: ['user', 'name'], key: 'user' },
@@ -105,8 +173,41 @@ function ManageOrders() {
   return (
     <div className="manage-orders-container">
       <h2 className="manage-orders-title">Quản Lý Đơn Hàng</h2>
+      
+      {/* Bulk Actions */}
+      {selectedRowKeys.length > 0 && (
+        <div className="bulk-actions-bar">
+          <Space wrap>
+            <span style={{ marginRight: 8 }}>
+              Đã chọn <strong>{selectedRowKeys.length}</strong> đơn hàng
+            </span>
+            <Button 
+              type="primary" 
+              onClick={() => handleBulkUpdateStatus('confirmed')}
+            >
+              Xác nhận
+            </Button>
+            <Button onClick={() => handleBulkUpdateStatus('pending')}>
+              Đang chờ
+            </Button>
+            <Button onClick={() => handleBulkUpdateStatus('cancelled')}>
+              Hủy bỏ
+            </Button>
+            <Button danger onClick={handleBulkDelete}>
+              Xóa tất cả
+            </Button>
+          </Space>
+        </div>
+      )}
+
       <div className="manage-orders-table">
-        <Table dataSource={orders} columns={columns} rowKey="_id" scroll={{ x: 'max-content' }} />
+        <Table 
+          dataSource={orders} 
+          columns={columns} 
+          rowKey="_id" 
+          rowSelection={rowSelection}
+          scroll={{ x: 'max-content' }} 
+        />
       </div>
       <Modal title="Cập Nhật Trạng Thái Đơn Hàng" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Form form={form} layout="vertical" onFinish={onFinish}>

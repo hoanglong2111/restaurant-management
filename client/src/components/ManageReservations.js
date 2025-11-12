@@ -1,6 +1,6 @@
 // File: client/src/components/ManageReservations.js
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, Modal, Form, Select, Alert, Spin, DatePicker, Checkbox } from 'antd';
+import { Table, Button, Modal, Form, Select, Alert, Spin, DatePicker, Checkbox, Space, message } from 'antd';
 import axiosInstance from './axiosInstance';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -18,6 +18,7 @@ function ManageReservations() {
     const [selectedDate, setSelectedDate] = useState(null); // Initialize as null
     const [currentTime, setCurrentTime] = useState(dayjs());
     const [filterMode, setFilterMode] = useState('date'); // 'date', 'month', 'year'
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [visibleColumns, setVisibleColumns] = useState([
         'ID Đặt Chỗ',
         'Người Dùng',
@@ -120,6 +121,73 @@ function ManageReservations() {
         } catch (err) {
             setError(err.response?.data?.message || 'Xóa đặt chỗ thất bại');
         }
+    };
+
+    // Bulk delete
+    const handleBulkDelete = () => {
+        if (selectedRowKeys.length === 0) {
+            message.warning('Vui lòng chọn ít nhất 1 đặt chỗ');
+            return;
+        }
+
+        Modal.confirm({
+            title: `Xác nhận xóa ${selectedRowKeys.length} đặt chỗ`,
+            content: 'Bạn có chắc chắn muốn xóa các đặt chỗ đã chọn?',
+            okText: 'Xóa',
+            okType: 'danger',
+            cancelText: 'Hủy',
+            onOk: async () => {
+                try {
+                    await Promise.all(selectedRowKeys.map(id => axiosInstance.delete(`reservations/${id}`)));
+                    message.success(`Đã xóa ${selectedRowKeys.length} đặt chỗ`);
+                    setSelectedRowKeys([]);
+                    fetchReservations();
+                } catch (err) {
+                    message.error('Có lỗi xảy ra khi xóa');
+                }
+            },
+        });
+    };
+
+    // Bulk update status
+    const handleBulkUpdateStatus = (status) => {
+        if (selectedRowKeys.length === 0) {
+            message.warning('Vui lòng chọn ít nhất 1 đặt chỗ');
+            return;
+        }
+
+        Modal.confirm({
+            title: `Cập nhật ${selectedRowKeys.length} đặt chỗ`,
+            content: `Đổi trạng thái thành "${status}"?`,
+            okText: 'Cập nhật',
+            cancelText: 'Hủy',
+            onOk: async () => {
+                try {
+                    await Promise.all(selectedRowKeys.map(id => 
+                        axiosInstance.put(`reservations/${id}`, { status: status.toLowerCase() })
+                    ));
+                    message.success(`Đã cập nhật ${selectedRowKeys.length} đặt chỗ`);
+                    setSelectedRowKeys([]);
+                    fetchReservations();
+                } catch (err) {
+                    message.error('Có lỗi xảy ra khi cập nhật');
+                }
+            },
+        });
+    };
+
+    const onSelectChange = (newSelectedRowKeys) => {
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+        selections: [
+            Table.SELECTION_ALL,
+            Table.SELECTION_INVERT,
+            Table.SELECTION_NONE,
+        ],
     };
 
     const columns = [
@@ -231,11 +299,38 @@ function ManageReservations() {
                 />
             </div>
 
+            {/* Bulk Actions */}
+            {selectedRowKeys.length > 0 && (
+                <div className="bulk-actions-bar">
+                    <Space wrap>
+                        <span style={{ marginRight: 8 }}>
+                            Đã chọn <strong>{selectedRowKeys.length}</strong> đặt chỗ
+                        </span>
+                        <Button 
+                            type="primary" 
+                            onClick={() => handleBulkUpdateStatus('confirmed')}
+                        >
+                            Xác nhận
+                        </Button>
+                        <Button onClick={() => handleBulkUpdateStatus('completed')}>
+                            Hoàn thành
+                        </Button>
+                        <Button onClick={() => handleBulkUpdateStatus('cancelled')}>
+                            Hủy bỏ
+                        </Button>
+                        <Button danger onClick={handleBulkDelete}>
+                            Xóa tất cả
+                        </Button>
+                    </Space>
+                </div>
+            )}
+
             <div className="manage-reservations-table">
                 <Table
                     dataSource={reservations}
                     columns={columns}
                     rowKey="_id"
+                    rowSelection={rowSelection}
                     scroll={{ x: 'max-content' }}
                 />
             </div>

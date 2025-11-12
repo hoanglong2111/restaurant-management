@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Result, Button, Spin } from 'antd';
+import { Result, Button, Spin, message } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
+import axiosInstance from '../components/axiosInstance';
 import '../CSS/PaymentSuccess.css';
 
 function PaymentSuccess({ clearCart }) {
@@ -9,17 +10,33 @@ function PaymentSuccess({ clearCart }) {
     const [searchParams] = useSearchParams();
     const [loading, setLoading] = useState(true);
     const sessionId = searchParams.get('session_id');
+    const orderId = searchParams.get('order_id');
 
     useEffect(() => {
-        // Clear cart after successful payment
-        if (sessionId) {
-            clearCart();
-            setLoading(false);
-        } else {
-            // No session ID, redirect to home
-            navigate('/');
-        }
-    }, [sessionId, clearCart, navigate]);
+        const confirmPayment = async () => {
+            if (sessionId && orderId) {
+                try {
+                    // Confirm payment với backend
+                    await axiosInstance.post('/orders/stripe-confirm', {
+                        sessionId,
+                        orderId
+                    });
+                    clearCart();
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error confirming payment:', error);
+                    message.error('Có lỗi xảy ra khi xác nhận thanh toán');
+                    clearCart(); // Vẫn clear cart
+                    setLoading(false);
+                }
+            } else {
+                // No session ID, redirect to home
+                navigate('/');
+            }
+        };
+
+        confirmPayment();
+    }, [sessionId, orderId, clearCart, navigate]);
 
     const handleViewOrders = () => {
         navigate('/myorders');

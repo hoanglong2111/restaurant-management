@@ -41,6 +41,25 @@
     gap: 8px;
 }
 
+/* Bulk Actions Bar */
+.bulk-actions-bar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
+    color: white;
+}
+
+.bulk-actions-bar .ant-space-item span {
+    color: white;
+    font-weight: 500;
+}
+
+.bulk-actions-bar .ant-btn {
+    font-weight: 500;
+}
+
 .manage-reservations-table {
     background-color: #ffffff;
     border-radius: 8px;
@@ -131,6 +150,21 @@
         border-radius: 4px;
     }
 
+    /* Bulk Actions Mobile */
+    .bulk-actions-bar {
+        padding: 12px;
+    }
+
+    .bulk-actions-bar .ant-space {
+        width: 100%;
+    }
+
+    .bulk-actions-bar .ant-btn {
+        font-size: 12px;
+        padding: 4px 12px;
+        height: auto;
+    }
+
     .column-selector {
         margin-bottom: 12px;
     }
@@ -190,7 +224,6 @@
         max-width: 200px;
     }
 }
-
 @media (max-width: 576px) {
     .manage-reservations-container {
         padding: 8px;

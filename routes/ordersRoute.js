@@ -218,6 +218,40 @@ router.post('/stripe-checkout', protect, async (req, res) => {
     }
 });
 
+// Stripe Confirm Payment (Manual) - Called from frontend success page
+router.post('/stripe-confirm', protect, async (req, res) => {
+    try {
+        const { sessionId, orderId } = req.body;
+        
+        console.log('=== Stripe Manual Confirm ===');
+        console.log('Session ID:', sessionId);
+        console.log('Order ID:', orderId);
+
+        // Verify session with Stripe
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        
+        if (session.payment_status === 'paid') {
+            // Update order
+            const order = await Order.findById(orderId);
+            if (order) {
+                order.isPaid = true;
+                order.paidAt = Date.now();
+                order.status = 'confirmed';
+                await order.save();
+                console.log('✅ Order confirmed:', order._id);
+                return res.json({ success: true, order });
+            } else {
+                return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+            }
+        } else {
+            return res.status(400).json({ message: 'Thanh toán chưa hoàn tất' });
+        }
+    } catch (error) {
+        console.error('Error confirming payment:', error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Stripe Webhook - Handle successful payment
 router.post('/stripe-webhook', express.raw({ type: 'application/json' }), async (req, res) => {
     const sig = req.headers['stripe-signature'];
