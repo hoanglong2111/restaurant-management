@@ -135,12 +135,14 @@
 }
 
 .drawer-menu .ant-menu-item-selected {
-  background-color: #1a1a1a;
-  color: #ffffff;
+  background-color: #e6f4ff;
+  color: #1890ff;
+  border-left: 3px solid #1890ff;
 }
 
 .drawer-menu .ant-menu-item-selected a {
-  color: #ffffff;
+  color: #1890ff;
+  font-weight: 500;
 }
 
 .drawer-menu .ant-menu-item-icon {
