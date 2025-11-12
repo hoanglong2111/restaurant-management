@@ -89,12 +89,26 @@ function ManageOrders() {
       return;
     }
 
+    const selectedOrders = orders.filter(order => selectedRowKeys.includes(order._id));
+
     Modal.confirm({
       title: `Xác nhận xóa ${selectedRowKeys.length} đơn hàng`,
-      content: 'Bạn có chắc chắn muốn xóa các đơn hàng đã chọn? Hành động này không thể hoàn tác.',
+      content: (
+        <div>
+          <p style={{ marginBottom: 12 }}>Bạn có chắc chắn muốn xóa các đơn hàng đã chọn? Hành động này không thể hoàn tác.</p>
+          <div style={{ maxHeight: 200, overflowY: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+            {selectedOrders.map((order, index) => (
+              <div key={order._id} style={{ marginBottom: 4 }}>
+                {index + 1}. ID: {order._id.slice(-6)} - {order.user?.name} - {order.totalPrice.toLocaleString()} VND
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
       okText: 'Xóa',
       okType: 'danger',
       cancelText: 'Hủy',
+      width: 600,
       onOk: async () => {
         try {
           await Promise.all(selectedRowKeys.map(id => axiosInstance.delete(`orders/${id}`)));
@@ -115,11 +129,30 @@ function ManageOrders() {
       return;
     }
 
+    const selectedOrders = orders.filter(order => selectedRowKeys.includes(order._id));
+    const statusMap = {
+      'confirmed': 'Hoàn Thành',
+      'pending': 'Đang Chờ',
+      'cancelled': 'Đã Hủy'
+    };
+
     Modal.confirm({
       title: `Cập nhật ${selectedRowKeys.length} đơn hàng`,
-      content: `Đổi trạng thái thành "${status}"?`,
+      content: (
+        <div>
+          <p style={{ marginBottom: 12 }}>Đổi trạng thái thành <strong>"{statusMap[status.toLowerCase()]}"</strong>?</p>
+          <div style={{ maxHeight: 200, overflowY: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+            {selectedOrders.map((order, index) => (
+              <div key={order._id} style={{ marginBottom: 4 }}>
+                {index + 1}. ID: {order._id.slice(-6)} - {order.user?.name} - Trạng thái hiện tại: {order.status}
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
       okText: 'Cập nhật',
       cancelText: 'Hủy',
+      width: 600,
       onOk: async () => {
         try {
           await Promise.all(selectedRowKeys.map(id => 

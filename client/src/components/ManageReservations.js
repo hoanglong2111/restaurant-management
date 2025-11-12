@@ -130,12 +130,26 @@ function ManageReservations() {
             return;
         }
 
+        const selectedReservations = reservations.filter(res => selectedRowKeys.includes(res._id));
+
         Modal.confirm({
             title: `Xác nhận xóa ${selectedRowKeys.length} đặt chỗ`,
-            content: 'Bạn có chắc chắn muốn xóa các đặt chỗ đã chọn?',
+            content: (
+                <div>
+                    <p style={{ marginBottom: 12 }}>Bạn có chắc chắn muốn xóa các đặt chỗ đã chọn?</p>
+                    <div style={{ maxHeight: 200, overflowY: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+                        {selectedReservations.map((res, index) => (
+                            <div key={res._id} style={{ marginBottom: 4 }}>
+                                {index + 1}. {res.user?.name} - Bàn {res.table?.tableNumber} - {dayjs(res.reservationDate).format('DD/MM/YYYY HH:mm')}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ),
             okText: 'Xóa',
             okType: 'danger',
             cancelText: 'Hủy',
+            width: 600,
             onOk: async () => {
                 try {
                     await Promise.all(selectedRowKeys.map(id => axiosInstance.delete(`reservations/${id}`)));
@@ -156,11 +170,31 @@ function ManageReservations() {
             return;
         }
 
+        const selectedReservations = reservations.filter(res => selectedRowKeys.includes(res._id));
+        const statusMap = {
+            'confirmed': 'Đã Xác Nhận',
+            'pending': 'Đang Chờ',
+            'cancelled': 'Đã Hủy',
+            'completed': 'Hoàn Thành'
+        };
+
         Modal.confirm({
             title: `Cập nhật ${selectedRowKeys.length} đặt chỗ`,
-            content: `Đổi trạng thái thành "${status}"?`,
+            content: (
+                <div>
+                    <p style={{ marginBottom: 12 }}>Đổi trạng thái thành <strong>"{statusMap[status.toLowerCase()]}"</strong>?</p>
+                    <div style={{ maxHeight: 200, overflowY: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+                        {selectedReservations.map((res, index) => (
+                            <div key={res._id} style={{ marginBottom: 4 }}>
+                                {index + 1}. {res.user?.name} - Bàn {res.table?.tableNumber} - Trạng thái: {res.status}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ),
             okText: 'Cập nhật',
             cancelText: 'Hủy',
+            width: 600,
             onOk: async () => {
                 try {
                     await Promise.all(selectedRowKeys.map(id => 

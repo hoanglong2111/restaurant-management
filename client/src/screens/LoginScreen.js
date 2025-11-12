@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import axiosInstance from '../components/axiosInstance';
 import { Form, Input, Button, Alert } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
+import useThemeColor from '../utils/useThemeColor';
 import '../CSS/LoginScreen.css';
 
 function LoginScreen() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    // Set theme color to orange gradient for login page
+    useThemeColor('#fda085');
 
     const onFinish = async (values) => {
         try {

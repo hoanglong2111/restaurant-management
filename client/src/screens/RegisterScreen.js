@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import axiosInstance from '../components/axiosInstance';
 import { Form, Input, Button, Alert } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
+import useThemeColor from '../utils/useThemeColor';
 import '../CSS/RegisterScreen.css';
 
 function RegisterScreen() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    // Set theme color to purple gradient for register page
+    useThemeColor('#a8edea');
 
     const onFinish = async (values) => {
         if (values.password !== values.confirmPassword) {

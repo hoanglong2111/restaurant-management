@@ -4,12 +4,17 @@ import { Spin, Alert, Button, Modal, Carousel, Card, Row, Col, Input, Select, Fo
 import { SearchOutlined, FilterOutlined, CalendarOutlined, CheckCircleOutlined, CloseCircleOutlined, EyeOutlined, ShoppingCartOutlined, CreditCardOutlined, UserOutlined, ClockCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import '../CSS/MenuItems.css';
 import axiosInstance from './axiosInstance'; // Import axiosInstance for API calls
+import useThemeColor from '../utils/useThemeColor';
 import '../CSS/global.css';
 const { Search } = Input;
 const { Option } = Select;
 
 function MenuItems({ addToCart }) { // Nhận addToCart từ props
     const navigate = useNavigate();
+    
+    // Set theme color to dark for menu page
+    useThemeColor('#1a1a1a');
+    
     const [menuItems, setMenuItems] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
     const [categories, setCategories] = useState([]);

@@ -5,10 +5,10 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 999;
-    background: #1a1a1a;
-    color: white;
-    border: none;
+    z-index: 1000;
+    background: #1a1a1a !important;
+    color: white !important;
+    border: none !important;
     border-radius: 24px;
     padding: 12px 24px;
     height: 48px;
@@ -18,9 +18,11 @@
 }
 
 .mobile-back-button:hover,
-.mobile-back-button:focus {
-    background: #000000;
-    color: white;
+.mobile-back-button:focus,
+.mobile-back-button:active {
+    background: #000000 !important;
+    color: white !important;
+    border-color: transparent !important;
     transform: translateX(-50%) translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
