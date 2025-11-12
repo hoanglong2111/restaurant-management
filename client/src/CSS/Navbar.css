@@ -50,6 +50,21 @@
     right: 0 !important;
     z-index: 1000 !important;
     width: 100% !important;
+    /* Extend into notch area */
+    padding-top: env(safe-area-inset-top);
+    height: calc(64px + env(safe-area-inset-top));
+  }
+  
+  /* Pseudo-element to fill notch area */
+  .navbar-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top);
+    background-color: #1a1a1a;
+    z-index: -1;
   }
 
   /* Thêm padding-top cho body để không bị che */

@@ -14,8 +14,8 @@ html {
   /* Fix mobile viewport height for address bar */
   height: -webkit-fill-available;
   
-  /* Safe area support for devices with notch (iPhone X+) */
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  /* Background for notch area */
+  background-color: #1a1a1a;
 }
 
 body {
@@ -29,6 +29,9 @@ body {
   /* Fix mobile viewport height for address bar */
   min-height: 100vh;
   min-height: -webkit-fill-available;
+  
+  /* Background color for body */
+  background-color: #1a1a1a;
   
   /* Improve mobile text rendering */
   text-rendering: optimizeLegibility;
