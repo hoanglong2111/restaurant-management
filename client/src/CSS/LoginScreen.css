@@ -306,6 +306,17 @@
   .landing-wrapper.login-page .ant-form-item {
     margin-bottom: 16px;
   }
+
+  /* Fix mobile input zoom */
+  .landing-wrapper.login-page .ant-input,
+  .landing-wrapper.login-page .ant-input-password input {
+    font-size: 16px !important; /* Prevent iOS zoom */
+  }
+
+  /* Prevent layout shift when keyboard opens */
+  .landing-wrapper.login-page .form-section {
+    min-height: auto;
+  }
 }
 
 .landing-wrapper.login-page .alert-error {

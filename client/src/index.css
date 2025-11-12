@@ -95,8 +95,16 @@ code {
   
   input,
   select,
-  textarea {
-    font-size: 16px; /* Prevent iOS zoom on focus */
+  textarea,
+  .ant-input,
+  .ant-input-password input {
+    font-size: 16px !important; /* Prevent iOS zoom on focus */
+  }
+
+  /* Prevent viewport resize when keyboard opens */
+  body.keyboard-open {
+    position: fixed;
+    width: 100%;
   }
 }
 
