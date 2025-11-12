@@ -62,7 +62,6 @@
     }
 
     .ant-btn {
-        font-size: 12px;
         padding: 4px 8px;
         height: auto;
     }
@@ -104,7 +103,6 @@
     }
 
     .ant-btn {
-        font-size: 11px;
         padding: 2px 6px;
     }
 }
