@@ -1,0 +1,51 @@
+/* Payment Success Screen */
+.payment-success-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.payment-success-screen .ant-result {
+    background: white;
+    padding: 60px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 100%;
+}
+
+.payment-success-screen .ant-result-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+.payment-success-screen .ant-result-subtitle {
+    font-size: 16px;
+    color: #666;
+}
+
+.payment-success-screen .ant-result-icon svg {
+    font-size: 80px !important;
+}
+
+@media (max-width: 768px) {
+    .payment-success-screen .ant-result {
+        padding: 40px 20px;
+    }
+
+    .payment-success-screen .ant-result-title {
+        font-size: 24px;
+    }
+
+    .payment-success-screen .ant-result-subtitle {
+        font-size: 14px;
+    }
+
+    .payment-success-screen .ant-result-icon svg {
+        font-size: 60px !important;
+    }
+}

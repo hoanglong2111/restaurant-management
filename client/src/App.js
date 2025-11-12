@@ -18,6 +18,7 @@ import ManageUsers from './components/ManageUsers';
 import ManageTables from './components/ManageTables';
 import CartScreen from './screens/CartScreen';
 import MyOrders from './components/MyOrders';
+import PaymentSuccess from './screens/PaymentSuccess';
 import { logDeviceInfo } from './utils/deviceDetection';
 // ...other imports...
 
@@ -54,6 +55,7 @@ function AppContent({ currentUser, cart, removeFromCart, addToCart, updateQuanti
           </PrivateRoute>
         } />
         <Route path="/cart" element={<CartScreen cart={cart} removeFromCart={removeFromCart} updateQuantity={updateQuantity} clearCart={clearCart} />} />
+        <Route path="/payment-success" element={<PaymentSuccess clearCart={clearCart} />} />
         <Route path="/myorders" element={
           <PrivateRoute>
             <MyOrders />
