@@ -178,16 +178,18 @@
 /* Mobile layout (768px and below) */
 @media (max-width: 768px) {
   .landing-wrapper.register-page {
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    overflow: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: 100vh;
     height: -webkit-fill-available; /* iOS Safari fix */
     min-height: 100vh;
     min-height: -webkit-fill-available;
     background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); /* Cover full viewport */
     position: relative;
+    -webkit-overflow-scrolling: touch;
   }
 
   .landing-wrapper.register-page .hero {
@@ -213,14 +215,22 @@
     z-index: 2;
     width: 100%;
     max-width: 480px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .landing-wrapper.register-page .form-card {
     background: white;
     border-radius: 20px;
-    padding: 40px 32px;
+    padding: 32px 24px 24px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    margin: auto;
   }
 
   @keyframes slideUp {
@@ -235,9 +245,9 @@
   }
 
   .landing-wrapper.register-page .mobile-logo {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 20px;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
     display: block;
     border-radius: 14px;
     animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -251,10 +261,10 @@
 
   .landing-wrapper.register-page .form-card h2 {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     color: #333333;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
   }
 
@@ -263,8 +273,8 @@
   .landing-wrapper.register-page .ant-input-affix-wrapper {
     border-radius: 10px !important;
     border: 2px solid #e0e0e0 !important;
-    min-height: 48px !important;
-    padding: 14px 16px !important;
+    min-height: 46px !important;
+    padding: 12px 16px !important;
     font-size: 16px !important;
     transition: all 0.3s !important;
   }
@@ -274,7 +284,7 @@
   }
 
   .landing-wrapper.register-page .ant-input-affix-wrapper .ant-input {
-    padding: 14px 16px !important;
+    padding: 12px 16px !important;
     border: none !important;
   }
 
@@ -286,18 +296,19 @@
 
   .landing-wrapper.register-page .ant-btn-primary {
     width: 100%;
-    height: 52px;
+    height: 48px;
     border-radius: 10px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
     font-weight: 600;
-    font-size: 17px;
+    font-size: 16px;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    margin-top: 8px;
   }
 
   .landing-wrapper.register-page .login-link {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 16px;
     font-size: 14px;
     color: #666;
   }
@@ -313,7 +324,16 @@
   }
 
   .landing-wrapper.register-page .ant-form-item {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+  }
+
+  .landing-wrapper.register-page .ant-form-item-label {
+    padding-bottom: 4px;
+  }
+
+  .landing-wrapper.register-page .ant-form-item-label > label {
+    font-size: 14px;
+    font-weight: 500;
   }
 
   /* Fix mobile input zoom */
