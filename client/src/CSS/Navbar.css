@@ -145,8 +145,24 @@
   font-weight: 500;
 }
 
+/* Icon Styling - Căn đều và đồng màu */
 .drawer-menu .ant-menu-item-icon {
   font-size: 18px;
+  min-width: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #595959;
+}
+
+.drawer-menu .ant-menu-item-selected .ant-menu-item-icon,
+.drawer-menu .ant-menu-item-selected .anticon {
+  color: #1890ff;
+}
+
+.drawer-menu .ant-menu-item:hover .ant-menu-item-icon,
+.drawer-menu .ant-menu-item:hover .anticon {
+  color: #1890ff;
 }
 
 .drawer-menu .ant-menu-item-divider {

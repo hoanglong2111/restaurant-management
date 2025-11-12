@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu, Drawer, Button, Badge, Dropdown, Avatar } from 'antd';
-import { MenuOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { 
+  MenuOutlined, 
+  ShoppingCartOutlined, 
+  UserOutlined,
+  CalendarOutlined,
+  ShopOutlined,
+  InboxOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+  UserAddOutlined,
+  AppstoreOutlined
+} from '@ant-design/icons';
 import 'antd/dist/reset.css';
 import '../CSS/Navbar.css'; // Ensure this path is correct based on your project structure
 import '../CSS/global.css'; // Nếu bạn tạo lớp global
@@ -165,17 +177,17 @@ function Navbar({ cart, removeFromCart }) {
             currentUser.name ? [
               {
                 key: '/menu',
-                icon: <span>🍽️</span>,
+                icon: <AppstoreOutlined />,
                 label: <Link to="/menu" onClick={onClose}>Thực Đơn</Link>,
               },
               {
                 key: '/reservations',
-                icon: <span>📅</span>,
+                icon: <CalendarOutlined />,
                 label: <Link to="/reservations" onClick={onClose}>Đặt Chỗ</Link>,
               },
               {
                 key: '/tables',
-                icon: <span>🪑</span>,
+                icon: <ShopOutlined />,
                 label: <Link to="/tables" onClick={onClose}>Bàn</Link>,
               },
               {
@@ -192,7 +204,7 @@ function Navbar({ cart, removeFromCart }) {
               },
               {
                 key: '/myorders',
-                icon: <span>📦</span>,
+                icon: <InboxOutlined />,
                 label: <Link to="/myorders" onClick={onClose}>Đơn Hàng Của Tôi</Link>,
               },
               {
@@ -203,7 +215,7 @@ function Navbar({ cart, removeFromCart }) {
               ...(currentUser.isAdmin ? [
                 {
                   key: '/admin',
-                  icon: <span>⚙️</span>,
+                  icon: <SettingOutlined />,
                   label: <Link to="/admin" onClick={onClose}>Quản Trị</Link>,
                 },
               ] : []),
@@ -212,24 +224,24 @@ function Navbar({ cart, removeFromCart }) {
               },
               {
                 key: 'logout',
-                icon: <span>🚪</span>,
+                icon: <LogoutOutlined />,
                 label: 'Đăng Xuất',
                 onClick: handleLogout,
               },
             ] : [
               {
                 key: '/menu',
-                icon: <span>🍽️</span>,
+                icon: <AppstoreOutlined />,
                 label: <Link to="/menu" onClick={onClose}>Thực Đơn</Link>,
               },
               {
                 key: '/reservations',
-                icon: <span>📅</span>,
+                icon: <CalendarOutlined />,
                 label: <Link to="/reservations" onClick={onClose}>Đặt Chỗ</Link>,
               },
               {
                 key: '/tables',
-                icon: <span>🪑</span>,
+                icon: <ShopOutlined />,
                 label: <Link to="/tables" onClick={onClose}>Bàn</Link>,
               },
               {
@@ -237,12 +249,12 @@ function Navbar({ cart, removeFromCart }) {
               },
               {
                 key: '/login',
-                icon: <span>🔑</span>,
+                icon: <LoginOutlined />,
                 label: <Link to="/login" onClick={onClose}>Đăng Nhập</Link>,
               },
               {
                 key: '/register',
-                icon: <span>📝</span>,
+                icon: <UserAddOutlined />,
                 label: <Link to="/register" onClick={onClose}>Đăng Ký</Link>,
               },
             ]
