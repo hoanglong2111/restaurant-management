@@ -1,9 +1,9 @@
 // client/src/screens/CartScreen.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Modal, Alert, InputNumber, message } from 'antd';
+import { Button, Modal, Alert, InputNumber, message, Checkbox } from 'antd';
 import { FaCcVisa, FaCcMastercard, FaMoneyBillWave, FaCcStripe, FaCcPaypal } from 'react-icons/fa';
-import { PlusOutlined, MinusOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { PlusOutlined, MinusOutlined, QrcodeOutlined, DeleteOutlined, CheckSquareOutlined, BorderOutlined } from '@ant-design/icons';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import axiosInstance from '../components/axiosInstance';
 import MobileBackButton from '../components/MobileBackButton';
@@ -13,6 +13,7 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
     const [loading, setLoading] = useState(false);
     const [error] = useState('');
     const navigate = useNavigate();
+    const [selectedItems, setSelectedItems] = useState([]);
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalUSD = (totalPrice / 25000).toFixed(2); // Convert VND to USD (1 USD ≈ 25,000 VND)
@@ -229,6 +230,62 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
         setLoading(false);
     };
 
+    // Bulk action handlers
+    const handleSelectItem = (itemId, checked) => {
+        if (checked) {
+            setSelectedItems(prev => [...prev, itemId]);
+        } else {
+            setSelectedItems(prev => prev.filter(id => id !== itemId));
+        }
+    };
+
+    const handleSelectAll = () => {
+        setSelectedItems(cart.map(item => item._id));
+    };
+
+    const handleInvertSelection = () => {
+        const allIds = cart.map(item => item._id);
+        const unselectedIds = allIds.filter(id => !selectedItems.includes(id));
+        setSelectedItems(unselectedIds);
+    };
+
+    const handleClearSelection = () => {
+        setSelectedItems([]);
+    };
+
+    const handleBulkDelete = () => {
+        const selectedCartItems = cart.filter(item => selectedItems.includes(item._id));
+        
+        Modal.confirm({
+            title: 'Xác nhận xóa hàng loạt',
+            content: (
+                <div>
+                    <p>Bạn có chắc chắn muốn xóa {selectedItems.length} sản phẩm đã chọn?</p>
+                    <div style={{ maxHeight: '200px', overflowY: 'auto', marginTop: '16px', padding: '8px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
+                        <strong>Các sản phẩm sẽ bị xóa:</strong>
+                        <ul style={{ marginTop: '8px', paddingLeft: '20px' }}>
+                            {selectedCartItems.map(item => (
+                                <li key={item._id} style={{ marginBottom: '4px' }}>
+                                    {item.name} (x{item.quantity}) - {(item.price * item.quantity).toLocaleString()} VND
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            ),
+            okText: 'Xóa',
+            okType: 'danger',
+            cancelText: 'Hủy',
+            onOk: () => {
+                selectedItems.forEach(itemId => {
+                    removeFromCart(itemId);
+                });
+                setSelectedItems([]);
+                message.success(`Đã xóa ${selectedItems.length} sản phẩm khỏi giỏ hàng`);
+            },
+        });
+    };
+
     return (
         <div className="cart-screen">
             <MobileBackButton to="/menu" label="Quay về Menu" />
@@ -242,51 +299,98 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
                             <p>Giỏ hàng trống</p>
                         </div>
                     ) : (
-                        cart.map(item => (
-                            <div key={item._id} className="cart-item">
-                                <div className="cart-item-content">
-                                    <div className="cart-item-image">
-                                        {item.imageUrls && item.imageUrls.length > 0 ? (
-                                            <img src={item.imageUrls[0]} alt={item.name} />
-                                        ) : (
-                                            <div className="cart-item-image-placeholder">
-                                                <span>Không có ảnh</span>
-                                            </div>
-                                        )}
+                        <>
+                            {/* Bulk Action Controls */}
+                            <div className="cart-bulk-controls">
+                                <div className="bulk-select-buttons">
+                                    <Button 
+                                        size="small" 
+                                        onClick={handleSelectAll}
+                                        icon={<CheckSquareOutlined />}
+                                    >
+                                        Chọn tất cả
+                                    </Button>
+                                    <Button 
+                                        size="small" 
+                                        onClick={handleInvertSelection}
+                                        icon={<BorderOutlined />}
+                                    >
+                                        Đảo ngược
+                                    </Button>
+                                    <Button 
+                                        size="small" 
+                                        onClick={handleClearSelection}
+                                        disabled={selectedItems.length === 0}
+                                    >
+                                        Bỏ chọn
+                                    </Button>
+                                </div>
+                                {selectedItems.length > 0 && (
+                                    <Button 
+                                        type="primary" 
+                                        danger 
+                                        size="small"
+                                        onClick={handleBulkDelete}
+                                        icon={<DeleteOutlined />}
+                                    >
+                                        Xóa ({selectedItems.length})
+                                    </Button>
+                                )}
+                            </div>
+
+                            {/* Cart Items */}
+                            {cart.map(item => (
+                                <div key={item._id} className="cart-item">
+                                    <div className="cart-item-checkbox">
+                                        <Checkbox
+                                            checked={selectedItems.includes(item._id)}
+                                            onChange={(e) => handleSelectItem(item._id, e.target.checked)}
+                                        />
                                     </div>
-                                    <div className="cart-item-details">
-                                        <div className="cart-item-info">
-                                            <span className="cart-item-name">{item.name}</span>
-                                            <div className="cart-item-quantity-controls">
-                                                <Button
-                                                    type="default"
-                                                    size="small"
-                                                    icon={<MinusOutlined />}
-                                                    onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                                                />
-                                                <InputNumber
-                                                    min={1}
-                                                    max={99}
-                                                    value={item.quantity}
-                                                    onChange={(value) => updateQuantity(item._id, value || 1)}
-                                                    style={{ width: '60px', margin: '0 8px' }}
-                                                />
-                                                <Button
-                                                    type="default"
-                                                    size="small"
-                                                    icon={<PlusOutlined />}
-                                                    onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                                                />
-                                            </div>
+                                    <div className="cart-item-content">
+                                        <div className="cart-item-image">
+                                            {item.imageUrls && item.imageUrls.length > 0 ? (
+                                                <img src={item.imageUrls[0]} alt={item.name} />
+                                            ) : (
+                                                <div className="cart-item-image-placeholder">
+                                                    <span>Không có ảnh</span>
+                                                </div>
+                                            )}
                                         </div>
-                                        <div className="cart-item-actions">
-                                            <span className="cart-item-price">{(item.price * item.quantity).toLocaleString()} VND</span>
-                                            <Button type="link" danger onClick={() => removeFromCart(item._id)}>Xóa</Button>
+                                        <div className="cart-item-details">
+                                            <div className="cart-item-info">
+                                                <span className="cart-item-name">{item.name}</span>
+                                                <div className="cart-item-quantity-controls">
+                                                    <Button
+                                                        type="default"
+                                                        size="small"
+                                                        icon={<MinusOutlined />}
+                                                        onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                                                    />
+                                                    <InputNumber
+                                                        min={1}
+                                                        max={99}
+                                                        value={item.quantity}
+                                                        onChange={(value) => updateQuantity(item._id, value || 1)}
+                                                        style={{ width: '60px', margin: '0 8px' }}
+                                                    />
+                                                    <Button
+                                                        type="default"
+                                                        size="small"
+                                                        icon={<PlusOutlined />}
+                                                        onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="cart-item-actions">
+                                                <span className="cart-item-price">{(item.price * item.quantity).toLocaleString()} VND</span>
+                                                <Button type="link" danger onClick={() => removeFromCart(item._id)}>Xóa</Button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            ))}
+                        </>
                     )}
                 </div>
 

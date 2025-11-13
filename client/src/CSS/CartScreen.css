@@ -36,16 +36,49 @@
     font-size: 18px;
 }
 
+/* Bulk Action Controls */
+.cart-bulk-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #fafafa;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #f0f0f0;
+}
+
+.bulk-select-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.bulk-select-buttons .ant-btn {
+    font-size: 12px;
+    padding: 4px 8px;
+    height: auto;
+}
+
 .cart-item {
     padding: 16px;
     border-bottom: 1px solid #f0f0f0;
     transition: background 0.3s;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.cart-item-checkbox {
+    flex-shrink: 0;
+    padding-top: 4px;
 }
 
 .cart-item-content {
     display: flex;
     gap: 16px;
     align-items: flex-start;
+    flex: 1;
 }
 
 .cart-item-image {
@@ -279,6 +312,16 @@
         padding-bottom: 100px;
     }
 
+    .cart-bulk-controls {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .bulk-select-buttons {
+        justify-content: center;
+    }
+
     .cart-item-image {
         width: 80px;
         height: 80px;
@@ -377,8 +420,22 @@
         font-size: 20px;
     }
 
+    .cart-bulk-controls {
+        padding: 8px 12px;
+    }
+
+    .bulk-select-buttons {
+        gap: 4px;
+    }
+
+    .bulk-select-buttons .ant-btn {
+        font-size: 11px;
+        padding: 2px 6px;
+    }
+
     .cart-item {
         padding: 10px;
+        gap: 8px;
     }
 
     .cart-item-name {
