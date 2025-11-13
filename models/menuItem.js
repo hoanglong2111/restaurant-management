@@ -20,20 +20,32 @@ menuItemSchema.virtual('remaining').get(function() {
     return this.stock - this.sold;
 });
 
+// Virtual field for status text
+menuItemSchema.virtual('statusText').get(function() {
+    const remaining = this.stock - this.sold;
+    
+    if (remaining <= 0) {
+        return 'Hết hàng';
+    } else if (remaining <= this.stock * 0.1) {
+        return 'Sắp hết hàng';
+    } else {
+        return 'Còn hàng';
+    }
+});
+
 // Pre-save middleware to auto-update availability based on stock
 menuItemSchema.pre('save', function(next) {
     const remaining = this.stock - this.sold;
     
-    // If remaining stock is 0, set availability to false (out of stock)
+    // Set availability based on stock levels
+    // - Out of stock (remaining = 0): availability = false
+    // - Low stock (remaining <= 10%): availability = false  
+    // - In stock (remaining > 10%): availability = true
     if (remaining <= 0) {
         this.availability = false;
-    } 
-    // If remaining stock is <= 10% of initial stock, set availability to false (low stock)
-    else if (remaining <= this.stock * 0.1) {
+    } else if (remaining <= this.stock * 0.1) {
         this.availability = false;
-    }
-    // Otherwise, set availability to true
-    else {
+    } else {
         this.availability = true;
     }
     
