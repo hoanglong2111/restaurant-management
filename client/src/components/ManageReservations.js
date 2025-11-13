@@ -140,7 +140,7 @@ function ManageReservations() {
                     <div style={{ maxHeight: 200, overflowY: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
                         {selectedReservations.map((res, index) => (
                             <div key={res._id} style={{ marginBottom: 4 }}>
-                                {index + 1}. {res.user?.name} - Bàn {res.table?.tableNumber} - {dayjs(res.reservationDate).format('DD/MM/YYYY HH:mm')}
+                                {index + 1}. <strong>{res.user?.name || 'Khách hàng'}</strong> - Bàn {res.table?.tableNumber || 'N/A'} - {dayjs(res.reservationDate).format('DD/MM/YYYY HH:mm')}
                             </div>
                         ))}
                     </div>
@@ -172,10 +172,9 @@ function ManageReservations() {
 
         const selectedReservations = reservations.filter(res => selectedRowKeys.includes(res._id));
         const statusMap = {
-            'confirmed': 'Đã Xác Nhận',
+            'confirmed': 'Hoàn Thành',
             'pending': 'Đang Chờ',
-            'cancelled': 'Đã Hủy',
-            'completed': 'Hoàn Thành'
+            'cancelled': 'Đã Hủy'
         };
 
         Modal.confirm({
@@ -186,7 +185,7 @@ function ManageReservations() {
                     <div style={{ maxHeight: 200, overflowY: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
                         {selectedReservations.map((res, index) => (
                             <div key={res._id} style={{ marginBottom: 4 }}>
-                                {index + 1}. {res.user?.name} - Bàn {res.table?.tableNumber} - Trạng thái: {res.status}
+                                {index + 1}. <strong>{res.user?.name || 'Khách hàng'}</strong> - Bàn {res.table?.tableNumber || 'N/A'} - Trạng thái: {res.status}
                             </div>
                         ))}
                     </div>
@@ -344,16 +343,16 @@ function ManageReservations() {
                             type="primary" 
                             onClick={() => handleBulkUpdateStatus('confirmed')}
                         >
-                            Xác nhận
-                        </Button>
-                        <Button onClick={() => handleBulkUpdateStatus('completed')}>
                             Hoàn thành
+                        </Button>
+                        <Button onClick={() => handleBulkUpdateStatus('pending')}>
+                            Đang chờ
                         </Button>
                         <Button onClick={() => handleBulkUpdateStatus('cancelled')}>
                             Hủy bỏ
                         </Button>
                         <Button danger onClick={handleBulkDelete}>
-                            Xóa tất cả
+                            Xóa
                         </Button>
                     </Space>
                 </div>

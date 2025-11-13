@@ -99,7 +99,7 @@ function ManageOrders() {
           <div style={{ maxHeight: 200, overflowY: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
             {selectedOrders.map((order, index) => (
               <div key={order._id} style={{ marginBottom: 4 }}>
-                {index + 1}. ID: {order._id.slice(-6)} - {order.user?.name} - {order.totalPrice.toLocaleString()} VND
+                {index + 1}. <strong>{order.user?.name || 'Khách hàng'}</strong> - ID: {order._id.slice(-6)} - {order.totalPrice.toLocaleString()} VND
               </div>
             ))}
           </div>
@@ -144,7 +144,7 @@ function ManageOrders() {
           <div style={{ maxHeight: 200, overflowY: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
             {selectedOrders.map((order, index) => (
               <div key={order._id} style={{ marginBottom: 4 }}>
-                {index + 1}. ID: {order._id.slice(-6)} - {order.user?.name} - Trạng thái hiện tại: {order.status}
+                {index + 1}. <strong>{order.user?.name || 'Khách hàng'}</strong> - ID: {order._id.slice(-6)} - Trạng thái hiện tại: {order.status}
               </div>
             ))}
           </div>
@@ -218,7 +218,7 @@ function ManageOrders() {
               type="primary" 
               onClick={() => handleBulkUpdateStatus('confirmed')}
             >
-              Xác nhận
+              Hoàn thành
             </Button>
             <Button onClick={() => handleBulkUpdateStatus('pending')}>
               Đang chờ
@@ -227,7 +227,7 @@ function ManageOrders() {
               Hủy bỏ
             </Button>
             <Button danger onClick={handleBulkDelete}>
-              Xóa tất cả
+              Xóa
             </Button>
           </Space>
         </div>
