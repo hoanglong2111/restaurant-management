@@ -216,6 +216,10 @@ function ManageOrders() {
     setProductStats({ totalQuantity, totalRevenue });
   };
 
+  const onSelectChange = (newSelectedRowKeys) => {
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
