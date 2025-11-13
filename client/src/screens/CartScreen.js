@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Alert, InputNumber, message } from 'antd';
-import { FaCcVisa, FaCcMastercard, FaMoneyBillWave } from 'react-icons/fa';
+import { FaCcVisa, FaCcMastercard, FaMoneyBillWave, FaCcStripe, FaCcPaypal } from 'react-icons/fa';
 import { PlusOutlined, MinusOutlined, QrcodeOutlined } from '@ant-design/icons';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import axiosInstance from '../components/axiosInstance';
@@ -284,8 +284,11 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
                         </div>
 
                         <div className="credit-payment-methods">
-                            <FaCcVisa style={{ fontSize: '32px', marginRight: '10px' }} />
-                            <FaCcMastercard style={{ fontSize: '32px', marginRight: '10px' }} />
+                            <FaCcVisa style={{ fontSize: '32px', marginRight: '10px', color: '#1A1F71' }} />
+                            <FaCcMastercard style={{ fontSize: '32px', marginRight: '10px', color: '#EB001B' }} />
+                            <FaCcStripe style={{ fontSize: '32px', marginRight: '10px', color: '#635BFF' }} />
+                            <FaCcPaypal style={{ fontSize: '32px', marginRight: '10px', color: '#003087' }} />
+                            <QrcodeOutlined style={{ fontSize: '32px', marginRight: '10px', color: '#00A8E8' }} />
                         </div>
 
                         {error && <Alert message="Lỗi" description={error} type="error" showIcon style={{ marginBottom: 16 }} />}
