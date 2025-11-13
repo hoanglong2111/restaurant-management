@@ -244,33 +244,46 @@ function CartScreen({ cart, removeFromCart, updateQuantity, clearCart }) {
                     ) : (
                         cart.map(item => (
                             <div key={item._id} className="cart-item">
-                                <div className="cart-item-info">
-                                    <span className="cart-item-name">{item.name}</span>
-                                    <div className="cart-item-quantity-controls">
-                                        <Button
-                                            type="default"
-                                            size="small"
-                                            icon={<MinusOutlined />}
-                                            onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                                        />
-                                        <InputNumber
-                                            min={1}
-                                            max={99}
-                                            value={item.quantity}
-                                            onChange={(value) => updateQuantity(item._id, value || 1)}
-                                            style={{ width: '60px', margin: '0 8px' }}
-                                        />
-                                        <Button
-                                            type="default"
-                                            size="small"
-                                            icon={<PlusOutlined />}
-                                            onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                                        />
+                                <div className="cart-item-content">
+                                    <div className="cart-item-image">
+                                        {item.imageUrls && item.imageUrls.length > 0 ? (
+                                            <img src={item.imageUrls[0]} alt={item.name} />
+                                        ) : (
+                                            <div className="cart-item-image-placeholder">
+                                                <span>Không có ảnh</span>
+                                            </div>
+                                        )}
                                     </div>
-                                </div>
-                                <div className="cart-item-actions">
-                                    <span className="cart-item-price">{(item.price * item.quantity).toLocaleString()} VND</span>
-                                    <Button type="link" danger onClick={() => removeFromCart(item._id)}>Xóa</Button>
+                                    <div className="cart-item-details">
+                                        <div className="cart-item-info">
+                                            <span className="cart-item-name">{item.name}</span>
+                                            <div className="cart-item-quantity-controls">
+                                                <Button
+                                                    type="default"
+                                                    size="small"
+                                                    icon={<MinusOutlined />}
+                                                    onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                                                />
+                                                <InputNumber
+                                                    min={1}
+                                                    max={99}
+                                                    value={item.quantity}
+                                                    onChange={(value) => updateQuantity(item._id, value || 1)}
+                                                    style={{ width: '60px', margin: '0 8px' }}
+                                                />
+                                                <Button
+                                                    type="default"
+                                                    size="small"
+                                                    icon={<PlusOutlined />}
+                                                    onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="cart-item-actions">
+                                            <span className="cart-item-price">{(item.price * item.quantity).toLocaleString()} VND</span>
+                                            <Button type="link" danger onClick={() => removeFromCart(item._id)}>Xóa</Button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         ))
