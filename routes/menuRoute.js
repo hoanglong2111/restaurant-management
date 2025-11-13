@@ -5,7 +5,7 @@ const { protect, isAdmin } = require('../middleware/authMiddleware');
 
 // Tạo món ăn mới
 router.post('/create', protect, isAdmin, async (req, res) => {
-    const { name, description, price, category, imageUrls, stock } = req.body;
+    const { name, description, price, category, imageUrls, stock, sold } = req.body;
 
     try {
         const menuItem = new MenuItem({
@@ -15,6 +15,7 @@ router.post('/create', protect, isAdmin, async (req, res) => {
             category,
             imageUrls,
             stock,
+            sold: sold || 0,
         });
 
         const createdMenuItem = await menuItem.save();
@@ -47,6 +48,7 @@ router.put('/:id', protect, isAdmin, async (req, res) => {
             menuItem.imageUrls = req.body.imageUrls || menuItem.imageUrls;
             menuItem.availability = req.body.availability !== undefined ? req.body.availability : menuItem.availability;
             menuItem.stock = req.body.stock !== undefined ? req.body.stock : menuItem.stock;
+            menuItem.sold = req.body.sold !== undefined ? req.body.sold : menuItem.sold;
 
             const updatedMenuItem = await menuItem.save();
             res.json(updatedMenuItem);

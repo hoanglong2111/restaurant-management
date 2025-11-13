@@ -97,10 +97,22 @@ function ManageMenu() {
       render: (price) => `${price.toLocaleString()} VND`,
     },
     {
-      title: 'Số Lượng',
+      title: 'Số Lượng Ban Đầu',
       dataIndex: 'stock',
       key: 'stock',
       render: (stock) => stock || 0,
+    },
+    {
+      title: 'Đã Bán',
+      dataIndex: 'sold',
+      key: 'sold',
+      render: (sold) => sold || 0,
+    },
+    {
+      title: 'Còn Lại',
+      dataIndex: 'remaining',
+      key: 'remaining',
+      render: (text, record) => (record.stock - (record.sold || 0)),
     },
     { title: 'Danh Mục', dataIndex: 'category', key: 'category' },
     {
@@ -179,6 +191,20 @@ function ManageMenu() {
             rules={[{ required: true, message: 'Vui lòng nhập số lượng tồn kho' }]}
           >
             <InputNumber min={0} style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item label="Đã Bán">
+            <InputNumber 
+              value={editingItem?.sold || 0} 
+              disabled 
+              style={{ width: '100%' }} 
+            />
+          </Form.Item>
+          <Form.Item label="Còn Lại">
+            <InputNumber 
+              value={(editingItem?.stock || 0) - (editingItem?.sold || 0)} 
+              disabled 
+              style={{ width: '100%' }} 
+            />
           </Form.Item>
           <Form.Item
             name="category"

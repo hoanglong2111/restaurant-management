@@ -2,10 +2,21 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/order');
 const Payment = require('../models/payment');
+const MenuItem = require('../models/menuItem');
 const { protect, isAdmin } = require('../middleware/authMiddleware');
 const Stripe = require('stripe');
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const crypto = require('crypto');
+
+// Helper function to update sold quantity
+const updateSoldQuantity = async (orderItems) => {
+    for (const item of orderItems) {
+        await MenuItem.findByIdAndUpdate(
+            item.menuItem,
+            { $inc: { sold: item.quantity } }
+        );
+    }
+};
 
 // Tạo đơn hàng mới
 router.post('/create', protect, async (req, res) => {
@@ -24,6 +35,10 @@ router.post('/create', protect, async (req, res) => {
         });
 
         const createdOrder = await order.save();
+        
+        // Update sold quantity for menu items
+        await updateSoldQuantity(orderItems);
+        
         res.status(201).json(createdOrder);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -122,6 +137,9 @@ router.post('/stripe', protect, async (req, res) => {
 
             // Save Order to Database
             const createdOrder = await order.save();
+
+            // Update sold quantity for menu items
+            await updateSoldQuantity(orderItems);
 
             res.json({ success: true, order: createdOrder });
         } else {
@@ -325,6 +343,10 @@ router.post('/paypal', protect, async (req, res) => {
             });
 
             const createdOrder = await order.save();
+            
+            // Update sold quantity for menu items
+            await updateSoldQuantity(orderItems);
+            
             res.json({ success: true, order: createdOrder });
         } else {
             res.json({ success: false, message: 'Thanh toán PayPal không thành công.' });
@@ -391,6 +413,9 @@ router.post('/vietqr', protect, async (req, res) => {
         });
 
         const createdOrder = await order.save();
+
+        // Update sold quantity for menu items
+        await updateSoldQuantity(orderItems);
 
         // VietQR Config
         const bankId = process.env.VIETQR_BANK_ID || '970422'; // VCB
@@ -459,6 +484,41 @@ router.put('/confirm-payment/:id', protect, isAdmin, async (req, res) => {
             res.status(404).json({ message: 'Đơn hàng không tìm thấy hoặc không phải VietQR' });
         }
     } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Cash on Delivery Route
+router.post('/cod', protect, async (req, res) => {
+    try {
+        const { orderItems, totalPrice } = req.body;
+
+        if (!orderItems || orderItems.length === 0) {
+            return res.status(400).json({ message: 'Vui lòng cung cấp thông tin đơn hàng.' });
+        }
+
+        // Create a New Order
+        const order = new Order({
+            user: req.user._id,
+            orderItems: orderItems.map(item => ({
+                menuItem: item.menuItem,
+                quantity: item.quantity,
+                price: item.price
+            })),
+            paymentMethod: 'COD',
+            totalPrice,
+            isPaid: false,
+            status: 'confirmed',
+        });
+
+        const createdOrder = await order.save();
+        
+        // Update sold quantity for menu items
+        await updateSoldQuantity(orderItems);
+        
+        res.json({ success: true, order: createdOrder });
+    } catch (error) {
+        console.error('COD Order Error:', error);
         res.status(400).json({ message: error.message });
     }
 });

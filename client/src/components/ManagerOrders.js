@@ -14,9 +14,14 @@ function ManageOrders() {
   const [currentOrder, setCurrentOrder] = useState(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [form] = Form.useForm();
+  const [menuItems, setMenuItems] = useState([]);
+  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [productStats, setProductStats] = useState({ totalQuantity: 0, totalRevenue: 0 });
 
   useEffect(() => {
     fetchOrders();
+    fetchMenuItems();
   }, []);
 
   const fetchOrders = async () => {
@@ -24,10 +29,20 @@ function ManageOrders() {
     try {
       const { data } = await axiosInstance.get('orders'); // Updated to use axiosInstance
       setOrders(data);
+      setFilteredOrders(data); // Initially show all orders
     } catch (err) {
       setError(err.response?.data?.message || 'Lấy danh sách đơn hàng thất bại');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchMenuItems = async () => {
+    try {
+      const { data } = await axiosInstance.get('menu');
+      setMenuItems(data);
+    } catch (err) {
+      console.error('Failed to fetch menu items:', err);
     }
   };
 
@@ -168,8 +183,37 @@ function ManageOrders() {
     });
   };
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    setSelectedRowKeys(newSelectedRowKeys);
+  const handleMenuItemChange = (menuItemId) => {
+    setSelectedMenuItem(menuItemId);
+    
+    if (!menuItemId) {
+      // Show all orders
+      setFilteredOrders(orders);
+      setProductStats({ totalQuantity: 0, totalRevenue: 0 });
+      return;
+    }
+
+    // Filter orders that contain the selected menu item
+    const filtered = orders.filter(order => 
+      order.orderItems.some(item => item.menuItem._id === menuItemId)
+    );
+    
+    setFilteredOrders(filtered);
+
+    // Calculate stats
+    let totalQuantity = 0;
+    let totalRevenue = 0;
+    
+    filtered.forEach(order => {
+      order.orderItems.forEach(item => {
+        if (item.menuItem._id === menuItemId) {
+          totalQuantity += item.quantity;
+          totalRevenue += item.price * item.quantity;
+        }
+      });
+    });
+    
+    setProductStats({ totalQuantity, totalRevenue });
   };
 
   const rowSelection = {
@@ -207,6 +251,46 @@ function ManageOrders() {
     <div className="manage-orders-container">
       <h2 className="manage-orders-title">Quản Lý Đơn Hàng</h2>
       
+      {/* Product Check Section */}
+      <div className="product-check-section" style={{ marginBottom: 20, padding: 20, background: '#f9f9f9', borderRadius: 8 }}>
+        <h3 style={{ marginBottom: 16 }}>Kiểm Tra Sản Phẩm</h3>
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ minWidth: 200 }}>
+            <label style={{ display: 'block', marginBottom: 8, fontWeight: 'bold' }}>Chọn sản phẩm:</label>
+            <Select
+              placeholder="Chọn sản phẩm từ thực đơn"
+              style={{ width: '100%' }}
+              allowClear
+              onChange={handleMenuItemChange}
+              value={selectedMenuItem}
+            >
+              {menuItems.map(item => (
+                <Option key={item._id} value={item._id}>
+                  {item.name} (Còn: {(item.stock || 0) - (item.sold || 0)})
+                </Option>
+              ))}
+            </Select>
+          </div>
+          
+          {selectedMenuItem && (
+            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 24, fontWeight: 'bold', color: '#1890ff' }}>
+                  {productStats.totalQuantity}
+                </div>
+                <div style={{ color: '#666', fontSize: 12 }}>Tổng số lượng đã bán</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 24, fontWeight: 'bold', color: '#52c41a' }}>
+                  {productStats.totalRevenue.toLocaleString()} VND
+                </div>
+                <div style={{ color: '#666', fontSize: 12 }}>Tổng doanh thu</div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      
       {/* Bulk Actions */}
       {selectedRowKeys.length > 0 && (
         <div className="bulk-actions-bar">
@@ -234,7 +318,7 @@ function ManageOrders() {
 
       <div className="manage-orders-table">
         <Table 
-          dataSource={orders} 
+          dataSource={filteredOrders} 
           columns={columns} 
           rowKey="_id" 
           rowSelection={rowSelection}
