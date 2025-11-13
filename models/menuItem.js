@@ -6,7 +6,8 @@ const menuItemSchema = mongoose.Schema({
     price: { type: Number, required: true },
     category: { type: String, required: true },
     imageUrls: [{ type: String }],
-    availability: { type: Boolean, required: true, default: true }
+    availability: { type: Boolean, required: true, default: true },
+    stock: { type: Number, required: true, default: 0, min: 0 }
 }, {
     timestamps: true
 });

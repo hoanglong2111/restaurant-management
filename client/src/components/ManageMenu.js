@@ -41,6 +41,7 @@ function ManageMenu() {
       name: item.name,
       description: item.description,
       price: item.price,
+      stock: item.stock,
       category: item.category,
       imageUrls: item.imageUrls || [''],
       availability: item.availability,
@@ -94,6 +95,12 @@ function ManageMenu() {
       dataIndex: 'price',
       key: 'price',
       render: (price) => `${price.toLocaleString()} VND`,
+    },
+    {
+      title: 'Số Lượng',
+      dataIndex: 'stock',
+      key: 'stock',
+      render: (stock) => stock || 0,
     },
     { title: 'Danh Mục', dataIndex: 'category', key: 'category' },
     {
@@ -165,6 +172,13 @@ function ManageMenu() {
             rules={[{ required: true, message: 'Vui lòng nhập giá' }]}
           >
             <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item
+            name="stock"
+            label="Số Lượng Tồn Kho"
+            rules={[{ required: true, message: 'Vui lòng nhập số lượng tồn kho' }]}
+          >
+            <InputNumber min={0} style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item
             name="category"
