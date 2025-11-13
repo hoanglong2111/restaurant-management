@@ -17,6 +17,10 @@
 @media (min-width: 769px) {
   .landing-wrapper.register-page {
     align-items: stretch;
+    /* Fill viewport and avoid any bottom white area */
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(102,126,234,1) 0%, rgba(118,75,162,1) 100%);
+    overflow: hidden;
   }
 
   .landing-wrapper.register-page .hero {
@@ -28,6 +32,7 @@
     color: #fff;
     padding: 48px;
     order: 2;
+    height: 100%;
   }
 
   .landing-wrapper.register-page .hero .brand {
@@ -90,6 +95,7 @@
     padding: 40px;
     background: #fff;
     order: 1;
+    height: 100%;
   }
 
   .landing-wrapper.register-page .form-card {

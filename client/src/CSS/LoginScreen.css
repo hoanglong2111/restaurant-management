@@ -17,6 +17,10 @@
 @media (min-width: 769px) {
   .landing-wrapper.login-page {
     align-items: stretch;
+    /* Ensure the landing fills the full viewport on desktop and avoids bottom white gap */
+    height: 100vh;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    overflow: hidden;
   }
 
   .landing-wrapper.login-page .hero {
@@ -28,6 +32,7 @@
     color: #fff;
     padding: 48px;
     order: 1;
+    height: 100%;
   }
 
   .landing-wrapper.login-page .hero .brand {
@@ -90,6 +95,7 @@
     padding: 40px;
     background: #fff;
     order: 2;
+    height: 100%;
   }
 
   .landing-wrapper.login-page .form-card {
