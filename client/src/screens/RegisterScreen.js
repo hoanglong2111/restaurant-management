@@ -36,7 +36,7 @@ function RegisterScreen() {
         <div className="landing-wrapper register-page">
             <div className="hero hero-alt">
                 <div className="brand">
-                    <img src="/canh-quan-logo.png" alt="Cảnh Quan Food & Beverage" className="brand-logo" />
+                    <img src="/client/public/canh-quan-logo.png" alt="Cảnh Quan Food & Beverage" className="brand-logo" />
                     <h1 className="brand-title">Tham gia Cảnh Quan</h1>
                     <p className="brand-subtitle">Tạo tài khoản để nhận ưu đãi và quản lý đặt chỗ dễ dàng.</p>
                     <Link to="/login" className="cta-ghost">Đăng nhập nếu đã có tài khoản</Link>

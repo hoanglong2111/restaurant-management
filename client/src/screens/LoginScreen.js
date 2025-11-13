@@ -30,7 +30,7 @@ function LoginScreen() {
         <div className="landing-wrapper login-page">
             <div className="hero">
                 <div className="brand">
-                    <img src="/canh-quan-logo.png" alt="Cảnh Quan Food & Beverage" className="brand-logo" />
+                    <img src="/client/public/canh-quan-logo.png" alt="Cảnh Quan Food & Beverage" className="brand-logo" />
                     <h1 className="brand-title">Chào mừng đến với Cảnh Quan</h1>
                     <p className="brand-subtitle">Quán ăn của mọi nhà — đặt món, đặt bàn, tận hưởng.</p>
                     <Link to="/register" className="cta-ghost">Tạo tài khoản mới</Link>
