@@ -85,7 +85,9 @@ dist
 
 # Gatsby
 .cache/
-public
+# public - Commented out because Create React App needs client/public/ tracked
+# Only ignore backend public uploads
+/public/uploads/
 
 # Serverless
 .serverless/
