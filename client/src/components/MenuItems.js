@@ -280,9 +280,11 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                                             <div className="menu-category-tag">
                                                 {item.category}
                                             </div>
-                                            <div className={`menu-availability ${item.availability ? 'in-stock' : 'out-of-stock'}`}>
-                                                {item.availability ? (
+                                            <div className={`menu-availability ${item.statusText === 'Còn hàng' ? 'in-stock' : item.statusText === 'Sắp hết hàng' ? 'low-stock' : 'out-of-stock'}`}>
+                                                {item.statusText === 'Còn hàng' ? (
                                                     <><CheckCircleOutlined /> Còn hàng</>
+                                                ) : item.statusText === 'Sắp hết hàng' ? (
+                                                    <><ClockCircleOutlined /> Sắp hết hàng</>
                                                 ) : (
                                                     <><CloseCircleOutlined /> Hết hàng</>
                                                 )}
@@ -367,9 +369,11 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                         <span className="menu-item-category">
                             Danh mục: <strong>{selectedItem.category}</strong>
                         </span>
-                        <span className={`menu-item-availability ${selectedItem.availability ? 'in-stock' : 'out-of-stock'}`}>
-                            {selectedItem.availability ? (
+                        <span className={`menu-item-availability ${selectedItem.statusText === 'Còn hàng' ? 'in-stock' : selectedItem.statusText === 'Sắp hết hàng' ? 'low-stock' : 'out-of-stock'}`}>
+                            {selectedItem.statusText === 'Còn hàng' ? (
                                 <><CheckCircleOutlined /> Còn hàng</>
+                            ) : selectedItem.statusText === 'Sắp hết hàng' ? (
+                                <><ClockCircleOutlined /> Sắp hết hàng</>
                             ) : (
                                 <><CloseCircleOutlined /> Hết hàng</>
                             )}

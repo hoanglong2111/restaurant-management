@@ -229,7 +229,32 @@
     color: #52c41a;
 }
 
+.menu-availability.low-stock {
+    color: #faad14;
+}
+
 .menu-availability.out-of-stock {
+    color: #ff4d4f;
+}
+
+/* Modal Item Availability */
+.menu-item-availability {
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.menu-item-availability.in-stock {
+    color: #52c41a;
+}
+
+.menu-item-availability.low-stock {
+    color: #faad14;
+}
+
+.menu-item-availability.out-of-stock {
     color: #ff4d4f;
 }
 
