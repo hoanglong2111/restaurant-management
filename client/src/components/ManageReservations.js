@@ -340,7 +340,6 @@ function ManageReservations() {
                             Đã chọn <strong>{selectedRowKeys.length}</strong> đặt chỗ
                         </span>
                         <Button 
-                            type="primary" 
                             onClick={() => handleBulkUpdateStatus('confirmed')}
                         >
                             Hoàn thành

@@ -215,7 +215,6 @@ function ManageOrders() {
               Đã chọn <strong>{selectedRowKeys.length}</strong> đơn hàng
             </span>
             <Button 
-              type="primary" 
               onClick={() => handleBulkUpdateStatus('confirmed')}
             >
               Hoàn thành
