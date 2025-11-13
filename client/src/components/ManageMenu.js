@@ -89,7 +89,18 @@ function ManageMenu() {
 
   const columns = [
     { title: 'Tên Món', dataIndex: 'name', key: 'name' },
-    { title: 'Mô Tả', dataIndex: 'description', key: 'description' },
+    { 
+      title: 'Mô Tả', 
+      dataIndex: 'description', 
+      key: 'description',
+      render: (description) => {
+        if (!description) return '-';
+        const maxLength = 50;
+        return description.length > maxLength ? 
+          `${description.substring(0, maxLength)}...` : 
+          description;
+      }
+    },
     {
       title: 'Giá',
       dataIndex: 'price',
@@ -128,9 +139,16 @@ function ManageMenu() {
     },
     {
       title: 'Tình Trạng',
-      dataIndex: 'availability',
-      key: 'availability',
-      render: (avail) => (avail ? 'Còn hàng' : 'Hết hàng'),
+      dataIndex: 'statusText',
+      key: 'statusText',
+      render: (statusText, record) => {
+        let color = '';
+        if (statusText === 'Hết hàng') color = '#ff4d4f';
+        else if (statusText === 'Sắp hết hàng') color = '#faad14';
+        else if (statusText === 'Còn hàng') color = '#52c41a';
+        
+        return <span style={{ color, fontWeight: 'bold' }}>{statusText}</span>;
+      },
       className: 'menu-availability',
     },
     {
@@ -239,8 +257,21 @@ function ManageMenu() {
               </>
             )}
           </Form.List>
-          <Form.Item name="availability" label="Tình Trạng" valuePropName="checked">
-            <Switch checkedChildren="Còn hàng" unCheckedChildren="Hết hàng" />
+          <Form.Item label="Tình Trạng Hiện Tại">
+            <span style={{ 
+              fontWeight: 'bold',
+              color: editingItem?.statusText === 'Hết hàng' ? '#ff4d4f' : 
+                     editingItem?.statusText === 'Sắp hết hàng' ? '#faad14' : '#52c41a'
+            }}>
+              {editingItem?.statusText || 'Chưa xác định'}
+            </span>
+          </Form.Item>
+          <Form.Item name="availability" label="Cho phép bán" valuePropName="checked">
+            <Switch 
+              checkedChildren="Có thể bán" 
+              unCheckedChildren="Ngừng bán"
+              disabled={editingItem && (editingItem.statusText === 'Hết hàng')}
+            />
           </Form.Item>
         </Form>
       </Modal>
