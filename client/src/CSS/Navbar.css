@@ -11,16 +11,22 @@
   height: 44px;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
+  /* Prevent layout shift */
+  flex-shrink: 0;
 }
 
 .menu-button.mobile-only:hover {
   background-color: #000000;
-  transform: scale(1.05);
+  /* Remove transform scale to prevent jank */
 }
 
 .menu-button.mobile-only .anticon {
   font-size: 20px;
+  /* Prevent icon shift */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Show menu button on mobile */
@@ -39,6 +45,8 @@
   padding: 0 24px;
   height: 64px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* Smooth transition for any changes */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Sticky Header - Chỉ mobile */
@@ -53,6 +61,10 @@
     /* Extend into notch area */
     padding-top: env(safe-area-inset-top);
     height: calc(64px + env(safe-area-inset-top));
+    /* Prevent layout shift */
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   
   /* Pseudo-element to fill notch area */
@@ -67,15 +79,17 @@
     z-index: -1;
   }
 
-  /* Thêm padding-top cho body để không bị che */
+  /* Thêm padding-top cho body để không bị che - dynamic height */
   body {
-    padding-top: 64px !important;
+    padding-top: calc(64px + env(safe-area-inset-top)) !important;
   }
 }
 
 /* Logo Styling */
 .logo {
   flex-shrink: 0;
+  /* Prevent layout shift */
+  min-width: fit-content;
 }
 
 .logo a {
@@ -85,10 +99,15 @@
   text-decoration: none;
   letter-spacing: 0.5px;
   transition: color 0.3s ease;
+  /* Prevent text shifting */
+  display: inline-block;
+  line-height: 1.2;
+  vertical-align: middle;
 }
 
 .logo a:hover {
   color: #f0f0f0;
+  /* Remove transform to prevent layout shift */
 }
 
 /* Desktop Menu Styling */
