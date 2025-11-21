@@ -173,7 +173,7 @@ function MenuItems({ addToCart }) {
         setReservationData(null);
     };
 
-    if (loading) return <Spin tip="Đang tải..." />;
+    if (loading) return <Spin />;
     if (error) return <Alert message="Lỗi" description={error} type="error" showIcon />;
 
     return (
