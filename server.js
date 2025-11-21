@@ -67,7 +67,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Routes
-app.use('/api/menu', protect, require('./routes/menuRoute'));
+app.use('/api/menu', require('./routes/menuRoute'));
 app.use('/api/orders', protect, require('./routes/ordersRoute')); // Stripe & PayPal routes here
 app.use('/api/reservations', protect, require('./routes/reservationsRoute'));
 app.use('/api/tables', protect, require('./routes/tablesRoute'));
