@@ -25,7 +25,12 @@ function Reservations() {
             const params = selectedDate
                 ? { date: selectedDate.format('YYYY-MM-DD') }
                 : {};
-            const { data } = await axiosInstance.get('reservations', { params });
+            
+            // Check if user is admin
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const endpoint = user && user.isAdmin ? 'reservations' : 'reservations/my';
+            
+            const { data } = await axiosInstance.get(endpoint, { params });
             setReservations(data);
         } catch (err) {
             setError(err.response?.data?.message || 'Không thể lấy danh sách đặt chỗ.');
@@ -90,7 +95,7 @@ function Reservations() {
                     </Col>
                 </Row>
                 {loading ? (
-                    <Spin tip="Đang tải..." className="reservations-spin" />
+                    <Spin className="reservations-spin" />
                 ) : error ? (
                     <Alert message="Lỗi" description={error} type="error" showIcon className="reservations-alert" />
                 ) : (
