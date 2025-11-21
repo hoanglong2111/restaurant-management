@@ -1,43 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Spin, Alert, Button, Modal, Carousel, Card, Row, Col, Input, Select, Form, DatePicker, InputNumber } from 'antd';
-import { SearchOutlined, FilterOutlined, CalendarOutlined, CheckCircleOutlined, CloseCircleOutlined, EyeOutlined, ShoppingCartOutlined, CreditCardOutlined, UserOutlined, ClockCircleOutlined, TeamOutlined } from '@ant-design/icons';
+import { SearchOutlined, FilterOutlined, CalendarOutlined, CheckCircleOutlined, CloseCircleOutlined, ClockCircleOutlined, EyeOutlined, ShoppingCartOutlined, CreditCardOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
 import '../CSS/MenuItems.css';
 import axiosInstance from './axiosInstance'; // Import axiosInstance for API calls
 import useThemeColor from '../utils/useThemeColor';
 import '../CSS/global.css';
-const { Search } = Input;
-const { Option } = Select;
+import MenuFilter from './menu/MenuFilter';
+import MenuItem from './menu/MenuItem';
 
-function MenuItems({ addToCart }) { // Nhận addToCart từ props
+function MenuItems({ addToCart }) {
     const navigate = useNavigate();
-    
     // Set theme color to dark for menu page
     useThemeColor('#1a1a1a');
-    
+
     const [menuItems, setMenuItems] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [isModalVisible, setIsModalVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
 
-    // State for Reservation Modal
+    // Reservation modal state
     const [isReserveModalVisible, setIsReserveModalVisible] = useState(false);
     const [availableTables, setAvailableTables] = useState([]);
     const [reservationForm] = Form.useForm();
     const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
     const [reservationData, setReservationData] = useState(null);
     const [reservationError, setReservationError] = useState('');
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
+    // Fetch menu items on mount
     useEffect(() => {
         const fetchMenuItems = async () => {
             setLoading(true);
             try {
-                const { data } = await axiosInstance.get('menu'); // Sử dụng axiosInstance
+                const { data } = await axiosInstance.get('menu');
                 const sanitizedData = data.map(item => ({
                     ...item,
                     imageUrls: Array.isArray(item.imageUrls) ? item.imageUrls : [],
@@ -52,16 +52,15 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                 setLoading(false);
             }
         };
-
         fetchMenuItems();
     }, []);
 
-    const handleSearch = (value) => {
+    const handleSearch = value => {
         setSearchTerm(value);
         filterItems(value, selectedCategory);
     };
 
-    const handleCategoryChange = (value) => {
+    const handleCategoryChange = value => {
         setSelectedCategory(value);
         filterItems(searchTerm, value);
     };
@@ -69,9 +68,7 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
     const filterItems = (search, category) => {
         let items = [...menuItems];
         if (search) {
-            items = items.filter(item =>
-                item.name.toLowerCase().includes(search.toLowerCase())
-            );
+            items = items.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
         }
         if (category) {
             items = items.filter(item => item.category === category);
@@ -79,7 +76,7 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
         setFilteredItems(items);
     };
 
-    const showModal = (item) => {
+    const showModal = item => {
         setSelectedItem(item);
         setIsModalVisible(true);
     };
@@ -91,7 +88,7 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
 
     const handleAddToCart = () => {
         if (selectedItem) {
-            addToCart(selectedItem); // Sử dụng addToCart từ props
+            addToCart(selectedItem);
             setIsModalVisible(false);
             setSelectedItem(null);
             Modal.success({
@@ -102,23 +99,18 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
     };
 
     const handleCheckout = () => {
-        // Chuyển hướng đến trang thanh toán bằng navigate (giữ state)
         navigate('/cart');
     };
 
     const handleEatAtTable = () => {
         setIsReserveModalVisible(true);
-        // fetchAvailableTables(); // Bạn có thể thêm tham số ngày nếu cần
     };
 
-    // Fetch available tables for reservation
-    const fetchAvailableTables = async (date) => {
+    const fetchAvailableTables = async date => {
         setLoading(true);
         try {
             const formattedDate = date.format('YYYY-MM-DD HH:mm:ss');
-            const response = await axiosInstance.get('tables', {
-                params: { reservationDate: formattedDate },
-            });
+            const response = await axiosInstance.get('tables', { params: { reservationDate: formattedDate } });
             setAvailableTables(response.data);
             setLoading(false);
         } catch (err) {
@@ -127,11 +119,8 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
         }
     };
 
-    // Gọi khi người dùng chọn ngày đặt bàn
-    const handleDateChange = (date) => {
-        if (date) {
-            fetchAvailableTables(date);
-        }
+    const handleDateChange = date => {
+        if (date) fetchAvailableTables(date);
     };
 
     const handleReserveCancel = () => {
@@ -147,23 +136,20 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                 setReservationData(values);
                 setIsConfirmModalVisible(true);
             })
-            .catch(info => {
-                console.log('Validate Failed:', info);
-            });
+            .catch(info => console.log('Validate Failed:', info));
     };
 
     const handleConfirm = async () => {
         try {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             const reservationPayload = {
-                user: currentUser._id, // Thêm trường này
+                user: currentUser._id,
                 table: reservationData.table,
                 reservationDate: reservationData.date.format('YYYY-MM-DD HH:mm:ss'),
                 numberOfGuests: reservationData.guests,
                 status: 'confirmed',
             };
             await axiosInstance.post('reservations', reservationPayload);
-            // Cập nhật danh sách bàn có sẵn sau khi đặt thành công
             fetchAvailableTables(reservationData.date);
             setIsConfirmModalVisible(false);
             setIsReserveModalVisible(false);
@@ -200,110 +186,33 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
             </div>
 
             {/* Filter Section */}
-            <div className="menu-filter-section">
-                <Row gutter={[16, 16]} align="middle">
-                    <Col xs={24} sm={24} md={8}>
-                        <Search
-                            placeholder="Tìm kiếm món ăn..."
-                            enterButton={<SearchOutlined style={{ fontSize: '18px', color: '#ffffff' }} />}
-                            size="large"
-                            onSearch={handleSearch}
-                            allowClear
-                            onChange={(e) => handleSearch(e.target.value)}
-                        />
-                    </Col>
-                    <Col xs={24} sm={12} md={8}>
-                        <Select
-                            placeholder="Chọn danh mục"
-                            size="large"
-                            style={{ width: '100%' }}
-                            onChange={handleCategoryChange}
-                            allowClear
-                            suffixIcon={<FilterOutlined />}
-                        >
-                            {categories.map(category => (
-                                <Option key={category} value={category}>
-                                    {category}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Col>
-                    <Col xs={24} sm={12} md={8}>
-                        <Button
-                            type="primary"
-                            size="large"
-                            onClick={handleEatAtTable}
-                            icon={<CalendarOutlined />}
-                            block
-                        >
-                            Đặt Bàn
-                        </Button>
-                    </Col>
-                </Row>
-            </div>
+            <MenuFilter
+                searchTerm={searchTerm}
+                onSearch={handleSearch}
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onCategoryChange={handleCategoryChange}
+                onEatAtTable={handleEatAtTable}
+            />
 
             {/* Menu Items Grid */}
             <div className="menu-items-container">
                 <Row gutter={[24, 24]}>
                     {filteredItems.length > 0 ? (
-                    filteredItems.map(item => (
-                        <Col xs={24} sm={12} md={8} lg={6} key={item._id}>
-                            <Card
-                                hoverable
-                                className="menu-card"
-                                cover={
-                                    item.imageUrls && item.imageUrls.length > 0 ? (
-                                        <img alt={item.name} src={item.imageUrls[0]} className="menu-image" />
-                                    ) : (
-                                        <div className="menu-image menu-image-placeholder">
-                                            <span className="placeholder-icon">🍽️</span>
-                                        </div>
-                                    )
-                                }
-                                actions={[
-                                    <Button
-                                        type="link"
-                                        onClick={() => showModal(item)}
-                                        icon={<EyeOutlined />}
-                                    >
-                                        Xem Chi Tiết
-                                    </Button>
-                                ]}
-                            >
-                                <Card.Meta
-                                    title={item.name}
-                                    description={
-                                        <div className="menu-card-info">
-                                            <div className="menu-price">
-                                                {item.price.toLocaleString()} VND
-                                            </div>
-                                            <div className="menu-category-tag">
-                                                {item.category}
-                                            </div>
-                                            <div className={`menu-availability ${item.statusText === 'Còn hàng' ? 'in-stock' : item.statusText === 'Sắp hết hàng' ? 'low-stock' : 'out-of-stock'}`}>
-                                                {item.statusText === 'Còn hàng' ? (
-                                                    <><CheckCircleOutlined /> Còn hàng</>
-                                                ) : item.statusText === 'Sắp hết hàng' ? (
-                                                    <><ClockCircleOutlined /> Sắp hết hàng</>
-                                                ) : (
-                                                    <><CloseCircleOutlined /> Hết hàng</>
-                                                )}
-                                            </div>
-                                        </div>
-                                    }
-                                />
-                            </Card>
+                        filteredItems.map(item => (
+                            <Col xs={24} sm={12} md={8} lg={6} key={item._id}>
+                                <MenuItem item={item} onAddToCart={addToCart} />
+                            </Col>
+                        ))
+                    ) : (
+                        <Col span={24}>
+                            <div className="empty-state">
+                                <SearchOutlined style={{ fontSize: '48px', color: '#d9d9d9' }} />
+                                <h3>Không tìm thấy món ăn nào</h3>
+                                <p>Vui lòng thử tìm kiếm với từ khóa khác</p>
+                            </div>
                         </Col>
-                    ))
-                ) : (
-                    <Col span={24}>
-                        <div className="empty-state">
-                            <SearchOutlined style={{ fontSize: '48px', color: '#d9d9d9' }} />
-                            <h3>Không tìm thấy món ăn nào</h3>
-                            <p>Vui lòng thử tìm kiếm với từ khóa khác</p>
-                        </div>
-                    </Col>
-                )}
+                    )}
                 </Row>
             </div>
 
@@ -317,33 +226,14 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                     centered
                     footer={
                         <div className="modal-footer-custom">
-                            <Button
-                                key="addToCart"
-                                size="large"
-                                onClick={handleAddToCart}
-                                type="primary"
-                                icon={<ShoppingCartOutlined />}
-                                block
-                            >
+                            <Button key="addToCart" size="large" onClick={handleAddToCart} type="primary" icon={<ShoppingCartOutlined />} block>
                                 Thêm Vào Giỏ Hàng
                             </Button>
                             <div className="modal-footer-row">
-                                <Button
-                                    key="eatAtTable"
-                                    size="large"
-                                    onClick={handleEatAtTable}
-                                    icon={<CalendarOutlined />}
-                                    style={{ flex: 1 }}
-                                >
+                                <Button key="eatAtTable" size="large" onClick={handleEatAtTable} icon={<CalendarOutlined />} style={{ flex: 1 }}>
                                     Đặt Bàn
                                 </Button>
-                                <Button
-                                    key="checkout"
-                                    size="large"
-                                    onClick={handleCheckout}
-                                    icon={<CreditCardOutlined />}
-                                    style={{ flex: 1 }}
-                                >
+                                <Button key="checkout" size="large" onClick={handleCheckout} icon={<CreditCardOutlined />} style={{ flex: 1 }}>
                                     Thanh Toán
                                 </Button>
                             </div>
@@ -395,33 +285,14 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                 cancelText="Hủy"
                 className="reserve-modal"
                 width={600}
-                okButtonProps={{
-                    size: 'large',
-                    type: 'primary'
-                }}
-                cancelButtonProps={{
-                    size: 'large'
-                }}
+                okButtonProps={{ size: 'large', type: 'primary' }}
+                cancelButtonProps={{ size: 'large' }}
             >
                 {reservationError && (
-                    <Alert
-                        message="Lỗi"
-                        description={reservationError}
-                        type="error"
-                        showIcon
-                        style={{ marginBottom: 16 }}
-                    />
+                    <Alert message="Lỗi" description={reservationError} type="error" showIcon style={{ marginBottom: 16 }} />
                 )}
-                <Form
-                    form={reservationForm}
-                    layout="vertical"
-                    name="reservationForm"
-                >
-                    <Form.Item
-                        name="date"
-                        label="Ngày và Giờ"
-                        rules={[{ required: true, message: 'Vui lòng chọn ngày đặt' }]}
-                    >
+                <Form form={reservationForm} layout="vertical" name="reservationForm">
+                    <Form.Item name="date" label="Ngày và Giờ" rules={[{ required: true, message: 'Vui lòng chọn ngày đặt' }]}>
                         <DatePicker
                             showTime
                             format="YYYY-MM-DD HH:mm"
@@ -432,34 +303,11 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                             suffixIcon={<ClockCircleOutlined />}
                         />
                     </Form.Item>
-                    <Form.Item
-                        name="guests"
-                        label="Số Lượng Khách"
-                        rules={[{ required: true, message: 'Vui lòng nhập số người' }]}
-                    >
-                        <InputNumber
-                            min={1}
-                            max={20}
-                            style={{ width: '100%' }}
-                            size="large"
-                            placeholder="Nhập số lượng khách"
-                            prefix={<TeamOutlined />}
-                        />
+                    <Form.Item name="guests" label="Số Lượng Khách" rules={[{ required: true, message: 'Vui lòng nhập số người' }]}>
+                        <InputNumber min={1} max={20} style={{ width: '100%' }} size="large" placeholder="Nhập số lượng khách" prefix={<TeamOutlined />} />
                     </Form.Item>
-                    <Form.Item
-                        name="table"
-                        label="Chọn Bàn"
-                        rules={[{ required: true, message: 'Vui lòng chọn bàn' }]}
-                    >
-                        <Select
-                            placeholder="Chọn bàn phù hợp"
-                            showSearch
-                            size="large"
-                            optionFilterProp="children"
-                            filterOption={(input, option) =>
-                                option.children.toLowerCase().includes(input.toLowerCase())
-                            }
-                        >
+                    <Form.Item name="table" label="Chọn Bàn" rules={[{ required: true, message: 'Vui lòng chọn bàn' }]}>
+                        <Select placeholder="Chọn bàn phù hợp" showSearch size="large" optionFilterProp="children" filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}>
                             {availableTables.length > 0 ? (
                                 availableTables.map(table => (
                                     <Option key={table._id} value={table._id}>
@@ -483,13 +331,8 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                 okText="Xác Nhận"
                 cancelText="Quay Lại"
                 className="reserve-modal"
-                okButtonProps={{
-                    size: 'large',
-                    type: 'primary'
-                }}
-                cancelButtonProps={{
-                    size: 'large'
-                }}
+                okButtonProps={{ size: 'large', type: 'primary' }}
+                cancelButtonProps={{ size: 'large' }}
             >
                 {reservationData && (
                     <div className="confirmation-content">
@@ -511,14 +354,10 @@ function MenuItems({ addToCart }) { // Nhận addToCart từ props
                             <UserOutlined className="confirmation-icon" />
                             <div>
                                 <div className="confirmation-label">Bàn Số</div>
-                                <div className="confirmation-value">#{
-                                    availableTables.find(table => table._id === reservationData.table)?.tableNumber
-                                }</div>
+                                <div className="confirmation-value">#{availableTables.find(t => t._id === reservationData.table)?.tableNumber}</div>
                             </div>
                         </div>
-                        <div className="confirmation-note">
-                            Bạn có chắc chắn rằng các thông tin trên đã chính xác?
-                        </div>
+                        <div className="confirmation-note">Bạn có chắc chắn rằng các thông tin trên đã chính xác?</div>
                     </div>
                 )}
             </Modal>

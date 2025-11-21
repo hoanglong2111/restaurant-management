@@ -9,7 +9,6 @@ function RegisterScreen() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Set theme color to purple gradient for register page
     useThemeColor('#a8edea');
 
     const onFinish = async (values) => {
@@ -19,13 +18,13 @@ function RegisterScreen() {
         }
 
         try {
-            // Ensure leading slash to avoid baseURL concat issue
             const { data } = await axiosInstance.post('/users/register', {
                 name: values.name,
                 email: values.email,
                 password: values.password,
             });
             localStorage.setItem('currentUser', JSON.stringify(data));
+            window.dispatchEvent(new Event('userChanged'));
             navigate('/');
         } catch (err) {
             setError(err.response?.data?.message || 'Đăng ký thất bại');
@@ -49,13 +48,13 @@ function RegisterScreen() {
                     <h2>Đăng Ký</h2>
                     {error && <Alert className="alert-error" message="Lỗi" description={error} type="error" showIcon />}
                     <Form onFinish={onFinish} layout="vertical">
-                        <Form.Item name="name" label="Tên" rules={[{ required: true, message: 'Vui lòng nhập tên' }]}> 
+                        <Form.Item name="name" label="Tên" rules={[{ required: true, message: 'Vui lòng nhập tên' }]}>
                             <Input placeholder="Tên" />
                         </Form.Item>
-                        <Form.Item name="email" label="Email" rules={[{ required: true, message: 'Vui lòng nhập email' }, { type: 'email', message: 'Email không hợp lệ' }]}>
-                            <Input placeholder="Email" />
+                        <Form.Item name="email" label="Email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
+                            <Input placeholder="Email" type="email" />
                         </Form.Item>
-                        <Form.Item name="password" label="Mật Khẩu" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}> 
+                        <Form.Item name="password" label="Mật Khẩu" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
                             <Input.Password placeholder="Mật khẩu" />
                         </Form.Item>
                         <Form.Item name="confirmPassword" label="Xác Nhận Mật Khẩu" rules={[{ required: true, message: 'Vui lòng xác nhận mật khẩu' }]}>

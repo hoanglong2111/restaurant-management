@@ -9,17 +9,13 @@ function LoginScreen() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Set theme color to orange gradient for login page
     useThemeColor('#fda085');
 
     const onFinish = async (values) => {
         try {
             const { data } = await axiosInstance.post('/users/login', values);
             localStorage.setItem('currentUser', JSON.stringify(data));
-
-            // Dispatch custom event to notify App.js
             window.dispatchEvent(new Event('userChanged'));
-
             navigate('/');
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed');
@@ -50,13 +46,11 @@ function LoginScreen() {
                             <Input.Password placeholder="Mật khẩu" />
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                Đăng Nhập
-                            </Button>
+                            <Button type="primary" htmlType="submit">Đăng Nhập</Button>
                         </Form.Item>
                     </Form>
 
-                    <div className="register-link">
+                    <div className="signup-link">
                         Bạn chưa có tài khoản? <Link to="/register">Đăng Ký</Link>
                     </div>
                 </div>

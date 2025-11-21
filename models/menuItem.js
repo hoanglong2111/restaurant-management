@@ -15,15 +15,21 @@ const menuItemSchema = mongoose.Schema({
     toObject: { virtuals: true }
 });
 
+// Add indexes for performance
+menuItemSchema.index({ category: 1 });
+menuItemSchema.index({ price: 1 });
+menuItemSchema.index({ availability: 1 });
+menuItemSchema.index({ sold: -1 }); // For best sellers
+
 // Virtual field for remaining stock
-menuItemSchema.virtual('remaining').get(function() {
+menuItemSchema.virtual('remaining').get(function () {
     return this.stock - this.sold;
 });
 
 // Virtual field for status text
-menuItemSchema.virtual('statusText').get(function() {
+menuItemSchema.virtual('statusText').get(function () {
     const remaining = this.stock - this.sold;
-    
+
     if (remaining <= 0) {
         return 'Hết hàng';
     } else if (remaining <= this.stock * 0.1) {
@@ -34,9 +40,9 @@ menuItemSchema.virtual('statusText').get(function() {
 });
 
 // Pre-save middleware to auto-update availability based on stock
-menuItemSchema.pre('save', function(next) {
+menuItemSchema.pre('save', function (next) {
     const remaining = this.stock - this.sold;
-    
+
     // Set availability based on stock levels
     // - Out of stock (remaining = 0): availability = false
     // - Low stock (remaining <= 10%): availability = false  
@@ -48,7 +54,7 @@ menuItemSchema.pre('save', function(next) {
     } else {
         this.availability = true;
     }
-    
+
     next();
 });
 

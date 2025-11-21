@@ -1,0 +1,64 @@
+.oauth-buttons {
+  margin: 20px 0;
+}
+
+.oauth-divider {
+  text-align: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.oauth-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #d9d9d9;
+  z-index: 0;
+}
+
+.oauth-divider span {
+  background-color: white;
+  padding: 0 15px;
+  position: relative;
+  z-index: 1;
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+.oauth-button {
+  margin-bottom: 12px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.google-button {
+  border-color: #4285f4;
+  color: #4285f4;
+}
+
+.google-button:hover {
+  background-color: #4285f4;
+  color: white;
+  border-color: #4285f4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+}
+
+.facebook-button {
+  border-color: #1877f2;
+  color: #1877f2;
+}
+
+.facebook-button:hover {
+  background-color: #1877f2;
+  color: white;
+  border-color: #1877f2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+}
