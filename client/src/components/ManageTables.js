@@ -174,7 +174,7 @@ function ManageTables() {
     },
   ];
 
-  if (loading) return <Spin tip="Đang tải..." className="manage-tables-spin" />;
+  if (loading) return <Spin className="manage-tables-spin" />;
   if (error)
     return <Alert message="Lỗi" description={error} type="error" showIcon className="manage-tables-alert" />;
 

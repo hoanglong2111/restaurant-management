@@ -68,7 +68,7 @@ function Tables() {
     },
   ];
 
-  if (loading) return <div className="tables-spin"><Spin tip="Đang tải..." /></div>;
+  if (loading) return <div className="tables-spin"><Spin /></div>;
   if (error) return <div className="tables-alert"><Alert message="Lỗi" description={error} type="error" showIcon /></div>;
 
   return (

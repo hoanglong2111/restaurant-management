@@ -84,7 +84,7 @@ function ManageUsers() {
     },
   ];
 
-  if (loading) return <div className="manage-users-spin"><Spin tip="Đang tải..." /></div>;
+  if (loading) return <div className="manage-users-spin"><Spin /></div>;
   if (error) return <div className="manage-users-alert"><Alert message="Lỗi" description={error} type="error" showIcon /></div>;
 
   return (

@@ -167,7 +167,7 @@ function ManageMenu() {
     },
   ];
 
-  if (loading) return <Spin tip="Đang tải..." className="manage-menu-spin" />;
+  if (loading) return <Spin className="manage-menu-spin" />;
   if (error) return <Alert message="Lỗi" description={error} type="error" showIcon className="manage-menu-alert" />;
 
   return (

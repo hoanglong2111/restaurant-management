@@ -288,7 +288,7 @@ function ManageReservations() {
         setVisibleColumns(checkedValues);
     };
 
-    if (loading) return <div className="manage-reservations-spin"><Spin tip="Đang tải..." /></div>;
+    if (loading) return <div className="manage-reservations-spin"><Spin /></div>;
     if (error && !isModalVisible) return <div className="manage-reservations-alert"><Alert message="Lỗi" description={error} type="error" showIcon /></div>;
 
     return (

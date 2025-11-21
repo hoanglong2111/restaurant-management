@@ -119,7 +119,7 @@ function DashboardHome() {
     if (loading) {
         return (
             <div className="dashboard-loading">
-                <Spin size="large" tip="Đang tải dữ liệu..." />
+                <Spin size="large" />
             </div>
         );
     }

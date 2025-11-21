@@ -149,7 +149,7 @@ function MyOrders() {
     if (loading) {
         return (
             <div className="my-orders-loading">
-                <Spin size="large" tip="Đang tải đơn hàng..." />
+                <Spin size="large" />
             </div>
         );
     }
